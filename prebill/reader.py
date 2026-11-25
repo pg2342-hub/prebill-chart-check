@@ -19,6 +19,8 @@ from .checker import Reading
 MODEL = "claude-opus-5-5"
 PRICE_PER_MTOK = {"input": 4.00, "output": 20.00}  # Claude Opus 5.5 list price, USD
 REC_PATH = Path(__file__).resolve().parent.parent / "recordings" / "claude_reads.json"
+# First prompt's readings, kept for the record: it lacked the AMA note on fever in a minor illness (see README).
+REC_PATH_V1 = REC_PATH.with_name("claude_reads_v1.json")
 
 SYSTEM = """You read urgent care progress notes for a pre-bill coding review.
 Grade medical decision making (MDM) with the AMA 2021 office/outpatient E/M table. Use only what the note documents.
@@ -29,6 +31,9 @@ Problems addressed:
 - moderate: 1+ chronic illness with exacerbation, progression or side effects; 2+ stable chronic illnesses;
   1 undiagnosed new problem with uncertain prognosis; 1 acute illness with systemic symptoms; 1 acute complicated injury
 - high: 1+ chronic illness with severe exacerbation; 1 acute or chronic illness or injury that poses a threat to life or bodily function
+- Fever, body aches or fatigue in a minor illness that is treated to relieve symptoms do not make it an acute illness with
+  systemic symptoms; grade that as acute uncomplicated (low). "Systemic symptoms" means a general illness affecting more than one
+  body system with real risk of morbidity.
 
 Data reviewed and analyzed (each unique test ordered or result reviewed counts once; ordering a test includes reviewing its result):
 - minimal: none, or 1 element
@@ -80,8 +85,8 @@ def _prompt(v: dict) -> str:
             f"Progress note:\n{v['note']}")
 
 
-def _load() -> dict:
-    return json.loads(REC_PATH.read_text()) if REC_PATH.exists() else {}
+def _load(path: Path = REC_PATH) -> dict:
+    return json.loads(path.read_text()) if path.exists() else {}
 
 
 class ClaudeReader:
@@ -119,8 +124,8 @@ class ClaudeReader:
 class RecordedReader:
     """Replays recorded model replies; the n-th read of a visit gets run n's reply."""
 
-    def __init__(self):
-        self.data = _load()
+    def __init__(self, path: Path = REC_PATH):
+        self.data = _load(path)
         self.calls: dict[str, int] = {}
 
     def read(self, v: dict) -> Reading:

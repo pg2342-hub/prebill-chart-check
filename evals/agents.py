@@ -52,6 +52,19 @@ def claude_recorded(inp):
     return Response(out, cost_usd=out["cost_usd"])
 
 
+_v1 = None
+
+
+def claude_v1_recorded(inp):
+    """Claude's readings with the first prompt (before the AMA fever note was added)."""
+    global _v1
+    if _v1 is None:
+        from prebill.reader import REC_PATH_V1, RecordedReader
+        _v1 = RecordedReader(REC_PATH_V1)
+    out = review(VISITS[inp["visit"]], _v1)
+    return Response(out, cost_usd=out["cost_usd"])
+
+
 _live = None
 
 

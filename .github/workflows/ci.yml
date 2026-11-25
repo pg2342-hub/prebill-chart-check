@@ -42,6 +42,8 @@ jobs:
       - name: Re-grade Claude's recorded readings (no API call)
         if: steps.rec.outputs.has == 'yes'
         run: cd evals && golive run golive.yml --runs 3 --out ../reports/claude
+      - name: Re-grade the first prompt's recorded readings (no API call)
+        run: cd evals && golive run golive.yml --agent agents:claude_v1_recorded --runs 3 --out ../reports/claude_v1
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: reports, path: reports/}
