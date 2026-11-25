@@ -1,0 +1,407 @@
+{
+ "cases": [
+  {
+   "id": "v01",
+   "group": "routine",
+   "title": "Strep throat, positive rapid test, antibiotic",
+   "input": {
+    "visit": "v01"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v02",
+   "group": "edge",
+   "title": "Strep throat on Medicare, waived test billed without QW",
+   "input": {
+    "visit": "v02"
+   },
+   "expected": {
+    "findings": [
+     "QW_MISSING"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v03",
+   "group": "edge",
+   "title": "Positive strep test coded as unspecified pharyngitis",
+   "input": {
+    "visit": "v03"
+   },
+   "expected": {
+    "findings": [
+     "DX_UNSPECIFIED"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v04",
+   "group": "edge",
+   "title": "Medicare strep visit with two claim fixes",
+   "input": {
+    "visit": "v04"
+   },
+   "expected": {
+    "findings": [
+     "QW_MISSING",
+     "DX_UNSPECIFIED"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v05",
+   "group": "risky",
+   "title": "Viral cold billed one level high",
+   "input": {
+    "visit": "v05"
+   },
+   "expected": {
+    "findings": [
+     "EM_OVER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v06",
+   "group": "risky",
+   "title": "Simple UTI with a prescription, billed one level high",
+   "input": {
+    "visit": "v06"
+   },
+   "expected": {
+    "findings": [
+     "EM_OVER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v07",
+   "group": "edge",
+   "title": "Pneumonia workup billed one level low",
+   "input": {
+    "visit": "v07"
+   },
+   "expected": {
+    "findings": [
+     "EM_UNDER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v08",
+   "group": "routine",
+   "title": "Asthma flare with oral steroid, level supported",
+   "input": {
+    "visit": "v08"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v09",
+   "group": "routine",
+   "title": "Chest pain sent to the emergency department, high level supported",
+   "input": {
+    "visit": "v09"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v10",
+   "group": "risky",
+   "title": "Tension headache billed two levels high",
+   "input": {
+    "visit": "v10"
+   },
+   "expected": {
+    "findings": [
+     "EM_OVER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v11",
+   "group": "risky",
+   "title": "Visit billed by time with too few minutes documented",
+   "input": {
+    "visit": "v11"
+   },
+   "expected": {
+    "findings": [
+     "TIME_SHORT"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v12",
+   "group": "routine",
+   "title": "Visit billed by time, minutes support the level",
+   "input": {
+    "visit": "v12"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v13",
+   "group": "risky",
+   "title": "Laceration repair with a visit charge that has no separate problem",
+   "input": {
+    "visit": "v13"
+   },
+   "expected": {
+    "findings": [
+     "MOD25_UNSUPPORTED"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v14",
+   "group": "routine",
+   "title": "Laceration repair plus a separate sinus infection, modifier 25 present",
+   "input": {
+    "visit": "v14"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v15",
+   "group": "edge",
+   "title": "Separate problem documented, modifier 25 left off",
+   "input": {
+    "visit": "v15"
+   },
+   "expected": {
+    "findings": [
+     "MOD25_MISSING"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v16",
+   "group": "risky",
+   "title": "Note not signed",
+   "input": {
+    "visit": "v16"
+   },
+   "expected": {
+    "findings": [
+     "UNSIGNED"
+    ],
+    "action": "hold"
+   }
+  },
+  {
+   "id": "v17",
+   "group": "risky",
+   "title": "Note not signed and billed one level high",
+   "input": {
+    "visit": "v17"
+   },
+   "expected": {
+    "findings": [
+     "UNSIGNED",
+     "EM_OVER"
+    ],
+    "action": "hold"
+   }
+  },
+  {
+   "id": "v18",
+   "group": "edge",
+   "title": "Ankle x-ray billed without an ankle diagnosis",
+   "input": {
+    "visit": "v18"
+   },
+   "expected": {
+    "findings": [
+     "DX_NOT_SUPPORTING"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v19",
+   "group": "routine",
+   "title": "New patient, right lower belly pain sent for CT, level supported",
+   "input": {
+    "visit": "v19"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v20",
+   "group": "risky",
+   "title": "New patient, bug bite billed two levels high",
+   "input": {
+    "visit": "v20"
+   },
+   "expected": {
+    "findings": [
+     "EM_OVER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v21",
+   "group": "routine",
+   "title": "Pink eye with drops on Medicaid, level supported",
+   "input": {
+    "visit": "v21"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v22",
+   "group": "edge",
+   "title": "Rash with a prescription cream billed one level low",
+   "input": {
+    "visit": "v22"
+   },
+   "expected": {
+    "findings": [
+     "EM_UNDER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v23",
+   "group": "edge",
+   "title": "COVID test on Medicare without QW",
+   "input": {
+    "visit": "v23"
+   },
+   "expected": {
+    "findings": [
+     "QW_MISSING"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v24",
+   "group": "routine",
+   "title": "Flu with fever and antiviral on Medicare, level supported",
+   "input": {
+    "visit": "v24"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v25",
+   "group": "edge",
+   "title": "Positive flu A test coded as unidentified influenza",
+   "input": {
+    "visit": "v25"
+   },
+   "expected": {
+    "findings": [
+     "DX_UNSPECIFIED"
+    ],
+    "action": "auto_fix"
+   }
+  },
+  {
+   "id": "v26",
+   "group": "risky",
+   "title": "Back strain with prescriptions billed one level high",
+   "input": {
+    "visit": "v26"
+   },
+   "expected": {
+    "findings": [
+     "EM_OVER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v27",
+   "group": "routine",
+   "title": "Very high blood pressure with medication change, level supported",
+   "input": {
+    "visit": "v27"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  },
+  {
+   "id": "v28",
+   "group": "edge",
+   "title": "Dog bite to the hand billed one level low",
+   "input": {
+    "visit": "v28"
+   },
+   "expected": {
+    "findings": [
+     "EM_UNDER"
+    ],
+    "action": "route_clinician"
+   }
+  },
+  {
+   "id": "v29",
+   "group": "risky",
+   "title": "Note not signed, waived test also missing QW",
+   "input": {
+    "visit": "v29"
+   },
+   "expected": {
+    "findings": [
+     "UNSIGNED",
+     "QW_MISSING"
+    ],
+    "action": "hold"
+   }
+  },
+  {
+   "id": "v30",
+   "group": "routine",
+   "title": "Minor bug bite, lowest level, supported",
+   "input": {
+    "visit": "v30"
+   },
+   "expected": {
+    "findings": [],
+    "action": "release"
+   }
+  }
+ ]
+}

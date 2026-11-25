@@ -1,0 +1,5 @@
+cases: cases.json
+checks: checks:checks
+agent: agents:claude_recorded
+gate: gate.yml
+runs: 3

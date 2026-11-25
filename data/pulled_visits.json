@@ -1,0 +1,944 @@
+{
+ "source": "local athenaOne-style mock",
+ "stats": {
+  "requests": 219,
+  "retries_429": 1,
+  "token_fetches": 6,
+  "pages": 183
+ },
+ "seconds": 0.29,
+ "visits": [
+  {
+   "id": "v01",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 24,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87880",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J02.0"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "strep",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "amoxicillin 500 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: sore throat x2 days.\nHPI: 24F with sore throat, painful swallowing, subjective fever. No cough. No sick contacts reported.\nExam: T 100.9 F. Tonsillar exudate, tender anterior cervical nodes. Lungs clear.\nTests: rapid strep antigen ordered and reviewed, POSITIVE.\nAssessment: streptococcal pharyngitis.\nPlan: amoxicillin 500 mg twice daily x10 days. Salt water gargles, return if unable to swallow fluids.\n"
+  },
+  {
+   "id": "v02",
+   "clinic": "Clinic B",
+   "payer": "Medicare",
+   "patient": {
+    "age": 67,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87880",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J02.0"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "strep",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "amoxicillin 500 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: sore throat.\nHPI: 67M with 3 days of sore throat and fever to 101 at home. No cough, no rash.\nExam: T 100.4 F. Erythematous pharynx with exudate. Anterior cervical adenopathy.\nTests: rapid strep antigen ordered and reviewed, POSITIVE.\nAssessment: strep pharyngitis.\nPlan: amoxicillin 500 mg BID x10 days. Fluids, acetaminophen as needed.\n"
+  },
+  {
+   "id": "v03",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 31,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87880",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J02.9"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "strep",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "penicillin VK 500 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: sore throat and fever.\nHPI: 31M, 2 days of throat pain, fever, no cough.\nExam: T 101.2 F, tonsillar swelling with exudate.\nTests: rapid strep ordered and reviewed, POSITIVE.\nAssessment: pharyngitis, strep positive.\nPlan: penicillin VK 500 mg BID x10 days.\n"
+  },
+  {
+   "id": "v04",
+   "clinic": "Clinic C",
+   "payer": "Medicare",
+   "patient": {
+    "age": 71,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87880",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J02.9"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "strep",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "amoxicillin 500 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: throat pain.\nHPI: 71F with sore throat for 2 days, low appetite, no cough.\nExam: T 100.6 F. Exudative tonsils, tender nodes.\nTests: rapid strep ordered and reviewed, POSITIVE.\nAssessment: streptococcal pharyngitis.\nPlan: amoxicillin 500 mg BID x10 days, hydration.\n"
+  },
+  {
+   "id": "v05",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 29,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "J06.9"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: congestion and cough x4 days.\nHPI: 29F with runny nose, mild dry cough, no fever, no shortness of breath.\nExam: afebrile, clear rhinorrhea, lungs clear, normal work of breathing.\nAssessment: viral upper respiratory infection.\nPlan: supportive care, over-the-counter guaifenesin and saline spray, return if fever or symptoms past 10 days.\n"
+  },
+  {
+   "id": "v06",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 35,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "81002",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "N39.0"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "nitrofurantoin 100 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: burning with urination.\nHPI: 35F, 2 days of dysuria and frequency. No fever, no flank pain, not pregnant.\nExam: afebrile, no CVA tenderness, mild suprapubic tenderness.\nTests: urine dipstick ordered and reviewed, positive leukocytes and nitrites.\nAssessment: uncomplicated urinary tract infection.\nPlan: nitrofurantoin 100 mg BID x5 days, fluids, return if fever or back pain.\n"
+  },
+  {
+   "id": "v07",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 52,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "J18.9"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "azithromycin 250 mg"
+   ],
+   "orders": [
+    "chest x-ray 2 views",
+    "CBC"
+   ],
+   "referral_ed": false,
+   "note": "CC: cough, fever, chills.\nHPI: 52M with 5 days of productive cough, fever to 102.4, chills, body aches and fatigue. Seen at an outside\nemergency department 3 weeks ago for chest wall pain; I reviewed that visit's discharge summary today.\nExam: T 102.1 F, HR 104, SpO2 94% on room air. Crackles right lower lobe.\nOrders: chest x-ray 2 views and CBC ordered; results reviewed with the patient.\nAssessment: community-acquired pneumonia, acute illness with systemic symptoms.\nPlan: azithromycin 500 mg day 1 then 250 mg days 2-5. Strict return precautions for worsening breathing.\n"
+  },
+  {
+   "id": "v08",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 41,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "J45.41"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "prednisone 40 mg",
+    "albuterol inhaler"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: wheezing.\nHPI: 41F with known moderate persistent asthma, 3 days of worsening wheeze and night cough after a cold,\nusing albuterol every 3 hours.\nExam: expiratory wheeze bilaterally, speaks full sentences, SpO2 96%.\nAssessment: moderate persistent asthma with acute exacerbation.\nPlan: prednisone 40 mg daily x5 days, albuterol refill, asthma action plan reviewed, follow up with PCP in 1 week.\n"
+  },
+  {
+   "id": "v09",
+   "clinic": "Clinic B",
+   "payer": "Medicare",
+   "patient": {
+    "age": 64,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99215",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "93000",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "R07.9"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": true,
+   "note": "CC: chest pressure.\nHPI: 64M with 1 hour of substernal chest pressure radiating to the left arm with sweating. History of hypertension and smoking.\nExam: diaphoretic, BP 168/96, HR 98.\nECG: performed in clinic, nonspecific ST changes.\nAssessment: chest pain, possible acute coronary syndrome, a threat to bodily function.\nPlan: aspirin given, EMS called, transferred to the emergency department for admission evaluation.\n"
+  },
+  {
+   "id": "v10",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 38,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99215",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "G44.209"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: headache.\nHPI: 38F with band-like headache since this morning after a long work week. No fever, no vision change,\nno weakness, no worst-headache-of-life features. Similar headaches in the past.\nExam: normal neuro exam, mild trapezius tenderness.\nAssessment: tension-type headache.\nPlan: ibuprofen over the counter, hydration, sleep, return if new neurologic symptoms.\n"
+  },
+  {
+   "id": "v11",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 46,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "time",
+    "procedures": [],
+    "dx": [
+     "M54.50"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: low back pain.\nHPI: 46M with low back pain after lifting boxes yesterday, no leg weakness, no numbness, no bladder changes.\nExam: paraspinal tenderness, negative straight leg raise, normal strength.\nAssessment: acute low back strain.\nPlan: heat, over-the-counter naproxen, activity as tolerated, home exercises given.\nTotal time on the date of the encounter: 22 minutes.\n"
+  },
+  {
+   "id": "v12",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 58,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "time",
+    "procedures": [],
+    "dx": [
+     "R42"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "meclizine 25 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: dizziness.\nHPI: 58F with room-spinning dizziness when rolling over in bed for 2 days. No hearing loss, no weakness.\nExam: positive Dix-Hallpike on the right, normal neuro exam.\nAssessment: dizziness, likely benign positional vertigo.\nPlan: canalith repositioning taught, meclizine 25 mg as needed, fall precautions, counseling on red flags.\nTotal time on the date of the encounter: 35 minutes, including counseling and documentation.\n"
+  },
+  {
+   "id": "v13",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 27,
+    "sex": "male"
+   },
+   "visit_type": "new",
+   "billed": {
+    "em": "99203",
+    "em_modifiers": [
+     "25"
+    ],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "12002",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "S61.411A"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: cut hand.\nHPI: 27M cut his right palm on a kitchen knife 1 hour ago. Tetanus up to date. No numbness.\nExam: 3.0 cm linear laceration of the right palm, no tendon exposure, full strength and sensation.\nProcedure: irrigated, lidocaine 1% local, simple repair with 5 sutures, 3.0 cm.\nAssessment: laceration of the right hand.\nPlan: wound care, suture removal in 10-14 days.\n"
+  },
+  {
+   "id": "v14",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 33,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [
+     "25"
+    ],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "12001",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "S51.811A",
+     "J01.90"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "amoxicillin-clavulanate 875 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: cut forearm; also sinus pain.\nHPI: 33F cut her left forearm on a shelf edge today. Separately, 12 days of facial pressure, purulent\nnasal discharge and worsening congestion after initial improvement.\nExam: 2.0 cm superficial laceration left forearm. Maxillary sinus tenderness, purulent drainage.\nProcedure: simple repair of 2.0 cm laceration with 3 sutures.\nAssessment: 1) forearm laceration, repaired. 2) acute bacterial sinusitis.\nPlan: wound care, suture removal in 7-10 days. Amoxicillin-clavulanate 875 mg BID x7 days for sinusitis.\n"
+  },
+  {
+   "id": "v15",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 44,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "12001",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "S61.012A",
+     "H10.31"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "polymyxin-trimethoprim eye drops"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: cut thumb; also red eye.\nHPI: 44M cut his left thumb on sheet metal at home. Separately, right eye redness with crusting since yesterday.\nExam: 1.5 cm superficial laceration left thumb. Right conjunctival injection with mucopurulent discharge, normal vision.\nProcedure: simple repair with 2 sutures.\nAssessment: 1) thumb laceration, repaired. 2) acute bacterial conjunctivitis, right eye.\nPlan: wound care, suture removal in 10 days. Polymyxin-trimethoprim drops 4 times daily x7 days.\n"
+  },
+  {
+   "id": "v16",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 19,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "H66.91"
+    ]
+   },
+   "signed": false,
+   "results": [],
+   "rx": [
+    "amoxicillin 875 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: ear pain.\nHPI: 19F with left ear pain x2 days after a cold.\nExam: bulging erythematous left tympanic membrane.\nAssessment: acute otitis media, left.\nPlan: amoxicillin 875 mg BID x10 days.\n"
+  },
+  {
+   "id": "v17",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 50,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "J06.9"
+    ]
+   },
+   "signed": false,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: sore throat and congestion.\nHPI: 50M with 3 days of scratchy throat and nasal congestion, no fever.\nExam: mild pharyngeal erythema, no exudate, lungs clear.\nAssessment: viral upper respiratory infection.\nPlan: over-the-counter lozenges and fluids.\n"
+  },
+  {
+   "id": "v18",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 22,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "73610",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J06.9"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [
+    "ankle x-ray 3 views"
+   ],
+   "referral_ed": false,
+   "note": "CC: twisted ankle; also a cold.\nHPI: 22M rolled his right ankle playing basketball today, can bear weight with pain. Also 3 days of runny nose.\nExam: lateral right ankle swelling and tenderness over the ATFL, no bony tenderness at the malleolus tip.\nX-ray: right ankle 3 views ordered and reviewed, no fracture.\nAssessment: 1) right ankle sprain. 2) viral URI.\nPlan: ankle brace, RICE, ibuprofen over the counter, supportive care for URI.\n"
+  },
+  {
+   "id": "v19",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 26,
+    "sex": "female"
+   },
+   "visit_type": "new",
+   "billed": {
+    "em": "99204",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "R10.31"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [
+    "CBC",
+    "urinalysis"
+   ],
+   "referral_ed": true,
+   "note": "CC: abdominal pain.\nHPI: 26F with 12 hours of pain that started near the navel and moved to the right lower abdomen, nausea, no vomiting.\nI reviewed her outside urgent care note from last week, which documented a negative pregnancy test.\nExam: T 99.9 F, RLQ tenderness with guarding, positive Rovsing sign.\nOrders: CBC and urinalysis ordered and reviewed, WBC 13.8.\nAssessment: right lower quadrant pain, undiagnosed new problem with uncertain prognosis, appendicitis not excluded.\nPlan: sent to the emergency department for CT and surgical evaluation; decision made to escalate care.\n"
+  },
+  {
+   "id": "v20",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 12,
+    "sex": "male"
+   },
+   "visit_type": "new",
+   "billed": {
+    "em": "99204",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "W57.XXXA",
+     "S80.861A"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: bug bite.\nHPI: 12M with an itchy bump on the left shin after camping. No fever, no spreading redness.\nExam: 1 cm raised papule, no warmth, no drainage.\nAssessment: insect bite of the left lower leg, minor.\nPlan: over-the-counter hydrocortisone cream, cool compress, return if spreading redness.\n"
+  },
+  {
+   "id": "v21",
+   "clinic": "Clinic B",
+   "payer": "Medicaid",
+   "patient": {
+    "age": 8,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "H10.32"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "polymyxin-trimethoprim eye drops"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: red eye.\nHPI: 8F with left eye redness and morning crusting x1 day. Mother provides the history.\nExam: left conjunctival injection with mucopurulent discharge, normal acuity.\nAssessment: acute bacterial conjunctivitis, left eye.\nPlan: polymyxin-trimethoprim drops 4 times daily x7 days, school note given.\n"
+  },
+  {
+   "id": "v22",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 36,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99212",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "L23.7"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "triamcinolone 0.1% cream"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: itchy rash.\nHPI: 36M with an itchy linear rash on both forearms 2 days after clearing brush.\nExam: linear vesicular streaks on both forearms, no facial involvement, no signs of infection.\nAssessment: allergic contact dermatitis due to plants.\nPlan: triamcinolone 0.1% cream twice daily x14 days, oral antihistamine over the counter.\n"
+  },
+  {
+   "id": "v23",
+   "clinic": "Clinic A",
+   "payer": "Medicare",
+   "patient": {
+    "age": 69,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87811",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J06.9"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "covid",
+     "value": "negative"
+    }
+   ],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: cough and congestion.\nHPI: 69F with 2 days of cough, congestion and sore throat. No fever, no shortness of breath.\nExam: afebrile, SpO2 97%, lungs clear.\nTests: COVID-19 antigen ordered and reviewed, negative.\nAssessment: viral upper respiratory infection.\nPlan: over-the-counter dextromethorphan, fluids, rest, return if breathing worsens.\n"
+  },
+  {
+   "id": "v24",
+   "clinic": "Clinic B",
+   "payer": "Medicare",
+   "patient": {
+    "age": 70,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87804",
+      "modifiers": [
+       "QW"
+      ]
+     },
+     {
+      "code": "87811",
+      "modifiers": [
+       "QW"
+      ]
+     }
+    ],
+    "dx": [
+     "J10.1"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "flu_a",
+     "value": "positive"
+    },
+    {
+     "test": "covid",
+     "value": "negative"
+    }
+   ],
+   "rx": [
+    "oseltamivir 75 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: fever and body aches.\nHPI: 70M with sudden fever to 101.8, chills, myalgias, headache and dry cough since yesterday.\nExam: T 101.6 F, HR 102, SpO2 95%, lungs clear.\nTests: influenza antigen and COVID-19 antigen ordered and reviewed; influenza A POSITIVE, COVID negative.\nAssessment: influenza A, acute illness with systemic symptoms, higher risk due to age.\nPlan: oseltamivir 75 mg BID x5 days, fluids, return precautions for breathing difficulty.\n"
+  },
+  {
+   "id": "v25",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 28,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87804",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J11.1"
+    ]
+   },
+   "signed": true,
+   "results": [
+    {
+     "test": "flu_a",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "oseltamivir 75 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: cough and congestion.\nHPI: 28F with 1 day of mild cough, congestion and scratchy throat. Afebrile at home. Roommate has the flu.\nExam: afebrile, mild nasal congestion, lungs clear.\nTests: influenza antigen ordered and reviewed, influenza A POSITIVE.\nAssessment: influenza A, mild.\nPlan: oseltamivir 75 mg BID x5 days given known exposure and onset within 48 hours, fluids.\n"
+  },
+  {
+   "id": "v26",
+   "clinic": "Clinic A",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 39,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "S39.012A"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "cyclobenzaprine 10 mg",
+    "ibuprofen 800 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: back pain.\nHPI: 39M strained his lower back moving furniture yesterday. No radiation, no numbness, no bladder or bowel changes.\nExam: lumbar paraspinal spasm and tenderness, negative straight leg raise, normal strength and reflexes.\nAssessment: strain of lower back muscles, acute, uncomplicated.\nPlan: cyclobenzaprine 10 mg at night x7 days, ibuprofen 800 mg TID with food x7 days, heat, gentle activity.\n"
+  },
+  {
+   "id": "v27",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 61,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99214",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "I10",
+     "R51.9"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "amlodipine 5 mg"
+   ],
+   "orders": [
+    "basic metabolic panel"
+   ],
+   "referral_ed": false,
+   "note": "CC: headache, high home blood pressure readings.\nHPI: 61F with known hypertension on lisinopril, home readings 170s-180s/100s this week, mild headache.\nNo chest pain, no vision change, no weakness. I reviewed her PCP's notes from her last two visits.\nExam: BP 182/104 repeated 178/102, normal neuro exam, no edema.\nOrders: basic metabolic panel ordered and reviewed, creatinine at baseline.\nAssessment: essential hypertension, poorly controlled (chronic illness with progression); headache.\nPlan: add amlodipine 5 mg daily, continue lisinopril, recheck BP with PCP in 1 week, ED precautions.\n"
+  },
+  {
+   "id": "v28",
+   "clinic": "Clinic C",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 45,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "S61.451A",
+     "W54.0XXA"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [
+    "amoxicillin-clavulanate 875 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: dog bite.\nHPI: 45F bitten on the back of the right hand by her neighbor's dog 3 hours ago. Dog vaccinated.\nExam: two puncture wounds over the 3rd metacarpal with surrounding swelling; tendon function intact,\nfull range of motion, sensation intact. Wound left open given bite risk.\nAssessment: dog bite puncture wounds of the right hand, an acute complicated injury given infection risk\nand closeness to the extensor tendon.\nPlan: irrigation, amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis, wound check in 48 hours.\n"
+  },
+  {
+   "id": "v29",
+   "clinic": "Clinic A",
+   "payer": "Medicare",
+   "patient": {
+    "age": 74,
+    "sex": "male"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99213",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [
+     {
+      "code": "87880",
+      "modifiers": []
+     }
+    ],
+    "dx": [
+     "J02.0"
+    ]
+   },
+   "signed": false,
+   "results": [
+    {
+     "test": "strep",
+     "value": "positive"
+    }
+   ],
+   "rx": [
+    "amoxicillin 500 mg"
+   ],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: sore throat.\nHPI: 74M with 2 days of sore throat and fever.\nExam: exudative pharyngitis, tender anterior nodes.\nTests: rapid strep ordered and reviewed, POSITIVE.\nAssessment: strep pharyngitis.\nPlan: amoxicillin 500 mg BID x10 days.\n"
+  },
+  {
+   "id": "v30",
+   "clinic": "Clinic B",
+   "payer": "Commercial plan",
+   "patient": {
+    "age": 30,
+    "sex": "female"
+   },
+   "visit_type": "established",
+   "billed": {
+    "em": "99212",
+    "em_modifiers": [],
+    "basis": "mdm",
+    "procedures": [],
+    "dx": [
+     "W57.XXXA",
+     "S50.862A"
+    ]
+   },
+   "signed": true,
+   "results": [],
+   "rx": [],
+   "orders": [],
+   "referral_ed": false,
+   "note": "CC: bite on the arm.\nHPI: 30F with an itchy bump on the left forearm since yesterday. No fever, no spreading redness.\nExam: small raised papule, no warmth or drainage.\nAssessment: insect bite of the left forearm, minor.\nPlan: over-the-counter hydrocortisone cream and an oral antihistamine as needed.\n"
+  }
+ ]
+}

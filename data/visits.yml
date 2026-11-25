@@ -1,0 +1,697 @@
+# 30 synthetic urgent care visits. Every patient, clinic, clinician and note is made up.
+# `billed` is the draft claim as it would leave the EHR. `truth` is the hand-labeled
+# reading of the note (AMA 2021 office/outpatient MDM elements), and `expected` is the
+# answer key: the findings a careful coder would raise and where the visit should go.
+#
+# MDM element levels: minimal, low, moderate, high ("minimal" also covers none).
+# Actions: release (claim goes out as is), auto_fix (a simple claim fix, applied once the
+# category has passed shadow mode), route_clinician (the clinician decides in the EHR),
+# hold (note not signed; nothing leaves).
+
+visits:
+  - id: v01
+    group: routine
+    title: Strep throat, positive rapid test, antibiotic
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 24, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87880", modifiers: []}], dx: [J02.0]}
+    signed: true
+    results: [{test: strep, value: positive}]
+    rx: [amoxicillin 500 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: sore throat x2 days.
+      HPI: 24F with sore throat, painful swallowing, subjective fever. No cough. No sick contacts reported.
+      Exam: T 100.9 F. Tonsillar exudate, tender anterior cervical nodes. Lungs clear.
+      Tests: rapid strep antigen ordered and reviewed, POSITIVE.
+      Assessment: streptococcal pharyngitis.
+      Plan: amoxicillin 500 mg twice daily x10 days. Salt water gargles, return if unable to swallow fluids.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v02
+    group: edge
+    title: Strep throat on Medicare, waived test billed without QW
+    clinic: Clinic B
+    payer: Medicare
+    patient: {age: 67, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87880", modifiers: []}], dx: [J02.0]}
+    signed: true
+    results: [{test: strep, value: positive}]
+    rx: [amoxicillin 500 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: sore throat.
+      HPI: 67M with 3 days of sore throat and fever to 101 at home. No cough, no rash.
+      Exam: T 100.4 F. Erythematous pharynx with exudate. Anterior cervical adenopathy.
+      Tests: rapid strep antigen ordered and reviewed, POSITIVE.
+      Assessment: strep pharyngitis.
+      Plan: amoxicillin 500 mg BID x10 days. Fluids, acetaminophen as needed.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [QW_MISSING], action: auto_fix}
+
+  - id: v03
+    group: edge
+    title: Positive strep test coded as unspecified pharyngitis
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 31, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87880", modifiers: []}], dx: [J02.9]}
+    signed: true
+    results: [{test: strep, value: positive}]
+    rx: [penicillin VK 500 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: sore throat and fever.
+      HPI: 31M, 2 days of throat pain, fever, no cough.
+      Exam: T 101.2 F, tonsillar swelling with exudate.
+      Tests: rapid strep ordered and reviewed, POSITIVE.
+      Assessment: pharyngitis, strep positive.
+      Plan: penicillin VK 500 mg BID x10 days.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [DX_UNSPECIFIED], action: auto_fix}
+
+  - id: v04
+    group: edge
+    title: Medicare strep visit with two claim fixes
+    clinic: Clinic C
+    payer: Medicare
+    patient: {age: 71, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87880", modifiers: []}], dx: [J02.9]}
+    signed: true
+    results: [{test: strep, value: positive}]
+    rx: [amoxicillin 500 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: throat pain.
+      HPI: 71F with sore throat for 2 days, low appetite, no cough.
+      Exam: T 100.6 F. Exudative tonsils, tender nodes.
+      Tests: rapid strep ordered and reviewed, POSITIVE.
+      Assessment: streptococcal pharyngitis.
+      Plan: amoxicillin 500 mg BID x10 days, hydration.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [QW_MISSING, DX_UNSPECIFIED], action: auto_fix}
+
+  - id: v05
+    group: risky
+    title: Viral cold billed one level high
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 29, sex: female}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [], dx: [J06.9]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: congestion and cough x4 days.
+      HPI: 29F with runny nose, mild dry cough, no fever, no shortness of breath.
+      Exam: afebrile, clear rhinorrhea, lungs clear, normal work of breathing.
+      Assessment: viral upper respiratory infection.
+      Plan: supportive care, over-the-counter guaifenesin and saline spray, return if fever or symptoms past 10 days.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [EM_OVER], action: route_clinician}
+
+  - id: v06
+    group: risky
+    title: Simple UTI with a prescription, billed one level high
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 35, sex: female}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [{code: "81002", modifiers: []}], dx: [N39.0]}
+    signed: true
+    results: []
+    rx: [nitrofurantoin 100 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: burning with urination.
+      HPI: 35F, 2 days of dysuria and frequency. No fever, no flank pain, not pregnant.
+      Exam: afebrile, no CVA tenderness, mild suprapubic tenderness.
+      Tests: urine dipstick ordered and reviewed, positive leukocytes and nitrites.
+      Assessment: uncomplicated urinary tract infection.
+      Plan: nitrofurantoin 100 mg BID x5 days, fluids, return if fever or back pain.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [EM_OVER], action: route_clinician}
+
+  - id: v07
+    group: edge
+    title: Pneumonia workup billed one level low
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 52, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [], dx: [J18.9]}
+    signed: true
+    results: []
+    rx: [azithromycin 250 mg]
+    orders: [chest x-ray 2 views, CBC]
+    referral_ed: false
+    note: |
+      CC: cough, fever, chills.
+      HPI: 52M with 5 days of productive cough, fever to 102.4, chills, body aches and fatigue. Seen at an outside
+      emergency department 3 weeks ago for chest wall pain; I reviewed that visit's discharge summary today.
+      Exam: T 102.1 F, HR 104, SpO2 94% on room air. Crackles right lower lobe.
+      Orders: chest x-ray 2 views and CBC ordered; results reviewed with the patient.
+      Assessment: community-acquired pneumonia, acute illness with systemic symptoms.
+      Plan: azithromycin 500 mg day 1 then 250 mg days 2-5. Strict return precautions for worsening breathing.
+    truth: {problems: moderate, data: moderate, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [EM_UNDER], action: route_clinician}
+
+  - id: v08
+    group: routine
+    title: Asthma flare with oral steroid, level supported
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 41, sex: female}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [], dx: [J45.41]}
+    signed: true
+    results: []
+    rx: [prednisone 40 mg, albuterol inhaler]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: wheezing.
+      HPI: 41F with known moderate persistent asthma, 3 days of worsening wheeze and night cough after a cold,
+      using albuterol every 3 hours.
+      Exam: expiratory wheeze bilaterally, speaks full sentences, SpO2 96%.
+      Assessment: moderate persistent asthma with acute exacerbation.
+      Plan: prednisone 40 mg daily x5 days, albuterol refill, asthma action plan reviewed, follow up with PCP in 1 week.
+    truth: {problems: moderate, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v09
+    group: routine
+    title: Chest pain sent to the emergency department, high level supported
+    clinic: Clinic B
+    payer: Medicare
+    patient: {age: 64, sex: male}
+    visit_type: established
+    billed: {em: "99215", em_modifiers: [], basis: mdm, procedures: [{code: "93000", modifiers: []}], dx: [R07.9]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: true
+    note: |
+      CC: chest pressure.
+      HPI: 64M with 1 hour of substernal chest pressure radiating to the left arm with sweating. History of hypertension and smoking.
+      Exam: diaphoretic, BP 168/96, HR 98.
+      ECG: performed in clinic, nonspecific ST changes.
+      Assessment: chest pain, possible acute coronary syndrome, a threat to bodily function.
+      Plan: aspirin given, EMS called, transferred to the emergency department for admission evaluation.
+    truth: {problems: high, data: minimal, risk: high, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v10
+    group: risky
+    title: Tension headache billed two levels high
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 38, sex: female}
+    visit_type: established
+    billed: {em: "99215", em_modifiers: [], basis: mdm, procedures: [], dx: [G44.209]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: headache.
+      HPI: 38F with band-like headache since this morning after a long work week. No fever, no vision change,
+      no weakness, no worst-headache-of-life features. Similar headaches in the past.
+      Exam: normal neuro exam, mild trapezius tenderness.
+      Assessment: tension-type headache.
+      Plan: ibuprofen over the counter, hydration, sleep, return if new neurologic symptoms.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [EM_OVER], action: route_clinician}
+
+  - id: v11
+    group: risky
+    title: Visit billed by time with too few minutes documented
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 46, sex: male}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: time, procedures: [], dx: [M54.50]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: low back pain.
+      HPI: 46M with low back pain after lifting boxes yesterday, no leg weakness, no numbness, no bladder changes.
+      Exam: paraspinal tenderness, negative straight leg raise, normal strength.
+      Assessment: acute low back strain.
+      Plan: heat, over-the-counter naproxen, activity as tolerated, home exercises given.
+      Total time on the date of the encounter: 22 minutes.
+    truth: {problems: low, data: minimal, risk: low, time_min: 22, separate_em: null}
+    expected: {findings: [TIME_SHORT], action: route_clinician}
+
+  - id: v12
+    group: routine
+    title: Visit billed by time, minutes support the level
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 58, sex: female}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: time, procedures: [], dx: [R42]}
+    signed: true
+    results: []
+    rx: [meclizine 25 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: dizziness.
+      HPI: 58F with room-spinning dizziness when rolling over in bed for 2 days. No hearing loss, no weakness.
+      Exam: positive Dix-Hallpike on the right, normal neuro exam.
+      Assessment: dizziness, likely benign positional vertigo.
+      Plan: canalith repositioning taught, meclizine 25 mg as needed, fall precautions, counseling on red flags.
+      Total time on the date of the encounter: 35 minutes, including counseling and documentation.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: 35, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v13
+    group: risky
+    title: Laceration repair with a visit charge that has no separate problem
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 27, sex: male}
+    visit_type: new
+    billed: {em: "99203", em_modifiers: ["25"], basis: mdm, procedures: [{code: "12002", modifiers: []}], dx: [S61.411A]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: cut hand.
+      HPI: 27M cut his right palm on a kitchen knife 1 hour ago. Tetanus up to date. No numbness.
+      Exam: 3.0 cm linear laceration of the right palm, no tendon exposure, full strength and sensation.
+      Procedure: irrigated, lidocaine 1% local, simple repair with 5 sutures, 3.0 cm.
+      Assessment: laceration of the right hand.
+      Plan: wound care, suture removal in 10-14 days.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: false}
+    expected: {findings: [MOD25_UNSUPPORTED], action: route_clinician}
+
+  - id: v14
+    group: routine
+    title: Laceration repair plus a separate sinus infection, modifier 25 present
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 33, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: ["25"], basis: mdm, procedures: [{code: "12001", modifiers: []}], dx: [S51.811A, J01.90]}
+    signed: true
+    results: []
+    rx: [amoxicillin-clavulanate 875 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: cut forearm; also sinus pain.
+      HPI: 33F cut her left forearm on a shelf edge today. Separately, 12 days of facial pressure, purulent
+      nasal discharge and worsening congestion after initial improvement.
+      Exam: 2.0 cm superficial laceration left forearm. Maxillary sinus tenderness, purulent drainage.
+      Procedure: simple repair of 2.0 cm laceration with 3 sutures.
+      Assessment: 1) forearm laceration, repaired. 2) acute bacterial sinusitis.
+      Plan: wound care, suture removal in 7-10 days. Amoxicillin-clavulanate 875 mg BID x7 days for sinusitis.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: true}
+    expected: {findings: [], action: release}
+
+  - id: v15
+    group: edge
+    title: Separate problem documented, modifier 25 left off
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 44, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "12001", modifiers: []}], dx: [S61.012A, H10.31]}
+    signed: true
+    results: []
+    rx: [polymyxin-trimethoprim eye drops]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: cut thumb; also red eye.
+      HPI: 44M cut his left thumb on sheet metal at home. Separately, right eye redness with crusting since yesterday.
+      Exam: 1.5 cm superficial laceration left thumb. Right conjunctival injection with mucopurulent discharge, normal vision.
+      Procedure: simple repair with 2 sutures.
+      Assessment: 1) thumb laceration, repaired. 2) acute bacterial conjunctivitis, right eye.
+      Plan: wound care, suture removal in 10 days. Polymyxin-trimethoprim drops 4 times daily x7 days.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: true}
+    expected: {findings: [MOD25_MISSING], action: auto_fix}
+
+  - id: v16
+    group: risky
+    title: Note not signed
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 19, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [], dx: [H66.91]}
+    signed: false
+    results: []
+    rx: [amoxicillin 875 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: ear pain.
+      HPI: 19F with left ear pain x2 days after a cold.
+      Exam: bulging erythematous left tympanic membrane.
+      Assessment: acute otitis media, left.
+      Plan: amoxicillin 875 mg BID x10 days.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [UNSIGNED], action: hold}
+
+  - id: v17
+    group: risky
+    title: Note not signed and billed one level high
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 50, sex: male}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [], dx: [J06.9]}
+    signed: false
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: sore throat and congestion.
+      HPI: 50M with 3 days of scratchy throat and nasal congestion, no fever.
+      Exam: mild pharyngeal erythema, no exudate, lungs clear.
+      Assessment: viral upper respiratory infection.
+      Plan: over-the-counter lozenges and fluids.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [UNSIGNED, EM_OVER], action: hold}
+
+  - id: v18
+    group: edge
+    title: Ankle x-ray billed without an ankle diagnosis
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 22, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "73610", modifiers: []}], dx: [J06.9]}
+    signed: true
+    results: []
+    rx: []
+    orders: [ankle x-ray 3 views]
+    referral_ed: false
+    note: |
+      CC: twisted ankle; also a cold.
+      HPI: 22M rolled his right ankle playing basketball today, can bear weight with pain. Also 3 days of runny nose.
+      Exam: lateral right ankle swelling and tenderness over the ATFL, no bony tenderness at the malleolus tip.
+      X-ray: right ankle 3 views ordered and reviewed, no fracture.
+      Assessment: 1) right ankle sprain. 2) viral URI.
+      Plan: ankle brace, RICE, ibuprofen over the counter, supportive care for URI.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [DX_NOT_SUPPORTING], action: route_clinician}
+
+  - id: v19
+    group: routine
+    title: New patient, right lower belly pain sent for CT, level supported
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 26, sex: female}
+    visit_type: new
+    billed: {em: "99204", em_modifiers: [], basis: mdm, procedures: [], dx: [R10.31]}
+    signed: true
+    results: []
+    rx: []
+    orders: [CBC, urinalysis]
+    referral_ed: true
+    note: |
+      CC: abdominal pain.
+      HPI: 26F with 12 hours of pain that started near the navel and moved to the right lower abdomen, nausea, no vomiting.
+      I reviewed her outside urgent care note from last week, which documented a negative pregnancy test.
+      Exam: T 99.9 F, RLQ tenderness with guarding, positive Rovsing sign.
+      Orders: CBC and urinalysis ordered and reviewed, WBC 13.8.
+      Assessment: right lower quadrant pain, undiagnosed new problem with uncertain prognosis, appendicitis not excluded.
+      Plan: sent to the emergency department for CT and surgical evaluation; decision made to escalate care.
+    truth: {problems: moderate, data: moderate, risk: high, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v20
+    group: risky
+    title: New patient, bug bite billed two levels high
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 12, sex: male}
+    visit_type: new
+    billed: {em: "99204", em_modifiers: [], basis: mdm, procedures: [], dx: [W57.XXXA, S80.861A]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: bug bite.
+      HPI: 12M with an itchy bump on the left shin after camping. No fever, no spreading redness.
+      Exam: 1 cm raised papule, no warmth, no drainage.
+      Assessment: insect bite of the left lower leg, minor.
+      Plan: over-the-counter hydrocortisone cream, cool compress, return if spreading redness.
+    truth: {problems: minimal, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [EM_OVER], action: route_clinician}
+
+  - id: v21
+    group: routine
+    title: Pink eye with drops on Medicaid, level supported
+    clinic: Clinic B
+    payer: Medicaid
+    patient: {age: 8, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [], dx: [H10.32]}
+    signed: true
+    results: []
+    rx: [polymyxin-trimethoprim eye drops]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: red eye.
+      HPI: 8F with left eye redness and morning crusting x1 day. Mother provides the history.
+      Exam: left conjunctival injection with mucopurulent discharge, normal acuity.
+      Assessment: acute bacterial conjunctivitis, left eye.
+      Plan: polymyxin-trimethoprim drops 4 times daily x7 days, school note given.
+    truth: {problems: low, data: low, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v22
+    group: edge
+    title: Rash with a prescription cream billed one level low
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 36, sex: male}
+    visit_type: established
+    billed: {em: "99212", em_modifiers: [], basis: mdm, procedures: [], dx: [L23.7]}
+    signed: true
+    results: []
+    rx: [triamcinolone 0.1% cream]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: itchy rash.
+      HPI: 36M with an itchy linear rash on both forearms 2 days after clearing brush.
+      Exam: linear vesicular streaks on both forearms, no facial involvement, no signs of infection.
+      Assessment: allergic contact dermatitis due to plants.
+      Plan: triamcinolone 0.1% cream twice daily x14 days, oral antihistamine over the counter.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [EM_UNDER], action: route_clinician}
+
+  - id: v23
+    group: edge
+    title: COVID test on Medicare without QW
+    clinic: Clinic A
+    payer: Medicare
+    patient: {age: 69, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87811", modifiers: []}], dx: [J06.9]}
+    signed: true
+    results: [{test: covid, value: negative}]
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: cough and congestion.
+      HPI: 69F with 2 days of cough, congestion and sore throat. No fever, no shortness of breath.
+      Exam: afebrile, SpO2 97%, lungs clear.
+      Tests: COVID-19 antigen ordered and reviewed, negative.
+      Assessment: viral upper respiratory infection.
+      Plan: over-the-counter dextromethorphan, fluids, rest, return if breathing worsens.
+    truth: {problems: low, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [QW_MISSING], action: auto_fix}
+
+  - id: v24
+    group: routine
+    title: Flu with fever and antiviral on Medicare, level supported
+    clinic: Clinic B
+    payer: Medicare
+    patient: {age: 70, sex: male}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [{code: "87804", modifiers: [QW]}, {code: "87811", modifiers: [QW]}], dx: [J10.1]}
+    signed: true
+    results: [{test: flu_a, value: positive}, {test: covid, value: negative}]
+    rx: [oseltamivir 75 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: fever and body aches.
+      HPI: 70M with sudden fever to 101.8, chills, myalgias, headache and dry cough since yesterday.
+      Exam: T 101.6 F, HR 102, SpO2 95%, lungs clear.
+      Tests: influenza antigen and COVID-19 antigen ordered and reviewed; influenza A POSITIVE, COVID negative.
+      Assessment: influenza A, acute illness with systemic symptoms, higher risk due to age.
+      Plan: oseltamivir 75 mg BID x5 days, fluids, return precautions for breathing difficulty.
+    truth: {problems: moderate, data: low, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v25
+    group: edge
+    title: Positive flu A test coded as unidentified influenza
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 28, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87804", modifiers: []}], dx: [J11.1]}
+    signed: true
+    results: [{test: flu_a, value: positive}]
+    rx: [oseltamivir 75 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: cough and congestion.
+      HPI: 28F with 1 day of mild cough, congestion and scratchy throat. Afebrile at home. Roommate has the flu.
+      Exam: afebrile, mild nasal congestion, lungs clear.
+      Tests: influenza antigen ordered and reviewed, influenza A POSITIVE.
+      Assessment: influenza A, mild.
+      Plan: oseltamivir 75 mg BID x5 days given known exposure and onset within 48 hours, fluids.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [DX_UNSPECIFIED], action: auto_fix}
+
+  - id: v26
+    group: risky
+    title: Back strain with prescriptions billed one level high
+    clinic: Clinic A
+    payer: Commercial plan
+    patient: {age: 39, sex: male}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [], dx: [S39.012A]}
+    signed: true
+    results: []
+    rx: [cyclobenzaprine 10 mg, ibuprofen 800 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: back pain.
+      HPI: 39M strained his lower back moving furniture yesterday. No radiation, no numbness, no bladder or bowel changes.
+      Exam: lumbar paraspinal spasm and tenderness, negative straight leg raise, normal strength and reflexes.
+      Assessment: strain of lower back muscles, acute, uncomplicated.
+      Plan: cyclobenzaprine 10 mg at night x7 days, ibuprofen 800 mg TID with food x7 days, heat, gentle activity.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [EM_OVER], action: route_clinician}
+
+  - id: v27
+    group: routine
+    title: Very high blood pressure with medication change, level supported
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 61, sex: female}
+    visit_type: established
+    billed: {em: "99214", em_modifiers: [], basis: mdm, procedures: [], dx: [I10, R51.9]}
+    signed: true
+    results: []
+    rx: [amlodipine 5 mg]
+    orders: [basic metabolic panel]
+    referral_ed: false
+    note: |
+      CC: headache, high home blood pressure readings.
+      HPI: 61F with known hypertension on lisinopril, home readings 170s-180s/100s this week, mild headache.
+      No chest pain, no vision change, no weakness. I reviewed her PCP's notes from her last two visits.
+      Exam: BP 182/104 repeated 178/102, normal neuro exam, no edema.
+      Orders: basic metabolic panel ordered and reviewed, creatinine at baseline.
+      Assessment: essential hypertension, poorly controlled (chronic illness with progression); headache.
+      Plan: add amlodipine 5 mg daily, continue lisinopril, recheck BP with PCP in 1 week, ED precautions.
+    truth: {problems: moderate, data: low, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}
+
+  - id: v28
+    group: edge
+    title: Dog bite to the hand billed one level low
+    clinic: Clinic C
+    payer: Commercial plan
+    patient: {age: 45, sex: female}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [], dx: [S61.451A, W54.0XXA]}
+    signed: true
+    results: []
+    rx: [amoxicillin-clavulanate 875 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: dog bite.
+      HPI: 45F bitten on the back of the right hand by her neighbor's dog 3 hours ago. Dog vaccinated.
+      Exam: two puncture wounds over the 3rd metacarpal with surrounding swelling; tendon function intact,
+      full range of motion, sensation intact. Wound left open given bite risk.
+      Assessment: dog bite puncture wounds of the right hand, an acute complicated injury given infection risk
+      and closeness to the extensor tendon.
+      Plan: irrigation, amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis, wound check in 48 hours.
+    truth: {problems: moderate, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [EM_UNDER], action: route_clinician}
+
+  - id: v29
+    group: risky
+    title: Note not signed, waived test also missing QW
+    clinic: Clinic A
+    payer: Medicare
+    patient: {age: 74, sex: male}
+    visit_type: established
+    billed: {em: "99213", em_modifiers: [], basis: mdm, procedures: [{code: "87880", modifiers: []}], dx: [J02.0]}
+    signed: false
+    results: [{test: strep, value: positive}]
+    rx: [amoxicillin 500 mg]
+    orders: []
+    referral_ed: false
+    note: |
+      CC: sore throat.
+      HPI: 74M with 2 days of sore throat and fever.
+      Exam: exudative pharyngitis, tender anterior nodes.
+      Tests: rapid strep ordered and reviewed, POSITIVE.
+      Assessment: strep pharyngitis.
+      Plan: amoxicillin 500 mg BID x10 days.
+    truth: {problems: low, data: minimal, risk: moderate, time_min: null, separate_em: null}
+    expected: {findings: [UNSIGNED, QW_MISSING], action: hold}
+
+  - id: v30
+    group: routine
+    title: Minor bug bite, lowest level, supported
+    clinic: Clinic B
+    payer: Commercial plan
+    patient: {age: 30, sex: female}
+    visit_type: established
+    billed: {em: "99212", em_modifiers: [], basis: mdm, procedures: [], dx: [W57.XXXA, S50.862A]}
+    signed: true
+    results: []
+    rx: []
+    orders: []
+    referral_ed: false
+    note: |
+      CC: bite on the arm.
+      HPI: 30F with an itchy bump on the left forearm since yesterday. No fever, no spreading redness.
+      Exam: small raised papule, no warmth or drainage.
+      Assessment: insect bite of the left forearm, minor.
+      Plan: over-the-counter hydrocortisone cream and an oral antihistamine as needed.
+    truth: {problems: minimal, data: minimal, risk: low, time_min: null, separate_em: null}
+    expected: {findings: [], action: release}

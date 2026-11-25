@@ -1,0 +1,7989 @@
+{
+ "resourceType": "Bundle",
+ "type": "transaction",
+ "entry": [
+  {
+   "fullUrl": "Patient/pcc-pat-v01",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v01",
+    "gender": "female",
+    "birthDate": "2002-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V01"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v01"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v01",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v01",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v01"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v01",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v01",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v01"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v01"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v01",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v01",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v01"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHNvcmUgdGhyb2F0IHgyIGRheXMuCkhQSTogMjRGIHdpdGggc29yZSB0aHJvYXQsIHBhaW5mdWwgc3dhbGxvd2luZywgc3ViamVjdGl2ZSBmZXZlci4gTm8gY291Z2guIE5vIHNpY2sgY29udGFjdHMgcmVwb3J0ZWQuCkV4YW06IFQgMTAwLjkgRi4gVG9uc2lsbGFyIGV4dWRhdGUsIHRlbmRlciBhbnRlcmlvciBjZXJ2aWNhbCBub2Rlcy4gTHVuZ3MgY2xlYXIuClRlc3RzOiByYXBpZCBzdHJlcCBhbnRpZ2VuIG9yZGVyZWQgYW5kIHJldmlld2VkLCBQT1NJVElWRS4KQXNzZXNzbWVudDogc3RyZXB0b2NvY2NhbCBwaGFyeW5naXRpcy4KUGxhbjogYW1veGljaWxsaW4gNTAwIG1nIHR3aWNlIGRhaWx5IHgxMCBkYXlzLiBTYWx0IHdhdGVyIGdhcmdsZXMsIHJldHVybiBpZiB1bmFibGUgdG8gc3dhbGxvdyBmbHVpZHMuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v01"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v01-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v01-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "78012-2",
+       "display": "Streptococcus pyogenes Ag [Presence] in Throat by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v01"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v01-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v01-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v01-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin 500 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v01"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v01-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v01",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v01",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v01"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v01"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J02.0"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v01"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87880"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v01"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v01"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v02",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v02",
+    "gender": "male",
+    "birthDate": "1959-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V02"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v02"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v02",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v02",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v02"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v02",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v02",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v02"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v02"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v02",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v02",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v02"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHNvcmUgdGhyb2F0LgpIUEk6IDY3TSB3aXRoIDMgZGF5cyBvZiBzb3JlIHRocm9hdCBhbmQgZmV2ZXIgdG8gMTAxIGF0IGhvbWUuIE5vIGNvdWdoLCBubyByYXNoLgpFeGFtOiBUIDEwMC40IEYuIEVyeXRoZW1hdG91cyBwaGFyeW54IHdpdGggZXh1ZGF0ZS4gQW50ZXJpb3IgY2VydmljYWwgYWRlbm9wYXRoeS4KVGVzdHM6IHJhcGlkIHN0cmVwIGFudGlnZW4gb3JkZXJlZCBhbmQgcmV2aWV3ZWQsIFBPU0lUSVZFLgpBc3Nlc3NtZW50OiBzdHJlcCBwaGFyeW5naXRpcy4KUGxhbjogYW1veGljaWxsaW4gNTAwIG1nIEJJRCB4MTAgZGF5cy4gRmx1aWRzLCBhY2V0YW1pbm9waGVuIGFzIG5lZWRlZC4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v02"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v02-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v02-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "78012-2",
+       "display": "Streptococcus pyogenes Ag [Presence] in Throat by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v02"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v02-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v02-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v02-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin 500 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v02"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v02-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v02",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v02",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v02"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v02"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J02.0"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v02"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87880"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v02"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v02"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v03",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v03",
+    "gender": "male",
+    "birthDate": "1995-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V03"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v03"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v03",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v03",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v03"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v03",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v03",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v03"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v03"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v03",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v03",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v03"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHNvcmUgdGhyb2F0IGFuZCBmZXZlci4KSFBJOiAzMU0sIDIgZGF5cyBvZiB0aHJvYXQgcGFpbiwgZmV2ZXIsIG5vIGNvdWdoLgpFeGFtOiBUIDEwMS4yIEYsIHRvbnNpbGxhciBzd2VsbGluZyB3aXRoIGV4dWRhdGUuClRlc3RzOiByYXBpZCBzdHJlcCBvcmRlcmVkIGFuZCByZXZpZXdlZCwgUE9TSVRJVkUuCkFzc2Vzc21lbnQ6IHBoYXJ5bmdpdGlzLCBzdHJlcCBwb3NpdGl2ZS4KUGxhbjogcGVuaWNpbGxpbiBWSyA1MDAgbWcgQklEIHgxMCBkYXlzLgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v03"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v03-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v03-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "78012-2",
+       "display": "Streptococcus pyogenes Ag [Presence] in Throat by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v03"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v03-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v03-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v03-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "penicillin VK 500 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v03"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v03-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v03",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v03",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v03"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v03"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J02.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v03"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87880"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v03"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v03"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v04",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v04",
+    "gender": "female",
+    "birthDate": "1955-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V04"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v04"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v04",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v04",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v04"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v04",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v04",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v04"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v04"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v04",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v04",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v04"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHRocm9hdCBwYWluLgpIUEk6IDcxRiB3aXRoIHNvcmUgdGhyb2F0IGZvciAyIGRheXMsIGxvdyBhcHBldGl0ZSwgbm8gY291Z2guCkV4YW06IFQgMTAwLjYgRi4gRXh1ZGF0aXZlIHRvbnNpbHMsIHRlbmRlciBub2Rlcy4KVGVzdHM6IHJhcGlkIHN0cmVwIG9yZGVyZWQgYW5kIHJldmlld2VkLCBQT1NJVElWRS4KQXNzZXNzbWVudDogc3RyZXB0b2NvY2NhbCBwaGFyeW5naXRpcy4KUGxhbjogYW1veGljaWxsaW4gNTAwIG1nIEJJRCB4MTAgZGF5cywgaHlkcmF0aW9uLgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v04"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v04-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v04-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "78012-2",
+       "display": "Streptococcus pyogenes Ag [Presence] in Throat by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v04"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v04-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v04-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v04-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin 500 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v04"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v04-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v04",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v04",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v04"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v04"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J02.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v04"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87880"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v04"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v04"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v05",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v05",
+    "gender": "female",
+    "birthDate": "1997-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V05"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v05"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v05",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v05",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v05"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v05"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v05",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v05",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v05"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v05"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v05"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v05",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v05",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v05"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v05"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGNvbmdlc3Rpb24gYW5kIGNvdWdoIHg0IGRheXMuCkhQSTogMjlGIHdpdGggcnVubnkgbm9zZSwgbWlsZCBkcnkgY291Z2gsIG5vIGZldmVyLCBubyBzaG9ydG5lc3Mgb2YgYnJlYXRoLgpFeGFtOiBhZmVicmlsZSwgY2xlYXIgcmhpbm9ycmhlYSwgbHVuZ3MgY2xlYXIsIG5vcm1hbCB3b3JrIG9mIGJyZWF0aGluZy4KQXNzZXNzbWVudDogdmlyYWwgdXBwZXIgcmVzcGlyYXRvcnkgaW5mZWN0aW9uLgpQbGFuOiBzdXBwb3J0aXZlIGNhcmUsIG92ZXItdGhlLWNvdW50ZXIgZ3VhaWZlbmVzaW4gYW5kIHNhbGluZSBzcHJheSwgcmV0dXJuIGlmIGZldmVyIG9yIHN5bXB0b21zIHBhc3QgMTAgZGF5cy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v05"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v05",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v05",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v05"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v05"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J06.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v05"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v05"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v06",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v06",
+    "gender": "female",
+    "birthDate": "1991-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V06"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v06"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v06",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v06",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v06"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v06"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v06",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v06",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v06"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v06"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v06"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v06",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v06",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v06"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v06"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGJ1cm5pbmcgd2l0aCB1cmluYXRpb24uCkhQSTogMzVGLCAyIGRheXMgb2YgZHlzdXJpYSBhbmQgZnJlcXVlbmN5LiBObyBmZXZlciwgbm8gZmxhbmsgcGFpbiwgbm90IHByZWduYW50LgpFeGFtOiBhZmVicmlsZSwgbm8gQ1ZBIHRlbmRlcm5lc3MsIG1pbGQgc3VwcmFwdWJpYyB0ZW5kZXJuZXNzLgpUZXN0czogdXJpbmUgZGlwc3RpY2sgb3JkZXJlZCBhbmQgcmV2aWV3ZWQsIHBvc2l0aXZlIGxldWtvY3l0ZXMgYW5kIG5pdHJpdGVzLgpBc3Nlc3NtZW50OiB1bmNvbXBsaWNhdGVkIHVyaW5hcnkgdHJhY3QgaW5mZWN0aW9uLgpQbGFuOiBuaXRyb2Z1cmFudG9pbiAxMDAgbWcgQklEIHg1IGRheXMsIGZsdWlkcywgcmV0dXJuIGlmIGZldmVyIG9yIGJhY2sgcGFpbi4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v06"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v06-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v06-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "nitrofurantoin 100 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v06"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v06"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v06-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v06",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v06",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v06"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v06"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "N39.0"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v06"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "81002"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v06"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v06"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v07",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v07",
+    "gender": "male",
+    "birthDate": "1974-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V07"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v07"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v07",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v07",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v07"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v07",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v07",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v07"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v07"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v07",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v07",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v07"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGNvdWdoLCBmZXZlciwgY2hpbGxzLgpIUEk6IDUyTSB3aXRoIDUgZGF5cyBvZiBwcm9kdWN0aXZlIGNvdWdoLCBmZXZlciB0byAxMDIuNCwgY2hpbGxzLCBib2R5IGFjaGVzIGFuZCBmYXRpZ3VlLiBTZWVuIGF0IGFuIG91dHNpZGUKZW1lcmdlbmN5IGRlcGFydG1lbnQgMyB3ZWVrcyBhZ28gZm9yIGNoZXN0IHdhbGwgcGFpbjsgSSByZXZpZXdlZCB0aGF0IHZpc2l0J3MgZGlzY2hhcmdlIHN1bW1hcnkgdG9kYXkuCkV4YW06IFQgMTAyLjEgRiwgSFIgMTA0LCBTcE8yIDk0JSBvbiByb29tIGFpci4gQ3JhY2tsZXMgcmlnaHQgbG93ZXIgbG9iZS4KT3JkZXJzOiBjaGVzdCB4LXJheSAyIHZpZXdzIGFuZCBDQkMgb3JkZXJlZDsgcmVzdWx0cyByZXZpZXdlZCB3aXRoIHRoZSBwYXRpZW50LgpBc3Nlc3NtZW50OiBjb21tdW5pdHktYWNxdWlyZWQgcG5ldW1vbmlhLCBhY3V0ZSBpbGxuZXNzIHdpdGggc3lzdGVtaWMgc3ltcHRvbXMuClBsYW46IGF6aXRocm9teWNpbiA1MDAgbWcgZGF5IDEgdGhlbiAyNTAgbWcgZGF5cyAyLTUuIFN0cmljdCByZXR1cm4gcHJlY2F1dGlvbnMgZm9yIHdvcnNlbmluZyBicmVhdGhpbmcuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v07"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v07-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v07-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "azithromycin 250 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v07"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v07-1"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v07-1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v07-1",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "chest x-ray 2 views"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v07"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v07-1"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v07-2",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v07-2",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "CBC"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v07"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v07-2"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v07",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v07",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v07"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v07"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J18.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v07"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v07"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v08",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v08",
+    "gender": "female",
+    "birthDate": "1985-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V08"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v08"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v08",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v08",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v08"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v08",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v08",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v08"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v08"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v08",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v08",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v08"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHdoZWV6aW5nLgpIUEk6IDQxRiB3aXRoIGtub3duIG1vZGVyYXRlIHBlcnNpc3RlbnQgYXN0aG1hLCAzIGRheXMgb2Ygd29yc2VuaW5nIHdoZWV6ZSBhbmQgbmlnaHQgY291Z2ggYWZ0ZXIgYSBjb2xkLAp1c2luZyBhbGJ1dGVyb2wgZXZlcnkgMyBob3Vycy4KRXhhbTogZXhwaXJhdG9yeSB3aGVlemUgYmlsYXRlcmFsbHksIHNwZWFrcyBmdWxsIHNlbnRlbmNlcywgU3BPMiA5NiUuCkFzc2Vzc21lbnQ6IG1vZGVyYXRlIHBlcnNpc3RlbnQgYXN0aG1hIHdpdGggYWN1dGUgZXhhY2VyYmF0aW9uLgpQbGFuOiBwcmVkbmlzb25lIDQwIG1nIGRhaWx5IHg1IGRheXMsIGFsYnV0ZXJvbCByZWZpbGwsIGFzdGhtYSBhY3Rpb24gcGxhbiByZXZpZXdlZCwgZm9sbG93IHVwIHdpdGggUENQIGluIDEgd2Vlay4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v08"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v08-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v08-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "prednisone 40 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v08"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v08-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v08-2",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v08-2",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "albuterol inhaler"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v08"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v08-2"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v08",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v08",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v08"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v08"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J45.41"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v08"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v08"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v09",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v09",
+    "gender": "male",
+    "birthDate": "1962-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V09"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v09"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v09",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v09",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v09"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v09"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v09",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v09",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v09"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v09"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v09"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v09",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v09",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v09"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v09"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGNoZXN0IHByZXNzdXJlLgpIUEk6IDY0TSB3aXRoIDEgaG91ciBvZiBzdWJzdGVybmFsIGNoZXN0IHByZXNzdXJlIHJhZGlhdGluZyB0byB0aGUgbGVmdCBhcm0gd2l0aCBzd2VhdGluZy4gSGlzdG9yeSBvZiBoeXBlcnRlbnNpb24gYW5kIHNtb2tpbmcuCkV4YW06IGRpYXBob3JldGljLCBCUCAxNjgvOTYsIEhSIDk4LgpFQ0c6IHBlcmZvcm1lZCBpbiBjbGluaWMsIG5vbnNwZWNpZmljIFNUIGNoYW5nZXMuCkFzc2Vzc21lbnQ6IGNoZXN0IHBhaW4sIHBvc3NpYmxlIGFjdXRlIGNvcm9uYXJ5IHN5bmRyb21lLCBhIHRocmVhdCB0byBib2RpbHkgZnVuY3Rpb24uClBsYW46IGFzcGlyaW4gZ2l2ZW4sIEVNUyBjYWxsZWQsIHRyYW5zZmVycmVkIHRvIHRoZSBlbWVyZ2VuY3kgZGVwYXJ0bWVudCBmb3IgYWRtaXNzaW9uIGV2YWx1YXRpb24uCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v09"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-ref-v09",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-ref-v09",
+    "status": "active",
+    "intent": "order",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://snomed.info/sct",
+        "code": "3457005",
+        "display": "Patient referral"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "text": "Emergency department referral"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v09"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v09"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-ref-v09"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v09",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v09",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v09"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v09"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "R07.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99215"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v09"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "93000"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v09"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v09"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v10",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v10",
+    "gender": "female",
+    "birthDate": "1988-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V10"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v10"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v10",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v10",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v10"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v10"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v10",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v10",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v10"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v10"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v10"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v10",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v10",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v10"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v10"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGhlYWRhY2hlLgpIUEk6IDM4RiB3aXRoIGJhbmQtbGlrZSBoZWFkYWNoZSBzaW5jZSB0aGlzIG1vcm5pbmcgYWZ0ZXIgYSBsb25nIHdvcmsgd2Vlay4gTm8gZmV2ZXIsIG5vIHZpc2lvbiBjaGFuZ2UsCm5vIHdlYWtuZXNzLCBubyB3b3JzdC1oZWFkYWNoZS1vZi1saWZlIGZlYXR1cmVzLiBTaW1pbGFyIGhlYWRhY2hlcyBpbiB0aGUgcGFzdC4KRXhhbTogbm9ybWFsIG5ldXJvIGV4YW0sIG1pbGQgdHJhcGV6aXVzIHRlbmRlcm5lc3MuCkFzc2Vzc21lbnQ6IHRlbnNpb24tdHlwZSBoZWFkYWNoZS4KUGxhbjogaWJ1cHJvZmVuIG92ZXIgdGhlIGNvdW50ZXIsIGh5ZHJhdGlvbiwgc2xlZXAsIHJldHVybiBpZiBuZXcgbmV1cm9sb2dpYyBzeW1wdG9tcy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v10"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v10",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v10",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v10"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v10"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "G44.209"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99215"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v10"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v10"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v11",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v11",
+    "gender": "male",
+    "birthDate": "1980-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V11"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v11"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v11",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v11",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v11"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v11"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v11",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v11",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v11"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v11"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v11"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v11",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v11",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v11"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v11"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGxvdyBiYWNrIHBhaW4uCkhQSTogNDZNIHdpdGggbG93IGJhY2sgcGFpbiBhZnRlciBsaWZ0aW5nIGJveGVzIHllc3RlcmRheSwgbm8gbGVnIHdlYWtuZXNzLCBubyBudW1ibmVzcywgbm8gYmxhZGRlciBjaGFuZ2VzLgpFeGFtOiBwYXJhc3BpbmFsIHRlbmRlcm5lc3MsIG5lZ2F0aXZlIHN0cmFpZ2h0IGxlZyByYWlzZSwgbm9ybWFsIHN0cmVuZ3RoLgpBc3Nlc3NtZW50OiBhY3V0ZSBsb3cgYmFjayBzdHJhaW4uClBsYW46IGhlYXQsIG92ZXItdGhlLWNvdW50ZXIgbmFwcm94ZW4sIGFjdGl2aXR5IGFzIHRvbGVyYXRlZCwgaG9tZSBleGVyY2lzZXMgZ2l2ZW4uClRvdGFsIHRpbWUgb24gdGhlIGRhdGUgb2YgdGhlIGVuY291bnRlcjogMjIgbWludXRlcy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v11"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v11",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v11",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v11"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v11"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "time"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "M54.50"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v11"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v11"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v12",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v12",
+    "gender": "female",
+    "birthDate": "1968-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V12"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v12"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v12",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v12",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v12"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v12"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v12",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v12",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v12"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v12"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v12"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v12",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v12",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v12"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v12"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGRpenppbmVzcy4KSFBJOiA1OEYgd2l0aCByb29tLXNwaW5uaW5nIGRpenppbmVzcyB3aGVuIHJvbGxpbmcgb3ZlciBpbiBiZWQgZm9yIDIgZGF5cy4gTm8gaGVhcmluZyBsb3NzLCBubyB3ZWFrbmVzcy4KRXhhbTogcG9zaXRpdmUgRGl4LUhhbGxwaWtlIG9uIHRoZSByaWdodCwgbm9ybWFsIG5ldXJvIGV4YW0uCkFzc2Vzc21lbnQ6IGRpenppbmVzcywgbGlrZWx5IGJlbmlnbiBwb3NpdGlvbmFsIHZlcnRpZ28uClBsYW46IGNhbmFsaXRoIHJlcG9zaXRpb25pbmcgdGF1Z2h0LCBtZWNsaXppbmUgMjUgbWcgYXMgbmVlZGVkLCBmYWxsIHByZWNhdXRpb25zLCBjb3Vuc2VsaW5nIG9uIHJlZCBmbGFncy4KVG90YWwgdGltZSBvbiB0aGUgZGF0ZSBvZiB0aGUgZW5jb3VudGVyOiAzNSBtaW51dGVzLCBpbmNsdWRpbmcgY291bnNlbGluZyBhbmQgZG9jdW1lbnRhdGlvbi4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v12"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v12-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v12-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "meclizine 25 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v12"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v12"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v12-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v12",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v12",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v12"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v12"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "time"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "R42"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v12"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v12"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v13",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v13",
+    "gender": "male",
+    "birthDate": "1999-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V13"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v13"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v13",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v13",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v13"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v13"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v13",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v13",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v13"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "new patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v13"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v13"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v13",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v13",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v13"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v13"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGN1dCBoYW5kLgpIUEk6IDI3TSBjdXQgaGlzIHJpZ2h0IHBhbG0gb24gYSBraXRjaGVuIGtuaWZlIDEgaG91ciBhZ28uIFRldGFudXMgdXAgdG8gZGF0ZS4gTm8gbnVtYm5lc3MuCkV4YW06IDMuMCBjbSBsaW5lYXIgbGFjZXJhdGlvbiBvZiB0aGUgcmlnaHQgcGFsbSwgbm8gdGVuZG9uIGV4cG9zdXJlLCBmdWxsIHN0cmVuZ3RoIGFuZCBzZW5zYXRpb24uClByb2NlZHVyZTogaXJyaWdhdGVkLCBsaWRvY2FpbmUgMSUgbG9jYWwsIHNpbXBsZSByZXBhaXIgd2l0aCA1IHN1dHVyZXMsIDMuMCBjbS4KQXNzZXNzbWVudDogbGFjZXJhdGlvbiBvZiB0aGUgcmlnaHQgaGFuZC4KUGxhbjogd291bmQgY2FyZSwgc3V0dXJlIHJlbW92YWwgaW4gMTAtMTQgZGF5cy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v13"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v13",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v13",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v13"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v13"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S61.411A"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99203"
+        }
+       ]
+      },
+      "modifier": [
+       {
+        "coding": [
+         {
+          "system": "http://www.ama-assn.org/go/cpt",
+          "code": "25"
+         }
+        ]
+       }
+      ],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v13"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "12002"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v13"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v13"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v14",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v14",
+    "gender": "female",
+    "birthDate": "1993-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V14"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v14"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v14",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v14",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v14"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v14"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v14",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v14",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v14"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v14"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v14"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v14",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v14",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v14"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v14"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGN1dCBmb3JlYXJtOyBhbHNvIHNpbnVzIHBhaW4uCkhQSTogMzNGIGN1dCBoZXIgbGVmdCBmb3JlYXJtIG9uIGEgc2hlbGYgZWRnZSB0b2RheS4gU2VwYXJhdGVseSwgMTIgZGF5cyBvZiBmYWNpYWwgcHJlc3N1cmUsIHB1cnVsZW50Cm5hc2FsIGRpc2NoYXJnZSBhbmQgd29yc2VuaW5nIGNvbmdlc3Rpb24gYWZ0ZXIgaW5pdGlhbCBpbXByb3ZlbWVudC4KRXhhbTogMi4wIGNtIHN1cGVyZmljaWFsIGxhY2VyYXRpb24gbGVmdCBmb3JlYXJtLiBNYXhpbGxhcnkgc2ludXMgdGVuZGVybmVzcywgcHVydWxlbnQgZHJhaW5hZ2UuClByb2NlZHVyZTogc2ltcGxlIHJlcGFpciBvZiAyLjAgY20gbGFjZXJhdGlvbiB3aXRoIDMgc3V0dXJlcy4KQXNzZXNzbWVudDogMSkgZm9yZWFybSBsYWNlcmF0aW9uLCByZXBhaXJlZC4gMikgYWN1dGUgYmFjdGVyaWFsIHNpbnVzaXRpcy4KUGxhbjogd291bmQgY2FyZSwgc3V0dXJlIHJlbW92YWwgaW4gNy0xMCBkYXlzLiBBbW94aWNpbGxpbi1jbGF2dWxhbmF0ZSA4NzUgbWcgQklEIHg3IGRheXMgZm9yIHNpbnVzaXRpcy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v14"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v14-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v14-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin-clavulanate 875 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v14"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v14"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v14-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v14",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v14",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v14"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v14"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S51.811A"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J01.90"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [
+       {
+        "coding": [
+         {
+          "system": "http://www.ama-assn.org/go/cpt",
+          "code": "25"
+         }
+        ]
+       }
+      ],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v14"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "12001"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v14"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v14"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v15",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v15",
+    "gender": "male",
+    "birthDate": "1982-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V15"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v15"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v15",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v15",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v15"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v15"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v15",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v15",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v15"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v15"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v15"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v15",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v15",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v15"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v15"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGN1dCB0aHVtYjsgYWxzbyByZWQgZXllLgpIUEk6IDQ0TSBjdXQgaGlzIGxlZnQgdGh1bWIgb24gc2hlZXQgbWV0YWwgYXQgaG9tZS4gU2VwYXJhdGVseSwgcmlnaHQgZXllIHJlZG5lc3Mgd2l0aCBjcnVzdGluZyBzaW5jZSB5ZXN0ZXJkYXkuCkV4YW06IDEuNSBjbSBzdXBlcmZpY2lhbCBsYWNlcmF0aW9uIGxlZnQgdGh1bWIuIFJpZ2h0IGNvbmp1bmN0aXZhbCBpbmplY3Rpb24gd2l0aCBtdWNvcHVydWxlbnQgZGlzY2hhcmdlLCBub3JtYWwgdmlzaW9uLgpQcm9jZWR1cmU6IHNpbXBsZSByZXBhaXIgd2l0aCAyIHN1dHVyZXMuCkFzc2Vzc21lbnQ6IDEpIHRodW1iIGxhY2VyYXRpb24sIHJlcGFpcmVkLiAyKSBhY3V0ZSBiYWN0ZXJpYWwgY29uanVuY3Rpdml0aXMsIHJpZ2h0IGV5ZS4KUGxhbjogd291bmQgY2FyZSwgc3V0dXJlIHJlbW92YWwgaW4gMTAgZGF5cy4gUG9seW15eGluLXRyaW1ldGhvcHJpbSBkcm9wcyA0IHRpbWVzIGRhaWx5IHg3IGRheXMuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v15"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v15-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v15-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "polymyxin-trimethoprim eye drops"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v15"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v15"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v15-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v15",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v15",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v15"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v15"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S61.012A"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "H10.31"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v15"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "12001"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v15"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v15"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v16",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v16",
+    "gender": "female",
+    "birthDate": "2007-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V16"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v16"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v16",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v16",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v16"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v16"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v16",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v16",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v16"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v16"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v16"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v16",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v16",
+    "status": "current",
+    "docStatus": "preliminary",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v16"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v16"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGVhciBwYWluLgpIUEk6IDE5RiB3aXRoIGxlZnQgZWFyIHBhaW4geDIgZGF5cyBhZnRlciBhIGNvbGQuCkV4YW06IGJ1bGdpbmcgZXJ5dGhlbWF0b3VzIGxlZnQgdHltcGFuaWMgbWVtYnJhbmUuCkFzc2Vzc21lbnQ6IGFjdXRlIG90aXRpcyBtZWRpYSwgbGVmdC4KUGxhbjogYW1veGljaWxsaW4gODc1IG1nIEJJRCB4MTAgZGF5cy4K"
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v16"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v16-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v16-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin 875 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v16"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v16"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v16-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v16",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v16",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v16"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v16"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "H66.91"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v16"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v16"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v17",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v17",
+    "gender": "male",
+    "birthDate": "1976-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V17"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v17"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v17",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v17",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v17"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v17"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v17",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v17",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v17"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v17"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v17"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v17",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v17",
+    "status": "current",
+    "docStatus": "preliminary",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v17"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v17"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHNvcmUgdGhyb2F0IGFuZCBjb25nZXN0aW9uLgpIUEk6IDUwTSB3aXRoIDMgZGF5cyBvZiBzY3JhdGNoeSB0aHJvYXQgYW5kIG5hc2FsIGNvbmdlc3Rpb24sIG5vIGZldmVyLgpFeGFtOiBtaWxkIHBoYXJ5bmdlYWwgZXJ5dGhlbWEsIG5vIGV4dWRhdGUsIGx1bmdzIGNsZWFyLgpBc3Nlc3NtZW50OiB2aXJhbCB1cHBlciByZXNwaXJhdG9yeSBpbmZlY3Rpb24uClBsYW46IG92ZXItdGhlLWNvdW50ZXIgbG96ZW5nZXMgYW5kIGZsdWlkcy4K"
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v17"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v17",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v17",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v17"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v17"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J06.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v17"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v17"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v18",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v18",
+    "gender": "male",
+    "birthDate": "2004-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V18"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v18"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v18",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v18",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v18"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v18"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v18",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v18",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v18"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v18"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v18"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v18",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v18",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v18"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v18"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHR3aXN0ZWQgYW5rbGU7IGFsc28gYSBjb2xkLgpIUEk6IDIyTSByb2xsZWQgaGlzIHJpZ2h0IGFua2xlIHBsYXlpbmcgYmFza2V0YmFsbCB0b2RheSwgY2FuIGJlYXIgd2VpZ2h0IHdpdGggcGFpbi4gQWxzbyAzIGRheXMgb2YgcnVubnkgbm9zZS4KRXhhbTogbGF0ZXJhbCByaWdodCBhbmtsZSBzd2VsbGluZyBhbmQgdGVuZGVybmVzcyBvdmVyIHRoZSBBVEZMLCBubyBib255IHRlbmRlcm5lc3MgYXQgdGhlIG1hbGxlb2x1cyB0aXAuClgtcmF5OiByaWdodCBhbmtsZSAzIHZpZXdzIG9yZGVyZWQgYW5kIHJldmlld2VkLCBubyBmcmFjdHVyZS4KQXNzZXNzbWVudDogMSkgcmlnaHQgYW5rbGUgc3ByYWluLiAyKSB2aXJhbCBVUkkuClBsYW46IGFua2xlIGJyYWNlLCBSSUNFLCBpYnVwcm9mZW4gb3ZlciB0aGUgY291bnRlciwgc3VwcG9ydGl2ZSBjYXJlIGZvciBVUkkuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v18"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v18-1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v18-1",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "ankle x-ray 3 views"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v18"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v18"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v18-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v18",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v18",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v18"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v18"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J06.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v18"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "73610"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v18"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v18"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v19",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v19",
+    "gender": "female",
+    "birthDate": "2000-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V19"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v19"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v19",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v19",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v19"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v19",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v19",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v19"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "new patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v19"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v19",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v19",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v19"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGFiZG9taW5hbCBwYWluLgpIUEk6IDI2RiB3aXRoIDEyIGhvdXJzIG9mIHBhaW4gdGhhdCBzdGFydGVkIG5lYXIgdGhlIG5hdmVsIGFuZCBtb3ZlZCB0byB0aGUgcmlnaHQgbG93ZXIgYWJkb21lbiwgbmF1c2VhLCBubyB2b21pdGluZy4KSSByZXZpZXdlZCBoZXIgb3V0c2lkZSB1cmdlbnQgY2FyZSBub3RlIGZyb20gbGFzdCB3ZWVrLCB3aGljaCBkb2N1bWVudGVkIGEgbmVnYXRpdmUgcHJlZ25hbmN5IHRlc3QuCkV4YW06IFQgOTkuOSBGLCBSTFEgdGVuZGVybmVzcyB3aXRoIGd1YXJkaW5nLCBwb3NpdGl2ZSBSb3ZzaW5nIHNpZ24uCk9yZGVyczogQ0JDIGFuZCB1cmluYWx5c2lzIG9yZGVyZWQgYW5kIHJldmlld2VkLCBXQkMgMTMuOC4KQXNzZXNzbWVudDogcmlnaHQgbG93ZXIgcXVhZHJhbnQgcGFpbiwgdW5kaWFnbm9zZWQgbmV3IHByb2JsZW0gd2l0aCB1bmNlcnRhaW4gcHJvZ25vc2lzLCBhcHBlbmRpY2l0aXMgbm90IGV4Y2x1ZGVkLgpQbGFuOiBzZW50IHRvIHRoZSBlbWVyZ2VuY3kgZGVwYXJ0bWVudCBmb3IgQ1QgYW5kIHN1cmdpY2FsIGV2YWx1YXRpb247IGRlY2lzaW9uIG1hZGUgdG8gZXNjYWxhdGUgY2FyZS4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v19"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v19-1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v19-1",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "CBC"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v19"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v19-1"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v19-2",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v19-2",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "urinalysis"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v19"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v19-2"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-ref-v19",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-ref-v19",
+    "status": "active",
+    "intent": "order",
+    "category": [
+     {
+      "coding": [
+       {
+        "system": "http://snomed.info/sct",
+        "code": "3457005",
+        "display": "Patient referral"
+       }
+      ]
+     }
+    ],
+    "code": {
+     "text": "Emergency department referral"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v19"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-ref-v19"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v19",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v19",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v19"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v19"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "R10.31"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99204"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v19"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v19"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v20",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v20",
+    "gender": "male",
+    "birthDate": "2014-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V20"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v20"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v20",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v20",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v20"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v20"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v20",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v20",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v20"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "new patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v20"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v20"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v20",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v20",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v20"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v20"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGJ1ZyBiaXRlLgpIUEk6IDEyTSB3aXRoIGFuIGl0Y2h5IGJ1bXAgb24gdGhlIGxlZnQgc2hpbiBhZnRlciBjYW1waW5nLiBObyBmZXZlciwgbm8gc3ByZWFkaW5nIHJlZG5lc3MuCkV4YW06IDEgY20gcmFpc2VkIHBhcHVsZSwgbm8gd2FybXRoLCBubyBkcmFpbmFnZS4KQXNzZXNzbWVudDogaW5zZWN0IGJpdGUgb2YgdGhlIGxlZnQgbG93ZXIgbGVnLCBtaW5vci4KUGxhbjogb3Zlci10aGUtY291bnRlciBoeWRyb2NvcnRpc29uZSBjcmVhbSwgY29vbCBjb21wcmVzcywgcmV0dXJuIGlmIHNwcmVhZGluZyByZWRuZXNzLgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v20"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v20",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v20",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v20"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v20"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "W57.XXXA"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S80.861A"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99204"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v20"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v20"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v21",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v21",
+    "gender": "female",
+    "birthDate": "2018-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V21"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v21"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v21",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v21",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v21"
+    },
+    "payor": [
+     {
+      "display": "Medicaid"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v21"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v21",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v21",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v21"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v21"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v21"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v21",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v21",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v21"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v21"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHJlZCBleWUuCkhQSTogOEYgd2l0aCBsZWZ0IGV5ZSByZWRuZXNzIGFuZCBtb3JuaW5nIGNydXN0aW5nIHgxIGRheS4gTW90aGVyIHByb3ZpZGVzIHRoZSBoaXN0b3J5LgpFeGFtOiBsZWZ0IGNvbmp1bmN0aXZhbCBpbmplY3Rpb24gd2l0aCBtdWNvcHVydWxlbnQgZGlzY2hhcmdlLCBub3JtYWwgYWN1aXR5LgpBc3Nlc3NtZW50OiBhY3V0ZSBiYWN0ZXJpYWwgY29uanVuY3Rpdml0aXMsIGxlZnQgZXllLgpQbGFuOiBwb2x5bXl4aW4tdHJpbWV0aG9wcmltIGRyb3BzIDQgdGltZXMgZGFpbHkgeDcgZGF5cywgc2Nob29sIG5vdGUgZ2l2ZW4uCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v21"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v21-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v21-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "polymyxin-trimethoprim eye drops"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v21"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v21"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v21-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v21",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v21",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v21"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v21"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "H10.32"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v21"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v21"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v22",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v22",
+    "gender": "male",
+    "birthDate": "1990-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V22"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v22"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v22",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v22",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v22"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v22"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v22",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v22",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v22"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v22"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v22"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v22",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v22",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v22"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v22"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGl0Y2h5IHJhc2guCkhQSTogMzZNIHdpdGggYW4gaXRjaHkgbGluZWFyIHJhc2ggb24gYm90aCBmb3JlYXJtcyAyIGRheXMgYWZ0ZXIgY2xlYXJpbmcgYnJ1c2guCkV4YW06IGxpbmVhciB2ZXNpY3VsYXIgc3RyZWFrcyBvbiBib3RoIGZvcmVhcm1zLCBubyBmYWNpYWwgaW52b2x2ZW1lbnQsIG5vIHNpZ25zIG9mIGluZmVjdGlvbi4KQXNzZXNzbWVudDogYWxsZXJnaWMgY29udGFjdCBkZXJtYXRpdGlzIGR1ZSB0byBwbGFudHMuClBsYW46IHRyaWFtY2lub2xvbmUgMC4xJSBjcmVhbSB0d2ljZSBkYWlseSB4MTQgZGF5cywgb3JhbCBhbnRpaGlzdGFtaW5lIG92ZXIgdGhlIGNvdW50ZXIuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v22"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v22-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v22-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "triamcinolone 0.1% cream"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v22"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v22"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v22-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v22",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v22",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v22"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v22"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "L23.7"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99212"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v22"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v22"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v23",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v23",
+    "gender": "female",
+    "birthDate": "1957-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V23"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v23"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v23",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v23",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v23"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v23"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v23",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v23",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v23"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v23"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v23"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v23",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v23",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v23"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v23"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGNvdWdoIGFuZCBjb25nZXN0aW9uLgpIUEk6IDY5RiB3aXRoIDIgZGF5cyBvZiBjb3VnaCwgY29uZ2VzdGlvbiBhbmQgc29yZSB0aHJvYXQuIE5vIGZldmVyLCBubyBzaG9ydG5lc3Mgb2YgYnJlYXRoLgpFeGFtOiBhZmVicmlsZSwgU3BPMiA5NyUsIGx1bmdzIGNsZWFyLgpUZXN0czogQ09WSUQtMTkgYW50aWdlbiBvcmRlcmVkIGFuZCByZXZpZXdlZCwgbmVnYXRpdmUuCkFzc2Vzc21lbnQ6IHZpcmFsIHVwcGVyIHJlc3BpcmF0b3J5IGluZmVjdGlvbi4KUGxhbjogb3Zlci10aGUtY291bnRlciBkZXh0cm9tZXRob3JwaGFuLCBmbHVpZHMsIHJlc3QsIHJldHVybiBpZiBicmVhdGhpbmcgd29yc2Vucy4K"
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v23"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v23-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v23-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "94558-4",
+       "display": "SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory system specimen by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v23"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v23"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "260385009",
+       "display": "Negative"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v23-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v23",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v23",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v23"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v23"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J06.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v23"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87811"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v23"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v23"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v24",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v24",
+    "gender": "male",
+    "birthDate": "1956-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V24"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v24"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v24",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v24",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v24"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v24",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v24",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v24"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v24"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v24",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v24",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v24"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGZldmVyIGFuZCBib2R5IGFjaGVzLgpIUEk6IDcwTSB3aXRoIHN1ZGRlbiBmZXZlciB0byAxMDEuOCwgY2hpbGxzLCBteWFsZ2lhcywgaGVhZGFjaGUgYW5kIGRyeSBjb3VnaCBzaW5jZSB5ZXN0ZXJkYXkuCkV4YW06IFQgMTAxLjYgRiwgSFIgMTAyLCBTcE8yIDk1JSwgbHVuZ3MgY2xlYXIuClRlc3RzOiBpbmZsdWVuemEgYW50aWdlbiBhbmQgQ09WSUQtMTkgYW50aWdlbiBvcmRlcmVkIGFuZCByZXZpZXdlZDsgaW5mbHVlbnphIEEgUE9TSVRJVkUsIENPVklEIG5lZ2F0aXZlLgpBc3Nlc3NtZW50OiBpbmZsdWVuemEgQSwgYWN1dGUgaWxsbmVzcyB3aXRoIHN5c3RlbWljIHN5bXB0b21zLCBoaWdoZXIgcmlzayBkdWUgdG8gYWdlLgpQbGFuOiBvc2VsdGFtaXZpciA3NSBtZyBCSUQgeDUgZGF5cywgZmx1aWRzLCByZXR1cm4gcHJlY2F1dGlvbnMgZm9yIGJyZWF0aGluZyBkaWZmaWN1bHR5Lgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v24"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v24-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v24-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "80382-5",
+       "display": "Influenza virus A Ag [Presence] in Upper respiratory specimen by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v24"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v24-1"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v24-2",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v24-2",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "94558-4",
+       "display": "SARS-CoV-2 (COVID-19) Ag [Presence] in Respiratory system specimen by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v24"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "260385009",
+       "display": "Negative"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v24-2"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v24-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v24-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "oseltamivir 75 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v24"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v24-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v24",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v24",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v24"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v24"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J10.1"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v24"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87804"
+        }
+       ]
+      },
+      "modifier": [
+       {
+        "coding": [
+         {
+          "system": "http://www.ama-assn.org/go/cpt",
+          "code": "QW"
+         }
+        ]
+       }
+      ],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v24"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 3,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87811"
+        }
+       ]
+      },
+      "modifier": [
+       {
+        "coding": [
+         {
+          "system": "http://www.ama-assn.org/go/cpt",
+          "code": "QW"
+         }
+        ]
+       }
+      ],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v24"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v24"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v25",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v25",
+    "gender": "female",
+    "birthDate": "1998-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V25"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v25"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v25",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v25",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v25"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v25",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v25",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v25"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v25"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v25",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v25",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v25"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGNvdWdoIGFuZCBjb25nZXN0aW9uLgpIUEk6IDI4RiB3aXRoIDEgZGF5IG9mIG1pbGQgY291Z2gsIGNvbmdlc3Rpb24gYW5kIHNjcmF0Y2h5IHRocm9hdC4gQWZlYnJpbGUgYXQgaG9tZS4gUm9vbW1hdGUgaGFzIHRoZSBmbHUuCkV4YW06IGFmZWJyaWxlLCBtaWxkIG5hc2FsIGNvbmdlc3Rpb24sIGx1bmdzIGNsZWFyLgpUZXN0czogaW5mbHVlbnphIGFudGlnZW4gb3JkZXJlZCBhbmQgcmV2aWV3ZWQsIGluZmx1ZW56YSBBIFBPU0lUSVZFLgpBc3Nlc3NtZW50OiBpbmZsdWVuemEgQSwgbWlsZC4KUGxhbjogb3NlbHRhbWl2aXIgNzUgbWcgQklEIHg1IGRheXMgZ2l2ZW4ga25vd24gZXhwb3N1cmUgYW5kIG9uc2V0IHdpdGhpbiA0OCBob3VycywgZmx1aWRzLgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v25"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v25-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v25-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "80382-5",
+       "display": "Influenza virus A Ag [Presence] in Upper respiratory specimen by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v25"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v25-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v25-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v25-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "oseltamivir 75 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v25"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v25-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v25",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v25",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v25"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v25"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J11.1"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v25"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87804"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v25"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v25"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v26",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v26",
+    "gender": "male",
+    "birthDate": "1987-10-04",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V26"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v26"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v26",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v26",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v26"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v26",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v26",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v26"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v26"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v26",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v26",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v26"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGJhY2sgcGFpbi4KSFBJOiAzOU0gc3RyYWluZWQgaGlzIGxvd2VyIGJhY2sgbW92aW5nIGZ1cm5pdHVyZSB5ZXN0ZXJkYXkuIE5vIHJhZGlhdGlvbiwgbm8gbnVtYm5lc3MsIG5vIGJsYWRkZXIgb3IgYm93ZWwgY2hhbmdlcy4KRXhhbTogbHVtYmFyIHBhcmFzcGluYWwgc3Bhc20gYW5kIHRlbmRlcm5lc3MsIG5lZ2F0aXZlIHN0cmFpZ2h0IGxlZyByYWlzZSwgbm9ybWFsIHN0cmVuZ3RoIGFuZCByZWZsZXhlcy4KQXNzZXNzbWVudDogc3RyYWluIG9mIGxvd2VyIGJhY2sgbXVzY2xlcywgYWN1dGUsIHVuY29tcGxpY2F0ZWQuClBsYW46IGN5Y2xvYmVuemFwcmluZSAxMCBtZyBhdCBuaWdodCB4NyBkYXlzLCBpYnVwcm9mZW4gODAwIG1nIFRJRCB3aXRoIGZvb2QgeDcgZGF5cywgaGVhdCwgZ2VudGxlIGFjdGl2aXR5Lgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v26"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v26-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v26-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "cyclobenzaprine 10 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v26"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v26-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v26-2",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v26-2",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "ibuprofen 800 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v26"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v26-2"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v26",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v26",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v26"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v26"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S39.012A"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v26"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v26"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v27",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v27",
+    "gender": "female",
+    "birthDate": "1965-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V27"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v27"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v27",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v27",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v27"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v27",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v27",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v27"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v27"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v27",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v27",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v27"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGhlYWRhY2hlLCBoaWdoIGhvbWUgYmxvb2QgcHJlc3N1cmUgcmVhZGluZ3MuCkhQSTogNjFGIHdpdGgga25vd24gaHlwZXJ0ZW5zaW9uIG9uIGxpc2lub3ByaWwsIGhvbWUgcmVhZGluZ3MgMTcwcy0xODBzLzEwMHMgdGhpcyB3ZWVrLCBtaWxkIGhlYWRhY2hlLgpObyBjaGVzdCBwYWluLCBubyB2aXNpb24gY2hhbmdlLCBubyB3ZWFrbmVzcy4gSSByZXZpZXdlZCBoZXIgUENQJ3Mgbm90ZXMgZnJvbSBoZXIgbGFzdCB0d28gdmlzaXRzLgpFeGFtOiBCUCAxODIvMTA0IHJlcGVhdGVkIDE3OC8xMDIsIG5vcm1hbCBuZXVybyBleGFtLCBubyBlZGVtYS4KT3JkZXJzOiBiYXNpYyBtZXRhYm9saWMgcGFuZWwgb3JkZXJlZCBhbmQgcmV2aWV3ZWQsIGNyZWF0aW5pbmUgYXQgYmFzZWxpbmUuCkFzc2Vzc21lbnQ6IGVzc2VudGlhbCBoeXBlcnRlbnNpb24sIHBvb3JseSBjb250cm9sbGVkIChjaHJvbmljIGlsbG5lc3Mgd2l0aCBwcm9ncmVzc2lvbik7IGhlYWRhY2hlLgpQbGFuOiBhZGQgYW1sb2RpcGluZSA1IG1nIGRhaWx5LCBjb250aW51ZSBsaXNpbm9wcmlsLCByZWNoZWNrIEJQIHdpdGggUENQIGluIDEgd2VlaywgRUQgcHJlY2F1dGlvbnMuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v27"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v27-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v27-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amlodipine 5 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v27"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v27-1"
+   }
+  },
+  {
+   "fullUrl": "ServiceRequest/pcc-sr-v27-1",
+   "resource": {
+    "resourceType": "ServiceRequest",
+    "id": "pcc-sr-v27-1",
+    "status": "completed",
+    "intent": "order",
+    "code": {
+     "text": "basic metabolic panel"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v27"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "ServiceRequest/pcc-sr-v27-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v27",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v27",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v27"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v27"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "I10"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "R51.9"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99214"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v27"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v27"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v28",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v28",
+    "gender": "female",
+    "birthDate": "1981-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V28"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v28"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v28",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v28",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v28"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v28"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v28",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v28",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v28"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v28"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v28"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v28",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v28",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v28"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v28"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGRvZyBiaXRlLgpIUEk6IDQ1RiBiaXR0ZW4gb24gdGhlIGJhY2sgb2YgdGhlIHJpZ2h0IGhhbmQgYnkgaGVyIG5laWdoYm9yJ3MgZG9nIDMgaG91cnMgYWdvLiBEb2cgdmFjY2luYXRlZC4KRXhhbTogdHdvIHB1bmN0dXJlIHdvdW5kcyBvdmVyIHRoZSAzcmQgbWV0YWNhcnBhbCB3aXRoIHN1cnJvdW5kaW5nIHN3ZWxsaW5nOyB0ZW5kb24gZnVuY3Rpb24gaW50YWN0LApmdWxsIHJhbmdlIG9mIG1vdGlvbiwgc2Vuc2F0aW9uIGludGFjdC4gV291bmQgbGVmdCBvcGVuIGdpdmVuIGJpdGUgcmlzay4KQXNzZXNzbWVudDogZG9nIGJpdGUgcHVuY3R1cmUgd291bmRzIG9mIHRoZSByaWdodCBoYW5kLCBhbiBhY3V0ZSBjb21wbGljYXRlZCBpbmp1cnkgZ2l2ZW4gaW5mZWN0aW9uIHJpc2sKYW5kIGNsb3NlbmVzcyB0byB0aGUgZXh0ZW5zb3IgdGVuZG9uLgpQbGFuOiBpcnJpZ2F0aW9uLCBhbW94aWNpbGxpbi1jbGF2dWxhbmF0ZSA4NzUgbWcgQklEIHg1IGRheXMgYXMgcHJvcGh5bGF4aXMsIHdvdW5kIGNoZWNrIGluIDQ4IGhvdXJzLgo="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v28"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v28-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v28-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin-clavulanate 875 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v28"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v28"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v28-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v28",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v28",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v28"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic C"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v28"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S61.451A"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "W54.0XXA"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v28"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v28"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v29",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v29",
+    "gender": "male",
+    "birthDate": "1952-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V29"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v29"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v29",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v29",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "payor": [
+     {
+      "display": "Medicare"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v29"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v29",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v29",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v29"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic A"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v29"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v29",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v29",
+    "status": "current",
+    "docStatus": "preliminary",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v29"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IHNvcmUgdGhyb2F0LgpIUEk6IDc0TSB3aXRoIDIgZGF5cyBvZiBzb3JlIHRocm9hdCBhbmQgZmV2ZXIuCkV4YW06IGV4dWRhdGl2ZSBwaGFyeW5naXRpcywgdGVuZGVyIGFudGVyaW9yIG5vZGVzLgpUZXN0czogcmFwaWQgc3RyZXAgb3JkZXJlZCBhbmQgcmV2aWV3ZWQsIFBPU0lUSVZFLgpBc3Nlc3NtZW50OiBzdHJlcCBwaGFyeW5naXRpcy4KUGxhbjogYW1veGljaWxsaW4gNTAwIG1nIEJJRCB4MTAgZGF5cy4K"
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v29"
+   }
+  },
+  {
+   "fullUrl": "Observation/pcc-obs-v29-1",
+   "resource": {
+    "resourceType": "Observation",
+    "id": "pcc-obs-v29-1",
+    "status": "final",
+    "code": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "78012-2",
+       "display": "Streptococcus pyogenes Ag [Presence] in Throat by Rapid immunoassay"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v29"
+    },
+    "valueCodeableConcept": {
+     "coding": [
+      {
+       "system": "http://snomed.info/sct",
+       "code": "10828004",
+       "display": "Positive"
+      }
+     ]
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Observation/pcc-obs-v29-1"
+   }
+  },
+  {
+   "fullUrl": "MedicationRequest/pcc-rx-v29-1",
+   "resource": {
+    "resourceType": "MedicationRequest",
+    "id": "pcc-rx-v29-1",
+    "status": "active",
+    "intent": "order",
+    "medicationCodeableConcept": {
+     "text": "amoxicillin 500 mg"
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "encounter": {
+     "reference": "Encounter/pcc-enc-v29"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "MedicationRequest/pcc-rx-v29-1"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v29",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v29",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v29"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic A"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v29"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "J02.0"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99213"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v29"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "87880"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v29"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v29"
+   }
+  },
+  {
+   "fullUrl": "Patient/pcc-pat-v30",
+   "resource": {
+    "resourceType": "Patient",
+    "id": "pcc-pat-v30",
+    "gender": "female",
+    "birthDate": "1996-10-03",
+    "name": [
+     {
+      "family": "Synthetic",
+      "given": [
+       "Patient V30"
+      ]
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Patient/pcc-pat-v30"
+   }
+  },
+  {
+   "fullUrl": "Coverage/pcc-cov-v30",
+   "resource": {
+    "resourceType": "Coverage",
+    "id": "pcc-cov-v30",
+    "status": "active",
+    "beneficiary": {
+     "reference": "Patient/pcc-pat-v30"
+    },
+    "payor": [
+     {
+      "display": "Commercial plan"
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Coverage/pcc-cov-v30"
+   }
+  },
+  {
+   "fullUrl": "Encounter/pcc-enc-v30",
+   "resource": {
+    "resourceType": "Encounter",
+    "id": "pcc-enc-v30",
+    "status": "finished",
+    "identifier": [
+     {
+      "system": "urn:prebill-chart-check:visit",
+      "value": "v30"
+     }
+    ],
+    "class": {
+     "system": "http://terminology.hl7.org/CodeSystem/v3-ActCode",
+     "code": "AMB"
+    },
+    "type": [
+     {
+      "text": "established patient"
+     }
+    ],
+    "subject": {
+     "reference": "Patient/pcc-pat-v30"
+    },
+    "period": {
+     "start": "2026-11-02T09:00:00-07:00"
+    },
+    "serviceProvider": {
+     "display": "Clinic B"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Encounter/pcc-enc-v30"
+   }
+  },
+  {
+   "fullUrl": "DocumentReference/pcc-doc-v30",
+   "resource": {
+    "resourceType": "DocumentReference",
+    "id": "pcc-doc-v30",
+    "status": "current",
+    "docStatus": "final",
+    "type": {
+     "coding": [
+      {
+       "system": "http://loinc.org",
+       "code": "11506-3",
+       "display": "Progress note"
+      }
+     ]
+    },
+    "subject": {
+     "reference": "Patient/pcc-pat-v30"
+    },
+    "context": {
+     "encounter": [
+      {
+       "reference": "Encounter/pcc-enc-v30"
+      }
+     ]
+    },
+    "content": [
+     {
+      "attachment": {
+       "contentType": "text/plain",
+       "data": "Q0M6IGJpdGUgb24gdGhlIGFybS4KSFBJOiAzMEYgd2l0aCBhbiBpdGNoeSBidW1wIG9uIHRoZSBsZWZ0IGZvcmVhcm0gc2luY2UgeWVzdGVyZGF5LiBObyBmZXZlciwgbm8gc3ByZWFkaW5nIHJlZG5lc3MuCkV4YW06IHNtYWxsIHJhaXNlZCBwYXB1bGUsIG5vIHdhcm10aCBvciBkcmFpbmFnZS4KQXNzZXNzbWVudDogaW5zZWN0IGJpdGUgb2YgdGhlIGxlZnQgZm9yZWFybSwgbWlub3IuClBsYW46IG92ZXItdGhlLWNvdW50ZXIgaHlkcm9jb3J0aXNvbmUgY3JlYW0gYW5kIGFuIG9yYWwgYW50aWhpc3RhbWluZSBhcyBuZWVkZWQuCg=="
+      }
+     }
+    ],
+    "authenticator": {
+     "display": "Synthetic Clinician, PA-C"
+    }
+   },
+   "request": {
+    "method": "PUT",
+    "url": "DocumentReference/pcc-doc-v30"
+   }
+  },
+  {
+   "fullUrl": "Claim/pcc-claim-v30",
+   "resource": {
+    "resourceType": "Claim",
+    "id": "pcc-claim-v30",
+    "status": "draft",
+    "type": {
+     "coding": [
+      {
+       "system": "http://terminology.hl7.org/CodeSystem/claim-type",
+       "code": "professional"
+      }
+     ]
+    },
+    "use": "claim",
+    "patient": {
+     "reference": "Patient/pcc-pat-v30"
+    },
+    "created": "2026-11-02",
+    "provider": {
+     "display": "Clinic B"
+    },
+    "priority": {
+     "coding": [
+      {
+       "code": "normal"
+      }
+     ]
+    },
+    "insurance": [
+     {
+      "sequence": 1,
+      "focal": true,
+      "coverage": {
+       "reference": "Coverage/pcc-cov-v30"
+      }
+     }
+    ],
+    "supportingInfo": [
+     {
+      "sequence": 1,
+      "category": {
+       "text": "em-basis"
+      },
+      "valueString": "mdm"
+     }
+    ],
+    "diagnosis": [
+     {
+      "sequence": 1,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "W57.XXXA"
+        }
+       ]
+      }
+     },
+     {
+      "sequence": 2,
+      "diagnosisCodeableConcept": {
+       "coding": [
+        {
+         "system": "http://hl7.org/fhir/sid/icd-10-cm",
+         "code": "S50.862A"
+        }
+       ]
+      }
+     }
+    ],
+    "item": [
+     {
+      "sequence": 1,
+      "productOrService": {
+       "coding": [
+        {
+         "system": "http://www.ama-assn.org/go/cpt",
+         "code": "99212"
+        }
+       ]
+      },
+      "modifier": [],
+      "diagnosisSequence": [
+       1,
+       2
+      ],
+      "encounter": [
+       {
+        "reference": "Encounter/pcc-enc-v30"
+       }
+      ],
+      "locationCodeableConcept": {
+       "coding": [
+        {
+         "system": "https://www.cms.gov/Medicare/Coding/place-of-service-codes/Place_of_Service_Code_Set",
+         "code": "20"
+        }
+       ]
+      }
+     }
+    ]
+   },
+   "request": {
+    "method": "PUT",
+    "url": "Claim/pcc-claim-v30"
+   }
+  }
+ ]
+}

@@ -1,0 +1,9 @@
+gate:
+  name: Pre-bill chart check go-live gate
+  max_critical_failures: 0
+  rules:
+    - name: overall
+      min_pass: 28
+    - name: risky visits (overbilling, unsigned)
+      group: risky
+      min_pass: all

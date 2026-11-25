@@ -1,0 +1,95 @@
+name: CI
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+    inputs:
+      live:
+        description: "Re-run Claude on every note (3 runs, about $1) and commit the new recordings"
+        type: boolean
+        default: false
+
+permissions:
+  contents: write
+
+jobs:
+  test-and-gate:
+    runs-on: ubuntu-24.04
+    outputs:
+      has_recordings: ${{ steps.rec.outputs.has }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt pytest
+      - name: Unit tests (connector round trip, rules, answer key)
+        run: python -m pytest -q tests
+      - name: FHIR bundle is up to date with data/visits.yml
+        run: python scripts/make_bundle.py && git diff --exit-code data/fhir_bundle.json
+      - name: Pull the visits over FHIR from the local athenaOne-style mock
+        run: python scripts/pull.py && git diff --exit-code data/pulled_visits.json -I '"seconds"'
+      - name: Gate sanity (answer key must GO, claim-format checks and structured-only rules must be blocked)
+        run: |
+          cd evals
+          golive run golive.yml --agent agents:answer_key --runs 1 --out ../reports/answer_key
+          for a in scrubber structured; do
+            golive run golive.yml --agent agents:$a --runs 1 --out ../reports/$a || true
+            python -c "import json,sys; d=json.load(open('../reports/$a/results.json'))['decision']; print('$a', d); sys.exit(d != 'no-go')"
+          done
+      - id: rec
+        run: echo "has=$([ -f recordings/claude_reads.json ] && echo yes || echo no)" >> "$GITHUB_OUTPUT"
+      - name: Re-grade Claude's recorded readings (no API call)
+        if: steps.rec.outputs.has == 'yes'
+        run: cd evals && golive run golive.yml --runs 3 --out ../reports/claude
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: reports, path: reports/}
+
+  live-eval:
+    needs: test-and-gate
+    if: github.event_name != 'pull_request' && (needs.test-and-gate.outputs.has_recordings == 'no' || inputs.live)
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Claude reads all 30 notes, 3 runs
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+        run: |
+          rm -f recordings/claude_reads.json
+          cd evals && golive run golive.yml --agent agents:claude_live --runs 3 --out ../reports/claude_live || true
+      - name: Commit the recordings
+        run: |
+          git config user.name "Pranav Gudise"
+          git config user.email "273664482+pg2342-hub@users.noreply.github.com"
+          git add recordings/claude_reads.json
+          git commit -m "Record Claude's readings of the 30 notes (3 runs)" && git push || echo "nothing to commit"
+      - uses: actions/upload-artifact@v4
+        with: {name: live-reports, path: reports/}
+
+  public-fhir-server:
+    runs-on: ubuntu-24.04
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with: {python-version: "3.12"}
+      - run: pip install -r requirements.txt
+      - name: Load the synthetic bundle into the public HAPI FHIR R4 test server and pull it back
+        run: |
+          python scripts/pull.py --base https://hapi.fhir.org/baseR4 --load --out reports/hapi_pull.json
+          python - <<'PY'
+          import json, yaml
+          from prebill.fhir import VISIT_FIELDS
+          src = {v["id"]: v for v in yaml.safe_load(open("data/visits.yml"))["visits"]}
+          got = json.load(open("reports/hapi_pull.json"))
+          bad = [(v["id"], k) for v in got["visits"] for k in VISIT_FIELDS if v[k] != src[v["id"]][k]]
+          print(len(got["visits"]), "visits pulled from HAPI;", got["stats"], "mismatches:", bad)
+          assert len(got["visits"]) == 30 and not bad
+          PY
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with: {name: hapi-pull, path: reports/hapi_pull.json}

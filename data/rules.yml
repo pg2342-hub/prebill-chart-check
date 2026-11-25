@@ -1,0 +1,43 @@
+# Coding rules the checker applies. Sources are public: AMA CPT 2021+ office/outpatient
+# E/M guidelines (MDM table and 2024 time thresholds), CMS CLIA-waived test list (QW
+# modifier), CMS physician fee schedule global periods, NCCI modifier 25 policy, and
+# ICD-10-CM coding guidelines. This is a teaching subset, not a full rule set.
+
+em:
+  # Level for each MDM element value. A visit's level is the highest level where at
+  # least two of the three elements (problems, data, risk) meet or exceed it.
+  element_levels: {minimal: 2, low: 3, moderate: 4, high: 5}
+  codes:
+    new: {2: "99202", 3: "99203", 4: "99204", 5: "99205"}
+    established: {2: "99212", 3: "99213", 4: "99214", 5: "99215"}
+  # Minutes on the date of the encounter needed for each code when billed by time.
+  time_minutes:
+    "99202": 15
+    "99203": 30
+    "99204": 45
+    "99205": 60
+    "99212": 10
+    "99213": 20
+    "99214": 30
+    "99215": 40
+
+# CLIA-waived tests that Medicare pays only with modifier QW.
+qw_required:
+  payers: [Medicare]
+  codes: ["87880", "87811", "87804"]
+
+# Procedures with a 0- or 10-day global period: an E/M billed the same day needs
+# modifier 25 and a separately identifiable problem in the note.
+global_procedures: ["12001", "12002", "10060", "29125"]
+
+# A positive result that makes an unspecified diagnosis codable as a specific one.
+specificity:
+  - {test: strep, value: positive, unspecified: J02.9, specific: J02.0}
+  - {test: flu_a, value: positive, unspecified_prefix: J11., specific_map: {J11.1: J10.1, J11.00: J10.00, J11.2: J10.2}}
+
+# A procedure must be billed with at least one diagnosis from its list (prefix match).
+dx_support:
+  "73610": [S93.4, S82., S99.91, M25.57]
+  "87880": [J02., J03., R07.0]
+  "87804": [J09, J10, J11, R50, R05, J06]
+  "87811": [U07.1, J06, J09, J10, J11, J18, R05, R50, Z20.822, J02]
