@@ -1,0 +1,1532 @@
+{
+ "v01#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg twice daily x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1654,
+  "output_tokens": 115,
+  "cost_usd": 0.008916,
+  "latency_s": 1.89
+ },
+ "v01#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg twice daily x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1654,
+  "output_tokens": 115,
+  "cost_usd": 0.008916,
+  "latency_s": 1.83
+ },
+ "v01#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg twice daily x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1654,
+  "output_tokens": 115,
+  "cost_usd": 0.008916,
+  "latency_s": 1.82
+ },
+ "v02#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strep pharyngitis",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1634,
+  "output_tokens": 110,
+  "cost_usd": 0.008736,
+  "latency_s": 1.79
+ },
+ "v02#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strep pharyngitis",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1634,
+  "output_tokens": 110,
+  "cost_usd": 0.008736,
+  "latency_s": 1.78
+ },
+ "v02#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "Assessment: strep pharyngitis.",
+   "data": "rapid strep antigen ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1634,
+  "output_tokens": 116,
+  "cost_usd": 0.008856,
+  "latency_s": 1.82
+ },
+ "v03#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "pharyngitis, strep positive",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "penicillin VK 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1598,
+  "output_tokens": 110,
+  "cost_usd": 0.008592,
+  "latency_s": 1.69
+ },
+ "v03#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "pharyngitis, strep positive",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "penicillin VK 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1598,
+  "output_tokens": 110,
+  "cost_usd": 0.008592,
+  "latency_s": 1.75
+ },
+ "v03#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "pharyngitis, strep positive",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "penicillin VK 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1598,
+  "output_tokens": 110,
+  "cost_usd": 0.008592,
+  "latency_s": 1.69
+ },
+ "v04#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1603,
+  "output_tokens": 110,
+  "cost_usd": 0.008612,
+  "latency_s": 1.78
+ },
+ "v04#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1603,
+  "output_tokens": 110,
+  "cost_usd": 0.008612,
+  "latency_s": 1.76
+ },
+ "v04#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "streptococcal pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1603,
+  "output_tokens": 110,
+  "cost_usd": 0.008612,
+  "latency_s": 1.86
+ },
+ "v05#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter guaifenesin and saline spray"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1609,
+  "output_tokens": 98,
+  "cost_usd": 0.008396,
+  "latency_s": 2.48
+ },
+ "v05#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter guaifenesin and saline spray"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1609,
+  "output_tokens": 98,
+  "cost_usd": 0.008396,
+  "latency_s": 1.11
+ },
+ "v05#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter guaifenesin and saline spray"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1609,
+  "output_tokens": 98,
+  "cost_usd": 0.008396,
+  "latency_s": 1.68
+ },
+ "v06#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "uncomplicated urinary tract infection",
+   "data": "urine dipstick ordered and reviewed",
+   "risk": "nitrofurantoin 100 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1638,
+  "output_tokens": 108,
+  "cost_usd": 0.008712,
+  "latency_s": 2.81
+ },
+ "v06#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "uncomplicated urinary tract infection",
+   "data": "urine dipstick ordered and reviewed",
+   "risk": "nitrofurantoin 100 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1638,
+  "output_tokens": 108,
+  "cost_usd": 0.008712,
+  "latency_s": 2.11
+ },
+ "v06#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "uncomplicated urinary tract infection",
+   "data": "urine dipstick ordered and reviewed",
+   "risk": "nitrofurantoin 100 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1638,
+  "output_tokens": 108,
+  "cost_usd": 0.008712,
+  "latency_s": 2.58
+ },
+ "v07#0": {
+  "problems": "moderate",
+  "data": "moderate",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "community-acquired pneumonia, acute illness with systemic symptoms",
+   "data": "chest x-ray 2 views and CBC ordered; reviewed that visit's discharge summary",
+   "risk": "azithromycin 500 mg day 1 then 250 mg days 2-5"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1712,
+  "output_tokens": 143,
+  "cost_usd": 0.009708,
+  "latency_s": 1.94
+ },
+ "v07#1": {
+  "problems": "moderate",
+  "data": "moderate",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "community-acquired pneumonia, acute illness with systemic symptoms",
+   "data": "chest x-ray 2 views and CBC ordered; reviewed outside ED discharge summary",
+   "risk": "azithromycin 500 mg day 1 then 250 mg days 2-5"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1712,
+  "output_tokens": 143,
+  "cost_usd": 0.009708,
+  "latency_s": 1.95
+ },
+ "v07#2": {
+  "problems": "moderate",
+  "data": "moderate",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "community-acquired pneumonia, acute illness with systemic symptoms",
+   "data": "chest x-ray 2 views and CBC ordered; reviewed that visit's discharge summary",
+   "risk": "azithromycin 500 mg day 1 then 250 mg days 2-5"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1712,
+  "output_tokens": 143,
+  "cost_usd": 0.009708,
+  "latency_s": 1.9
+ },
+ "v08#0": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "moderate persistent asthma with acute exacerbation",
+   "data": "SpO2 96%",
+   "risk": "prednisone 40 mg daily x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 103,
+  "cost_usd": 0.008624,
+  "latency_s": 1.86
+ },
+ "v08#1": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "moderate persistent asthma with acute exacerbation",
+   "data": "SpO2 96%",
+   "risk": "prednisone 40 mg daily x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 103,
+  "cost_usd": 0.008624,
+  "latency_s": 1.77
+ },
+ "v08#2": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "moderate persistent asthma with acute exacerbation",
+   "data": "SpO2 96%",
+   "risk": "prednisone 40 mg daily x5 days, albuterol refill"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 110,
+  "cost_usd": 0.008764,
+  "latency_s": 1.4
+ },
+ "v09#0": {
+  "problems": "high",
+  "data": "minimal",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "possible acute coronary syndrome, a threat to bodily function",
+   "data": "ECG: performed in clinic, nonspecific ST changes",
+   "risk": "transferred to the emergency department for admission evaluation"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1635,
+  "output_tokens": 116,
+  "cost_usd": 0.00886,
+  "latency_s": 1.98
+ },
+ "v09#1": {
+  "problems": "high",
+  "data": "minimal",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "possible acute coronary syndrome, a threat to bodily function",
+   "data": "ECG: performed in clinic, nonspecific ST changes",
+   "risk": "transferred to the emergency department for admission evaluation"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1635,
+  "output_tokens": 116,
+  "cost_usd": 0.00886,
+  "latency_s": 2.19
+ },
+ "v09#2": {
+  "problems": "high",
+  "data": "minimal",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "possible acute coronary syndrome, a threat to bodily function",
+   "data": "ECG: performed in clinic, nonspecific ST changes",
+   "risk": "EMS called, transferred to the emergency department for admission evaluation"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1635,
+  "output_tokens": 121,
+  "cost_usd": 0.00896,
+  "latency_s": 2.02
+ },
+ "v10#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "tension-type headache",
+   "data": "normal neuro exam, mild trapezius tenderness",
+   "risk": "ibuprofen over the counter, hydration, sleep"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1608,
+  "output_tokens": 102,
+  "cost_usd": 0.008472,
+  "latency_s": 1.75
+ },
+ "v10#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "tension-type headache",
+   "data": "normal neuro exam, mild trapezius tenderness",
+   "risk": "ibuprofen over the counter, hydration, sleep"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1608,
+  "output_tokens": 102,
+  "cost_usd": 0.008472,
+  "latency_s": 1.63
+ },
+ "v10#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "tension-type headache",
+   "data": "normal neuro exam, mild trapezius tenderness",
+   "risk": "ibuprofen over the counter, hydration, sleep"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1608,
+  "output_tokens": 102,
+  "cost_usd": 0.008472,
+  "latency_s": 1.62
+ },
+ "v11#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": 22,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute low back strain",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter naproxen"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1615,
+  "output_tokens": 87,
+  "cost_usd": 0.0082,
+  "latency_s": 1.62
+ },
+ "v11#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": 22,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute low back strain",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter naproxen"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1615,
+  "output_tokens": 87,
+  "cost_usd": 0.0082,
+  "latency_s": 1.6
+ },
+ "v11#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": 22,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute low back strain",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter naproxen"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1615,
+  "output_tokens": 87,
+  "cost_usd": 0.0082,
+  "latency_s": 1.57
+ },
+ "v12#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": 35,
+  "separate_em": null,
+  "evidence": {
+   "problems": "dizziness, likely benign positional vertigo",
+   "data": "positive Dix-Hallpike on the right, normal neuro exam",
+   "risk": "meclizine 25 mg as needed"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 111,
+  "cost_usd": 0.008784,
+  "latency_s": 1.48
+ },
+ "v12#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": 35,
+  "separate_em": null,
+  "evidence": {
+   "problems": "dizziness, likely benign positional vertigo",
+   "data": "positive Dix-Hallpike on the right, normal neuro exam",
+   "risk": "meclizine 25 mg as needed"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 111,
+  "cost_usd": 0.008784,
+  "latency_s": 1.65
+ },
+ "v12#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": 35,
+  "separate_em": null,
+  "evidence": {
+   "problems": "dizziness, likely benign positional vertigo",
+   "data": "positive Dix-Hallpike on the right, normal neuro exam",
+   "risk": "meclizine 25 mg as needed"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1641,
+  "output_tokens": 111,
+  "cost_usd": 0.008784,
+  "latency_s": 1.57
+ },
+ "v13#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": false,
+  "evidence": {
+   "problems": "laceration of the right hand",
+   "data": "no tests ordered or reviewed",
+   "risk": "wound care, suture removal in 10-14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1660,
+  "output_tokens": 94,
+  "cost_usd": 0.00852,
+  "latency_s": 2.38
+ },
+ "v13#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": false,
+  "evidence": {
+   "problems": "laceration of the right hand",
+   "data": "No tests ordered or reviewed",
+   "risk": "wound care, suture removal in 10-14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1660,
+  "output_tokens": 94,
+  "cost_usd": 0.00852,
+  "latency_s": 2.25
+ },
+ "v13#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": false,
+  "evidence": {
+   "problems": "laceration of the right hand",
+   "data": "no tests or external records documented",
+   "risk": "wound care, suture removal in 10-14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1660,
+  "output_tokens": 91,
+  "cost_usd": 0.00846,
+  "latency_s": 2.88
+ },
+ "v14#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial sinusitis",
+   "data": "no tests ordered or reviewed",
+   "risk": "Amoxicillin-clavulanate 875 mg BID x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1726,
+  "output_tokens": 108,
+  "cost_usd": 0.009064,
+  "latency_s": 1.5
+ },
+ "v14#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial sinusitis",
+   "data": "no tests ordered or reviewed",
+   "risk": "Amoxicillin-clavulanate 875 mg BID x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1726,
+  "output_tokens": 108,
+  "cost_usd": 0.009064,
+  "latency_s": 1.34
+ },
+ "v14#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial sinusitis",
+   "data": "no tests ordered or reviewed",
+   "risk": "Amoxicillin-clavulanate 875 mg BID x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1726,
+  "output_tokens": 108,
+  "cost_usd": 0.009064,
+  "latency_s": 1.43
+ },
+ "v15#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, right eye",
+   "data": "no tests ordered or reviewed",
+   "risk": "Polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1697,
+  "output_tokens": 115,
+  "cost_usd": 0.009088,
+  "latency_s": 1.53
+ },
+ "v15#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, right eye",
+   "data": "no tests ordered or reviewed",
+   "risk": "Polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1697,
+  "output_tokens": 115,
+  "cost_usd": 0.009088,
+  "latency_s": 1.54
+ },
+ "v15#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": true,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, right eye",
+   "data": "No tests ordered or reviewed",
+   "risk": "Polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1697,
+  "output_tokens": 115,
+  "cost_usd": 0.009088,
+  "latency_s": 1.55
+ },
+ "v16#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute otitis media, left",
+   "data": "no tests ordered or reviewed",
+   "risk": "amoxicillin 875 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1558,
+  "output_tokens": 98,
+  "cost_usd": 0.008192,
+  "latency_s": 1.55
+ },
+ "v16#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute otitis media, left",
+   "data": "no tests ordered or reviewed",
+   "risk": "amoxicillin 875 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1558,
+  "output_tokens": 98,
+  "cost_usd": 0.008192,
+  "latency_s": 1.49
+ },
+ "v16#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute otitis media, left",
+   "data": "no tests or external records documented",
+   "risk": "amoxicillin 875 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1558,
+  "output_tokens": 95,
+  "cost_usd": 0.008132,
+  "latency_s": 1.73
+ },
+ "v17#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter lozenges and fluids"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1577,
+  "output_tokens": 95,
+  "cost_usd": 0.008208,
+  "latency_s": 1.67
+ },
+ "v17#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter lozenges and fluids"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1577,
+  "output_tokens": 95,
+  "cost_usd": 0.008208,
+  "latency_s": 1.53
+ },
+ "v17#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter lozenges and fluids"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1577,
+  "output_tokens": 95,
+  "cost_usd": 0.008208,
+  "latency_s": 1.67
+ },
+ "v18#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "1) right ankle sprain. 2) viral URI.",
+   "data": "right ankle 3 views ordered and reviewed, no fracture",
+   "risk": "ankle brace, RICE, ibuprofen over the counter"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1657,
+  "output_tokens": 119,
+  "cost_usd": 0.009008,
+  "latency_s": 1.81
+ },
+ "v18#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "1) right ankle sprain. 2) viral URI.",
+   "data": "right ankle 3 views ordered and reviewed, no fracture",
+   "risk": "ankle brace, RICE, ibuprofen over the counter"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1657,
+  "output_tokens": 119,
+  "cost_usd": 0.009008,
+  "latency_s": 1.52
+ },
+ "v18#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "1) right ankle sprain. 2) viral URI.",
+   "data": "right ankle 3 views ordered and reviewed, no fracture",
+   "risk": "ankle brace, RICE, ibuprofen over the counter"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1657,
+  "output_tokens": 119,
+  "cost_usd": 0.009008,
+  "latency_s": 1.75
+ },
+ "v19#0": {
+  "problems": "moderate",
+  "data": "moderate",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "undiagnosed new problem with uncertain prognosis, appendicitis not excluded",
+   "data": "reviewed her outside urgent care note; CBC and urinalysis ordered and reviewed",
+   "risk": "sent to the emergency department for CT and surgical evaluation; decision made to escalate care"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1701,
+  "output_tokens": 148,
+  "cost_usd": 0.009764,
+  "latency_s": 2.11
+ },
+ "v19#1": {
+  "problems": "high",
+  "data": "moderate",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "appendicitis not excluded",
+   "data": "reviewed her outside urgent care note; CBC and urinalysis ordered and reviewed",
+   "risk": "sent to the emergency department for CT and surgical evaluation"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1701,
+  "output_tokens": 118,
+  "cost_usd": 0.009164,
+  "latency_s": 2.23
+ },
+ "v19#2": {
+  "problems": "high",
+  "data": "moderate",
+  "risk": "high",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "appendicitis not excluded",
+   "data": "reviewed her outside urgent care note; CBC and urinalysis ordered and reviewed",
+   "risk": "sent to the emergency department for CT and surgical evaluation; decision made to escalate care"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1701,
+  "output_tokens": 127,
+  "cost_usd": 0.009344,
+  "latency_s": 2.06
+ },
+ "v20#0": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left lower leg, minor",
+   "data": "No tests, external records, or independent historian documented",
+   "risk": "over-the-counter hydrocortisone cream"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1591,
+  "output_tokens": 105,
+  "cost_usd": 0.008464,
+  "latency_s": 1.45
+ },
+ "v20#1": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left lower leg, minor",
+   "data": "No tests, external notes or independent historian documented",
+   "risk": "over-the-counter hydrocortisone cream, cool compress"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1591,
+  "output_tokens": 110,
+  "cost_usd": 0.008564,
+  "latency_s": 1.52
+ },
+ "v20#2": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left lower leg, minor",
+   "data": "No tests ordered or reviewed",
+   "risk": "over-the-counter hydrocortisone cream"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1591,
+  "output_tokens": 102,
+  "cost_usd": 0.008404,
+  "latency_s": 1.39
+ },
+ "v21#0": {
+  "problems": "low",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, left eye",
+   "data": "Mother provides the history.",
+   "risk": "polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1596,
+  "output_tokens": 109,
+  "cost_usd": 0.008564,
+  "latency_s": 1.7
+ },
+ "v21#1": {
+  "problems": "low",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, left eye",
+   "data": "Mother provides the history.",
+   "risk": "polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1596,
+  "output_tokens": 109,
+  "cost_usd": 0.008564,
+  "latency_s": 1.79
+ },
+ "v21#2": {
+  "problems": "low",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "acute bacterial conjunctivitis, left eye",
+   "data": "Mother provides the history.",
+   "risk": "polymyxin-trimethoprim drops 4 times daily x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1596,
+  "output_tokens": 109,
+  "cost_usd": 0.008564,
+  "latency_s": 1.68
+ },
+ "v22#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "allergic contact dermatitis due to plants",
+   "data": "no tests ordered or reviewed",
+   "risk": "triamcinolone 0.1% cream twice daily x14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1604,
+  "output_tokens": 108,
+  "cost_usd": 0.008576,
+  "latency_s": 2.06
+ },
+ "v22#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "allergic contact dermatitis due to plants",
+   "data": "no tests ordered or reviewed",
+   "risk": "triamcinolone 0.1% cream twice daily x14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1604,
+  "output_tokens": 108,
+  "cost_usd": 0.008576,
+  "latency_s": 1.73
+ },
+ "v22#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "allergic contact dermatitis due to plants",
+   "data": "no tests ordered or reviewed",
+   "risk": "triamcinolone 0.1% cream twice daily x14 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1604,
+  "output_tokens": 108,
+  "cost_usd": 0.008576,
+  "latency_s": 1.88
+ },
+ "v23#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "COVID-19 antigen ordered and reviewed, negative",
+   "risk": "over-the-counter dextromethorphan, fluids, rest"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1618,
+  "output_tokens": 110,
+  "cost_usd": 0.008672,
+  "latency_s": 1.69
+ },
+ "v23#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "COVID-19 antigen ordered and reviewed, negative",
+   "risk": "over-the-counter dextromethorphan, fluids, rest"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1618,
+  "output_tokens": 110,
+  "cost_usd": 0.008672,
+  "latency_s": 1.88
+ },
+ "v23#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "viral upper respiratory infection",
+   "data": "COVID-19 antigen ordered and reviewed, negative",
+   "risk": "over-the-counter dextromethorphan, fluids, rest"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1618,
+  "output_tokens": 110,
+  "cost_usd": 0.008672,
+  "latency_s": 1.78
+ },
+ "v24#0": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, acute illness with systemic symptoms, higher risk due to age",
+   "data": "influenza antigen and COVID-19 antigen ordered and reviewed",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1670,
+  "output_tokens": 128,
+  "cost_usd": 0.00924,
+  "latency_s": 2.11
+ },
+ "v24#1": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, acute illness with systemic symptoms, higher risk due to age",
+   "data": "influenza antigen and COVID-19 antigen ordered and reviewed",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1670,
+  "output_tokens": 128,
+  "cost_usd": 0.00924,
+  "latency_s": 1.87
+ },
+ "v24#2": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, acute illness with systemic symptoms, higher risk due to age",
+   "data": "influenza antigen and COVID-19 antigen ordered and reviewed",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1670,
+  "output_tokens": 128,
+  "cost_usd": 0.00924,
+  "latency_s": 1.78
+ },
+ "v25#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, mild",
+   "data": "influenza antigen ordered and reviewed, influenza A POSITIVE",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1636,
+  "output_tokens": 111,
+  "cost_usd": 0.008764,
+  "latency_s": 1.82
+ },
+ "v25#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, mild",
+   "data": "influenza antigen ordered and reviewed",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1636,
+  "output_tokens": 100,
+  "cost_usd": 0.008544,
+  "latency_s": 1.73
+ },
+ "v25#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "influenza A, mild",
+   "data": "influenza antigen ordered and reviewed, influenza A POSITIVE",
+   "risk": "oseltamivir 75 mg BID x5 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1636,
+  "output_tokens": 111,
+  "cost_usd": 0.008764,
+  "latency_s": 1.86
+ },
+ "v26#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strain of lower back muscles, acute, uncomplicated",
+   "data": "no tests ordered or reviewed",
+   "risk": "cyclobenzaprine 10 mg at night x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1643,
+  "output_tokens": 112,
+  "cost_usd": 0.008812,
+  "latency_s": 1.76
+ },
+ "v26#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strain of lower back muscles, acute, uncomplicated",
+   "data": "no tests ordered or reviewed",
+   "risk": "cyclobenzaprine 10 mg at night x7 days, ibuprofen 800 mg TID"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1643,
+  "output_tokens": 126,
+  "cost_usd": 0.009092,
+  "latency_s": 2.07
+ },
+ "v26#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strain of lower back muscles, acute, uncomplicated",
+   "data": "no tests ordered or reviewed",
+   "risk": "cyclobenzaprine 10 mg at night x7 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1643,
+  "output_tokens": 112,
+  "cost_usd": 0.008812,
+  "latency_s": 1.69
+ },
+ "v27#0": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "essential hypertension, poorly controlled (chronic illness with progression)",
+   "data": "reviewed her PCP's notes from her last two visits; basic metabolic panel ordered and reviewed",
+   "risk": "add amlodipine 5 mg daily, continue lisinopril"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1704,
+  "output_tokens": 140,
+  "cost_usd": 0.009616,
+  "latency_s": 2.59
+ },
+ "v27#1": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "essential hypertension, poorly controlled (chronic illness with progression)",
+   "data": "reviewed her PCP's notes from her last two visits; basic metabolic panel ordered and reviewed",
+   "risk": "add amlodipine 5 mg daily, continue lisinopril"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1704,
+  "output_tokens": 140,
+  "cost_usd": 0.009616,
+  "latency_s": 2.09
+ },
+ "v27#2": {
+  "problems": "moderate",
+  "data": "low",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "essential hypertension, poorly controlled (chronic illness with progression)",
+   "data": "I reviewed her PCP's notes from her last two visits; basic metabolic panel ordered and reviewed",
+   "risk": "add amlodipine 5 mg daily, continue lisinopril"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1704,
+  "output_tokens": 141,
+  "cost_usd": 0.009636,
+  "latency_s": 3.05
+ },
+ "v28#0": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "an acute complicated injury given infection risk and closeness to the extensor tendon",
+   "data": "no tests ordered or reviewed",
+   "risk": "amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1684,
+  "output_tokens": 130,
+  "cost_usd": 0.009336,
+  "latency_s": 1.87
+ },
+ "v28#1": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "an acute complicated injury given infection risk and closeness to the extensor tendon",
+   "data": "no tests ordered or reviewed",
+   "risk": "amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1684,
+  "output_tokens": 130,
+  "cost_usd": 0.009336,
+  "latency_s": 1.87
+ },
+ "v28#2": {
+  "problems": "moderate",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "an acute complicated injury given infection risk and closeness to the extensor tendon",
+   "data": "no tests ordered or reviewed",
+   "risk": "amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1684,
+  "output_tokens": 130,
+  "cost_usd": 0.009336,
+  "latency_s": 1.97
+ },
+ "v29#0": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strep pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1586,
+  "output_tokens": 107,
+  "cost_usd": 0.008484,
+  "latency_s": 2.52
+ },
+ "v29#1": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strep pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1586,
+  "output_tokens": 107,
+  "cost_usd": 0.008484,
+  "latency_s": 1.97
+ },
+ "v29#2": {
+  "problems": "low",
+  "data": "minimal",
+  "risk": "moderate",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "strep pharyngitis",
+   "data": "rapid strep ordered and reviewed, POSITIVE",
+   "risk": "amoxicillin 500 mg BID x10 days"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1586,
+  "output_tokens": 107,
+  "cost_usd": 0.008484,
+  "latency_s": 1.93
+ },
+ "v30#0": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left forearm, minor",
+   "data": "no tests or external records documented",
+   "risk": "over-the-counter hydrocortisone cream and an oral antihistamine as needed"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1589,
+  "output_tokens": 110,
+  "cost_usd": 0.008556,
+  "latency_s": 1.45
+ },
+ "v30#1": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left forearm, minor",
+   "data": "no tests ordered or reviewed",
+   "risk": "over-the-counter hydrocortisone cream and an oral antihistamine"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1589,
+  "output_tokens": 110,
+  "cost_usd": 0.008556,
+  "latency_s": 1.37
+ },
+ "v30#2": {
+  "problems": "minimal",
+  "data": "minimal",
+  "risk": "low",
+  "time_min": null,
+  "separate_em": null,
+  "evidence": {
+   "problems": "insect bite of the left forearm, minor",
+   "data": "no tests or external records documented",
+   "risk": "over-the-counter hydrocortisone cream and an oral antihistamine as needed"
+  },
+  "model": "claude-opus-5-5",
+  "input_tokens": 1589,
+  "output_tokens": 110,
+  "cost_usd": 0.008556,
+  "latency_s": 1.47
+ }
+}
