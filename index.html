@@ -1,0 +1,427 @@
+<!doctype html><html lang="en"><head>
+<!-- demo-chrome --><meta name="theme-color" content="#f4f2ec"><link rel="icon" href="https://pranavgudise.dev/favicon.svg" type="image/svg+xml"><link rel="stylesheet" href="https://pranavgudise.dev/kit/demo.css"><!-- /demo-chrome -->
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Pre-bill chart check</title>
+<meta name="description" content="Pulls urgent care visits over FHIR R4 and checks each draft claim against its note; with Claude reading the note, 29 of 30 visits match the answer key on all 3 runs.">
+<!-- Run scripts/demo_chrome.py on this file after writing it: it adds the shared kit stylesheet, the header and the footer. -->
+<style>
+/* Shared demo layout, copied from the approved pilots. Keep it; add page-specific rules below it. */
+
+.head{padding:8px 0 0}
+.head h1{margin:40px 0 14px}
+.head .lead{max-width:38em}
+/* verdict: the same 25 cases under the same gate, one square per case */
+.verdict{margin:36px 0 0;border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.vhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding:18px 24px;border-bottom:1px solid var(--rule)}
+.vhead h2{all:unset;font:400 22px/1.2 var(--serif)}
+.vhead p{margin:0;color:var(--ink-2);font-size:15px}
+.vhead p b{color:var(--ink)}
+.vrow,.arow{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 7.5em 5.5em;align-items:center;gap:20px;padding:22px 24px}
+.vrow+.vrow{border-top:1px solid var(--rule-soft)}
+.vwho b,.awho b{display:block;font:400 20px/1.2 var(--serif)}
+.vwho span,.awho span{display:block;color:var(--ink-2);font-size:14px;line-height:1.4;margin-top:4px}
+.strip{display:grid;grid-template-columns:repeat(25,minmax(0,1fr));gap:4px}
+.cell{display:block;aspect-ratio:1;border-radius:4px;border:1.5px solid transparent;transition:transform .2s var(--ease),box-shadow .2s}
+.cell.pass{background:var(--green)}
+.cell.fail{background:var(--paper);border-color:var(--ink)}
+.cell.crit{background:var(--ink)}
+.cell:hover,.cell:focus-visible,.cell.lit{transform:translateY(-3px);box-shadow:0 6px 12px -6px rgb(27 26 23/.5)}
+.vscore b{font:400 44px/1 var(--serif)}
+.vscore span{display:block;color:var(--ink-2);font-size:13px;line-height:1.35;margin-top:4px}
+.gate{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 14px;border-radius:999px;font:500 13px/1 var(--mono);letter-spacing:.06em}
+.gate.go{background:var(--green-wash);color:var(--green)}
+.gate.nogo{background:var(--ink);color:var(--paper)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;padding:14px 24px;border-top:1px solid var(--rule);color:var(--ink-2);font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:3px;border:1.5px solid transparent}
+.legend .pass{background:var(--green)}.legend .fail{border-color:var(--ink)}.legend .crit{background:var(--ink)}
+/* page body: content and a side column */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start;margin-top:8px}
+.side{position:sticky;top:24px;margin-top:64px;display:grid;gap:22px;font-size:14px;color:var(--ink-2)}
+.side h3{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.side p{margin:0}
+.side nav a{display:block;padding:5px 0;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-soft)}
+.side nav a:hover{color:var(--ink)}
+.side pre{font-size:12px;margin:6px 0 0}
+.point{font-size:17px;max-width:40em;margin:0}
+.point b{font-weight:500}
+.seg{display:flex;width:fit-content;max-width:100%;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:999px;margin:0 0 16px;background:#fbfaf6}
+.seg button{min-height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);cursor:pointer}
+.seg button span{font-weight:400;opacity:.8}
+.seg button[aria-checked=true]{background:var(--ink);color:var(--paper)}
+.n{font-family:var(--mono);font-size:13px}
+.tag{font:400 12px/1 var(--mono);border:1px solid var(--rule);border-radius:999px;padding:4px 8px;white-space:nowrap}
+.tx{max-width:340px}.ch{font-size:13px;color:var(--ink-2);margin-top:4px}
+.v{white-space:nowrap;font-weight:500}
+.v.ok{color:var(--green)}
+.v.bad{white-space:normal;color:var(--ink)}
+.v.bad.crit::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ink);margin-right:6px;vertical-align:1px}
+.why{font-weight:400;font-size:13px;color:var(--ink-2);margin-top:4px;max-width:240px}
+#cases tr.lit td{background:var(--green-wash)}
+#cases tr{scroll-margin-top:24px}
+.abl{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.arow{grid-template-columns:minmax(0,13em) minmax(0,1fr) 6.5em}
+.arow+.arow{border-top:1px solid var(--rule-soft)}
+.ascore{font:400 15px/1 var(--sans);color:var(--ink-2)}
+.ascore b{font:400 30px/1 var(--serif);color:var(--ink)}
+.ascore span{display:block;font-size:13px;margin-top:4px}
+.note{color:var(--ink-2);font-size:15px;max-width:44em;margin-top:14px}
+.rule{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule div{border:1px solid var(--rule);border-radius:16px;padding:20px 22px;background:#fbfaf6}
+.rule div:last-child{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rule h3{margin:0 0 6px;font:400 22px/1.2 var(--serif)}
+.rule p{margin:0 0 10px;font-size:15px;opacity:.85}
+.rule ul{margin:0;font-size:15px}
+.rule div:last-child li::marker{color:rgb(244 242 236/.6)}
+.sev{font:500 12px/1 var(--mono);padding:4px 8px;border-radius:999px;border:1px solid var(--rule)}
+.sev-critical{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sev-low{color:var(--ink-2)}
+@media (max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr);gap:0}
+ .side{position:static;margin-top:48px;order:2}
+ .vrow{grid-template-columns:minmax(0,1fr) auto;gap:14px 16px}
+ .vrow .strip{grid-column:1/-1;grid-row:2}
+ .vscore{grid-row:3}.vrow .gate{grid-row:3}
+ .arow{grid-template-columns:minmax(0,1fr) auto;gap:12px 16px}
+ .arow .strip{grid-column:1/-1;grid-row:2}
+ .ascore{grid-column:2;grid-row:1}
+ .rule{grid-template-columns:1fr}
+}
+@media (max-width:640px){.vrow,.arow{padding:18px}.vhead{padding:16px 18px}.strip{gap:3px}.tx{max-width:none}}
+@media (prefers-reduced-motion:reduce){.cell{transition:none}}
+
+/* ---- page-specific rules go here ---- */
+.strip{grid-template-columns:repeat(30,minmax(0,1fr))}
+.lanes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.lane{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:14px 14px 16px;min-height:150px}
+.lane:nth-child(4){background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.lh{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:10px}
+.lh b{font:400 19px/1.2 var(--serif)}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font:500 12px/1 var(--mono);padding:6px 8px;border-radius:999px;background:var(--green-wash);color:var(--green-deep);text-decoration:none;border:1.5px solid transparent}
+.lane:nth-child(4) .chip{background:rgb(244 242 236/.14);color:var(--paper)}
+.chip.off{background:var(--paper);color:var(--ink);border:1.5px dashed var(--ink)}
+.empty{font-size:13px;opacity:.7}
+.qnote{color:var(--ink-2);font-size:14px;margin:10px 0 0}
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:8px 0 0}
+.stat{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;padding:16px}
+.stat b{display:block;font:400 30px/1 var(--serif);font-variant-numeric:tabular-nums}
+.stat span{display:block;color:var(--ink-2);font-size:13px;margin-top:6px;line-height:1.35}
+details summary{cursor:pointer;font-size:13px;color:var(--ink-2);margin-top:6px}
+.ev{margin:6px 0;padding-left:18px;font-size:13px;color:var(--ink-2)}
+pre.note{white-space:pre-wrap;font-size:12px;max-width:44em;background:var(--paper);border:1px solid var(--rule-soft);border-radius:10px;padding:10px;margin:6px 0 0}
+.scroll{overflow-x:auto}
+table.t{min-width:640px}
+.lanes[hidden]{display:none}
+.seg button span{margin-left:6px}
+@media (max-width:1000px){.lanes,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.strip{grid-template-columns:repeat(15,minmax(0,1fr))}}
+</style></head><body>
+<!-- demo-chrome --><header class="demo-top"><a class="demo-brand" href="https://pranavgudise.dev/"><svg class="demo-mark" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9.25"/><g class="n"><path class="f" d="M15.5 8.5 L 13.4 13.4 L 8.5 15.5 L 10.6 10.6 Z"/></g><circle class="p" cx="12" cy="12" r=".7"/></svg><span>Pranav Gudise</span></a><a class="pill" href="https://github.com/pg2342-hub/prebill-chart-check">Code on GitHub</a></header><!-- /demo-chrome -->
+<main>
+<div class="head">
+<h1>Pre-bill chart check</h1>
+<p class="lead">Pulls a day's urgent care visits over FHIR R4, reads each progress note, and checks the draft claim against it before
+the claim goes out. Each visit is released, auto-fixed, sent to the clinician, or held.</p>
+</div>
+
+<section class="verdict" aria-labelledby="verdict-h">
+  <div class="vhead"><h2 id="verdict-h">Same 30 visits, same rules, same gate</h2><p>Gate: <b>28 of 30 match the answer key on every run, all 10 risky visits, zero critical errors</b></p></div>
+  <div class="vrow"><div class="vwho"><b>Claim-format checks</b><span>Reads the claim only, the way a claim scrubber does</span></div>
+<div class="strip" role="group" aria-label="Claim-format checks: every visit"><a class="cell pass" href="#case-v01" data-case="v01" aria-label="Claim-format checks v01 passed"></a><a class="cell pass" href="#case-v02" data-case="v02" aria-label="Claim-format checks v02 passed"></a><a class="cell fail" href="#case-v03" data-case="v03" aria-label="Claim-format checks v03 failed"></a><a class="cell fail" href="#case-v04" data-case="v04" aria-label="Claim-format checks v04 failed"></a><a class="cell crit" href="#case-v05" data-case="v05" aria-label="Claim-format checks v05 failed with a critical error"></a><a class="cell crit" href="#case-v06" data-case="v06" aria-label="Claim-format checks v06 failed with a critical error"></a><a class="cell fail" href="#case-v07" data-case="v07" aria-label="Claim-format checks v07 failed"></a><a class="cell pass" href="#case-v08" data-case="v08" aria-label="Claim-format checks v08 passed"></a><a class="cell pass" href="#case-v09" data-case="v09" aria-label="Claim-format checks v09 passed"></a><a class="cell crit" href="#case-v10" data-case="v10" aria-label="Claim-format checks v10 failed with a critical error"></a><a class="cell crit" href="#case-v11" data-case="v11" aria-label="Claim-format checks v11 failed with a critical error"></a><a class="cell pass" href="#case-v12" data-case="v12" aria-label="Claim-format checks v12 passed"></a><a class="cell crit" href="#case-v13" data-case="v13" aria-label="Claim-format checks v13 failed with a critical error"></a><a class="cell pass" href="#case-v14" data-case="v14" aria-label="Claim-format checks v14 passed"></a><a class="cell pass" href="#case-v15" data-case="v15" aria-label="Claim-format checks v15 passed"></a><a class="cell crit" href="#case-v16" data-case="v16" aria-label="Claim-format checks v16 failed with a critical error"></a><a class="cell crit" href="#case-v17" data-case="v17" aria-label="Claim-format checks v17 failed with a critical error"></a><a class="cell pass" href="#case-v18" data-case="v18" aria-label="Claim-format checks v18 passed"></a><a class="cell pass" href="#case-v19" data-case="v19" aria-label="Claim-format checks v19 passed"></a><a class="cell crit" href="#case-v20" data-case="v20" aria-label="Claim-format checks v20 failed with a critical error"></a><a class="cell pass" href="#case-v21" data-case="v21" aria-label="Claim-format checks v21 passed"></a><a class="cell fail" href="#case-v22" data-case="v22" aria-label="Claim-format checks v22 failed"></a><a class="cell pass" href="#case-v23" data-case="v23" aria-label="Claim-format checks v23 passed"></a><a class="cell pass" href="#case-v24" data-case="v24" aria-label="Claim-format checks v24 passed"></a><a class="cell fail" href="#case-v25" data-case="v25" aria-label="Claim-format checks v25 failed"></a><a class="cell crit" href="#case-v26" data-case="v26" aria-label="Claim-format checks v26 failed with a critical error"></a><a class="cell pass" href="#case-v27" data-case="v27" aria-label="Claim-format checks v27 passed"></a><a class="cell fail" href="#case-v28" data-case="v28" aria-label="Claim-format checks v28 failed"></a><a class="cell crit" href="#case-v29" data-case="v29" aria-label="Claim-format checks v29 failed with a critical error"></a><a class="cell pass" href="#case-v30" data-case="v30" aria-label="Claim-format checks v30 passed"></a></div>
+<div class="vscore"><b>14</b><span>of 30 passed 1 run (rules are deterministic)<br>10 critical</span></div>
+<span class="gate nogo">NO-GO</span></div><div class="vrow"><div class="vwho"><b>Structured-only rules</b><span>Same rules; MDM guessed from orders, results and prescriptions</span></div>
+<div class="strip" role="group" aria-label="Structured-only rules: every visit"><a class="cell pass" href="#case-v01" data-case="v01" aria-label="Structured-only rules v01 passed"></a><a class="cell pass" href="#case-v02" data-case="v02" aria-label="Structured-only rules v02 passed"></a><a class="cell pass" href="#case-v03" data-case="v03" aria-label="Structured-only rules v03 passed"></a><a class="cell pass" href="#case-v04" data-case="v04" aria-label="Structured-only rules v04 passed"></a><a class="cell pass" href="#case-v05" data-case="v05" aria-label="Structured-only rules v05 passed"></a><a class="cell pass" href="#case-v06" data-case="v06" aria-label="Structured-only rules v06 passed"></a><a class="cell fail" href="#case-v07" data-case="v07" aria-label="Structured-only rules v07 failed"></a><a class="cell fail" href="#case-v08" data-case="v08" aria-label="Structured-only rules v08 failed"></a><a class="cell pass" href="#case-v09" data-case="v09" aria-label="Structured-only rules v09 passed"></a><a class="cell pass" href="#case-v10" data-case="v10" aria-label="Structured-only rules v10 passed"></a><a class="cell pass" href="#case-v11" data-case="v11" aria-label="Structured-only rules v11 passed"></a><a class="cell pass" href="#case-v12" data-case="v12" aria-label="Structured-only rules v12 passed"></a><a class="cell pass" href="#case-v13" data-case="v13" aria-label="Structured-only rules v13 passed"></a><a class="cell fail" href="#case-v14" data-case="v14" aria-label="Structured-only rules v14 failed"></a><a class="cell fail" href="#case-v15" data-case="v15" aria-label="Structured-only rules v15 failed"></a><a class="cell pass" href="#case-v16" data-case="v16" aria-label="Structured-only rules v16 passed"></a><a class="cell pass" href="#case-v17" data-case="v17" aria-label="Structured-only rules v17 passed"></a><a class="cell pass" href="#case-v18" data-case="v18" aria-label="Structured-only rules v18 passed"></a><a class="cell fail" href="#case-v19" data-case="v19" aria-label="Structured-only rules v19 failed"></a><a class="cell pass" href="#case-v20" data-case="v20" aria-label="Structured-only rules v20 passed"></a><a class="cell pass" href="#case-v21" data-case="v21" aria-label="Structured-only rules v21 passed"></a><a class="cell pass" href="#case-v22" data-case="v22" aria-label="Structured-only rules v22 passed"></a><a class="cell pass" href="#case-v23" data-case="v23" aria-label="Structured-only rules v23 passed"></a><a class="cell fail" href="#case-v24" data-case="v24" aria-label="Structured-only rules v24 failed"></a><a class="cell pass" href="#case-v25" data-case="v25" aria-label="Structured-only rules v25 passed"></a><a class="cell pass" href="#case-v26" data-case="v26" aria-label="Structured-only rules v26 passed"></a><a class="cell pass" href="#case-v27" data-case="v27" aria-label="Structured-only rules v27 passed"></a><a class="cell fail" href="#case-v28" data-case="v28" aria-label="Structured-only rules v28 failed"></a><a class="cell pass" href="#case-v29" data-case="v29" aria-label="Structured-only rules v29 passed"></a><a class="cell fail" href="#case-v30" data-case="v30" aria-label="Structured-only rules v30 failed"></a></div>
+<div class="vscore"><b>22</b><span>of 30 passed 1 run (rules are deterministic)</span></div>
+<span class="gate nogo">NO-GO</span></div><div class="vrow"><div class="vwho"><b>Claude reads the note</b><span>Same rules; Claude grades the note's MDM, 3 runs</span></div>
+<div class="strip" role="group" aria-label="Claude reads the note: every visit"><a class="cell pass" href="#case-v01" data-case="v01" aria-label="Claude reads the note v01 passed"></a><a class="cell pass" href="#case-v02" data-case="v02" aria-label="Claude reads the note v02 passed"></a><a class="cell pass" href="#case-v03" data-case="v03" aria-label="Claude reads the note v03 passed"></a><a class="cell pass" href="#case-v04" data-case="v04" aria-label="Claude reads the note v04 passed"></a><a class="cell pass" href="#case-v05" data-case="v05" aria-label="Claude reads the note v05 passed"></a><a class="cell pass" href="#case-v06" data-case="v06" aria-label="Claude reads the note v06 passed"></a><a class="cell pass" href="#case-v07" data-case="v07" aria-label="Claude reads the note v07 passed"></a><a class="cell pass" href="#case-v08" data-case="v08" aria-label="Claude reads the note v08 passed"></a><a class="cell pass" href="#case-v09" data-case="v09" aria-label="Claude reads the note v09 passed"></a><a class="cell pass" href="#case-v10" data-case="v10" aria-label="Claude reads the note v10 passed"></a><a class="cell pass" href="#case-v11" data-case="v11" aria-label="Claude reads the note v11 passed"></a><a class="cell pass" href="#case-v12" data-case="v12" aria-label="Claude reads the note v12 passed"></a><a class="cell pass" href="#case-v13" data-case="v13" aria-label="Claude reads the note v13 passed"></a><a class="cell pass" href="#case-v14" data-case="v14" aria-label="Claude reads the note v14 passed"></a><a class="cell pass" href="#case-v15" data-case="v15" aria-label="Claude reads the note v15 passed"></a><a class="cell pass" href="#case-v16" data-case="v16" aria-label="Claude reads the note v16 passed"></a><a class="cell pass" href="#case-v17" data-case="v17" aria-label="Claude reads the note v17 passed"></a><a class="cell pass" href="#case-v18" data-case="v18" aria-label="Claude reads the note v18 passed"></a><a class="cell fail" href="#case-v19" data-case="v19" aria-label="Claude reads the note v19 failed"></a><a class="cell pass" href="#case-v20" data-case="v20" aria-label="Claude reads the note v20 passed"></a><a class="cell pass" href="#case-v21" data-case="v21" aria-label="Claude reads the note v21 passed"></a><a class="cell pass" href="#case-v22" data-case="v22" aria-label="Claude reads the note v22 passed"></a><a class="cell pass" href="#case-v23" data-case="v23" aria-label="Claude reads the note v23 passed"></a><a class="cell pass" href="#case-v24" data-case="v24" aria-label="Claude reads the note v24 passed"></a><a class="cell pass" href="#case-v25" data-case="v25" aria-label="Claude reads the note v25 passed"></a><a class="cell pass" href="#case-v26" data-case="v26" aria-label="Claude reads the note v26 passed"></a><a class="cell pass" href="#case-v27" data-case="v27" aria-label="Claude reads the note v27 passed"></a><a class="cell pass" href="#case-v28" data-case="v28" aria-label="Claude reads the note v28 passed"></a><a class="cell pass" href="#case-v29" data-case="v29" aria-label="Claude reads the note v29 passed"></a><a class="cell pass" href="#case-v30" data-case="v30" aria-label="Claude reads the note v30 passed"></a></div>
+<div class="vscore"><b>29</b><span>of 30 passed on all 3 runs</span></div>
+<span class="gate go">GO</span></div>
+  <div class="legend"><span><i class="pass"></i>Matched the answer key</span><span><i class="fail"></i>Wrong findings or wrong place</span><span><i class="crit"></i>Critical: an unsigned or overbilled claim would have gone out</span><span>Each square is one visit. Select one to read it.</span></div>
+</section>
+
+<div class="layout">
+<div class="content">
+  <h2 id="why">Why it matters</h2>
+  <p class="point">Most of what decides whether a claim is right lives in the note, not the claim. Checking only the claim's format
+  sent every overbilled and unsigned visit out the door (14 of 30 matched). Rules that guess the visit level from orders and
+  prescriptions avoided those critical misses but raised false alarms (22 of 30). With Claude reading the note and the same
+  fixed rules deciding, 29 of 30 visits matched the answer key on all 3 runs.</p>
+
+  <h2 id="prompt">What the first run caught</h2>
+  <p class="point">The first prompt passed 26/25/25 of 30 on its three runs, with 0 critical errors, so it did not clear the gate.
+  Every miss was the same call: on 5 strep throat visits with a fever, Claude graded the problem as an acute illness
+  with systemic symptoms, which would have sent a correctly billed 99213 to the clinician as under-coded. The AMA guidelines say fever
+  or body aches in a minor illness treated for symptoms do not count as systemic. That one sentence went into the prompt, nothing
+  else changed, and the second prompt passed 30/29/29 with 0 critical errors. The remaining miss is a
+  close call: on a right lower belly pain sent for a CT, Claude twice read possible appendicitis as a threat to bodily function, where
+  the answer key says an undiagnosed problem with uncertain prognosis. Because the fix was found on these same 30 visits, the next
+  step would be fresh visits it has not seen. In a live pilot this is what shadow mode is for: the coders' rejections show which call
+  is off before anything auto-fixes.</p>
+
+  <h2 id="queue">Where the visits went</h2>
+  <div class="seg" role="radiogroup" aria-label="Whose routing to show">
+    <button type="button" role="radio" aria-checked="false" data-q="key">Answer key</button>
+    <button type="button" role="radio" aria-checked="false" data-q="scrubber">Claim-format <span>15 off</span></button>
+    <button type="button" role="radio" aria-checked="false" data-q="structured">Structured-only <span>8 off</span></button>
+    <button type="button" role="radio" aria-checked="true" data-q="claude">Claude <span>0 off</span></button>
+  </div>
+  <div class="lanes" data-view="key" hidden><div class="lane"><div class="lh"><b>Release</b><span class="n">10</span></div><div class="chips"><a class="chip" href="#case-v01" data-case="v01" title="Strep throat, positive rapid test, antibiotic">v01</a><a class="chip" href="#case-v08" data-case="v08" title="Asthma flare with oral steroid, level supported">v08</a><a class="chip" href="#case-v09" data-case="v09" title="Chest pain sent to the emergency department, high level supported">v09</a><a class="chip" href="#case-v12" data-case="v12" title="Visit billed by time, minutes support the level">v12</a><a class="chip" href="#case-v14" data-case="v14" title="Laceration repair plus a separate sinus infection, modifier 25 present">v14</a><a class="chip" href="#case-v19" data-case="v19" title="New patient, right lower belly pain sent for CT, level supported">v19</a><a class="chip" href="#case-v21" data-case="v21" title="Pink eye with drops on Medicaid, level supported">v21</a><a class="chip" href="#case-v24" data-case="v24" title="Flu with fever and antiviral on Medicare, level supported">v24</a><a class="chip" href="#case-v27" data-case="v27" title="Very high blood pressure with medication change, level supported">v27</a><a class="chip" href="#case-v30" data-case="v30" title="Minor bug bite, lowest level, supported">v30</a></div></div><div class="lane"><div class="lh"><b>Auto-fix</b><span class="n">6</span></div><div class="chips"><a class="chip" href="#case-v02" data-case="v02" title="Strep throat on Medicare, waived test billed without QW">v02</a><a class="chip" href="#case-v03" data-case="v03" title="Positive strep test coded as unspecified pharyngitis">v03</a><a class="chip" href="#case-v04" data-case="v04" title="Medicare strep visit with two claim fixes">v04</a><a class="chip" href="#case-v15" data-case="v15" title="Separate problem documented, modifier 25 left off">v15</a><a class="chip" href="#case-v23" data-case="v23" title="COVID test on Medicare without QW">v23</a><a class="chip" href="#case-v25" data-case="v25" title="Positive flu A test coded as unidentified influenza">v25</a></div></div><div class="lane"><div class="lh"><b>To the clinician</b><span class="n">11</span></div><div class="chips"><a class="chip" href="#case-v05" data-case="v05" title="Viral cold billed one level high">v05</a><a class="chip" href="#case-v06" data-case="v06" title="Simple UTI with a prescription, billed one level high">v06</a><a class="chip" href="#case-v07" data-case="v07" title="Pneumonia workup billed one level low">v07</a><a class="chip" href="#case-v10" data-case="v10" title="Tension headache billed two levels high">v10</a><a class="chip" href="#case-v11" data-case="v11" title="Visit billed by time with too few minutes documented">v11</a><a class="chip" href="#case-v13" data-case="v13" title="Laceration repair with a visit charge that has no separate problem">v13</a><a class="chip" href="#case-v18" data-case="v18" title="Ankle x-ray billed without an ankle diagnosis">v18</a><a class="chip" href="#case-v20" data-case="v20" title="New patient, bug bite billed two levels high">v20</a><a class="chip" href="#case-v22" data-case="v22" title="Rash with a prescription cream billed one level low">v22</a><a class="chip" href="#case-v26" data-case="v26" title="Back strain with prescriptions billed one level high">v26</a><a class="chip" href="#case-v28" data-case="v28" title="Dog bite to the hand billed one level low">v28</a></div></div><div class="lane"><div class="lh"><b>Hold</b><span class="n">3</span></div><div class="chips"><a class="chip" href="#case-v16" data-case="v16" title="Note not signed">v16</a><a class="chip" href="#case-v17" data-case="v17" title="Note not signed and billed one level high">v17</a><a class="chip" href="#case-v29" data-case="v29" title="Note not signed, waived test also missing QW">v29</a></div></div></div><div class="lanes" data-view="scrubber" hidden><div class="lane"><div class="lh"><b>Release</b><span class="n">24</span></div><div class="chips"><a class="chip" href="#case-v01" data-case="v01" title="Strep throat, positive rapid test, antibiotic">v01</a><a class="chip off" href="#case-v03" data-case="v03" title="Positive strep test coded as unspecified pharyngitis (answer key: Auto-fix)">v03</a><a class="chip off" href="#case-v05" data-case="v05" title="Viral cold billed one level high (answer key: To the clinician)">v05</a><a class="chip off" href="#case-v06" data-case="v06" title="Simple UTI with a prescription, billed one level high (answer key: To the clinician)">v06</a><a class="chip off" href="#case-v07" data-case="v07" title="Pneumonia workup billed one level low (answer key: To the clinician)">v07</a><a class="chip" href="#case-v08" data-case="v08" title="Asthma flare with oral steroid, level supported">v08</a><a class="chip" href="#case-v09" data-case="v09" title="Chest pain sent to the emergency department, high level supported">v09</a><a class="chip off" href="#case-v10" data-case="v10" title="Tension headache billed two levels high (answer key: To the clinician)">v10</a><a class="chip off" href="#case-v11" data-case="v11" title="Visit billed by time with too few minutes documented (answer key: To the clinician)">v11</a><a class="chip" href="#case-v12" data-case="v12" title="Visit billed by time, minutes support the level">v12</a><a class="chip off" href="#case-v13" data-case="v13" title="Laceration repair with a visit charge that has no separate problem (answer key: To the clinician)">v13</a><a class="chip" href="#case-v14" data-case="v14" title="Laceration repair plus a separate sinus infection, modifier 25 present">v14</a><a class="chip off" href="#case-v16" data-case="v16" title="Note not signed (answer key: Hold)">v16</a><a class="chip off" href="#case-v17" data-case="v17" title="Note not signed and billed one level high (answer key: Hold)">v17</a><a class="chip" href="#case-v19" data-case="v19" title="New patient, right lower belly pain sent for CT, level supported">v19</a><a class="chip off" href="#case-v20" data-case="v20" title="New patient, bug bite billed two levels high (answer key: To the clinician)">v20</a><a class="chip" href="#case-v21" data-case="v21" title="Pink eye with drops on Medicaid, level supported">v21</a><a class="chip off" href="#case-v22" data-case="v22" title="Rash with a prescription cream billed one level low (answer key: To the clinician)">v22</a><a class="chip" href="#case-v24" data-case="v24" title="Flu with fever and antiviral on Medicare, level supported">v24</a><a class="chip off" href="#case-v25" data-case="v25" title="Positive flu A test coded as unidentified influenza (answer key: Auto-fix)">v25</a><a class="chip off" href="#case-v26" data-case="v26" title="Back strain with prescriptions billed one level high (answer key: To the clinician)">v26</a><a class="chip" href="#case-v27" data-case="v27" title="Very high blood pressure with medication change, level supported">v27</a><a class="chip off" href="#case-v28" data-case="v28" title="Dog bite to the hand billed one level low (answer key: To the clinician)">v28</a><a class="chip" href="#case-v30" data-case="v30" title="Minor bug bite, lowest level, supported">v30</a></div></div><div class="lane"><div class="lh"><b>Auto-fix</b><span class="n">5</span></div><div class="chips"><a class="chip" href="#case-v02" data-case="v02" title="Strep throat on Medicare, waived test billed without QW">v02</a><a class="chip" href="#case-v04" data-case="v04" title="Medicare strep visit with two claim fixes">v04</a><a class="chip" href="#case-v15" data-case="v15" title="Separate problem documented, modifier 25 left off">v15</a><a class="chip" href="#case-v23" data-case="v23" title="COVID test on Medicare without QW">v23</a><a class="chip off" href="#case-v29" data-case="v29" title="Note not signed, waived test also missing QW (answer key: Hold)">v29</a></div></div><div class="lane"><div class="lh"><b>To the clinician</b><span class="n">1</span></div><div class="chips"><a class="chip" href="#case-v18" data-case="v18" title="Ankle x-ray billed without an ankle diagnosis">v18</a></div></div><div class="lane"><div class="lh"><b>Hold</b><span class="n">0</span></div><div class="chips"><span class=empty>none</span></div></div></div><div class="lanes" data-view="structured" hidden><div class="lane"><div class="lh"><b>Release</b><span class="n">7</span></div><div class="chips"><a class="chip" href="#case-v01" data-case="v01" title="Strep throat, positive rapid test, antibiotic">v01</a><a class="chip off" href="#case-v07" data-case="v07" title="Pneumonia workup billed one level low (answer key: To the clinician)">v07</a><a class="chip" href="#case-v09" data-case="v09" title="Chest pain sent to the emergency department, high level supported">v09</a><a class="chip" href="#case-v12" data-case="v12" title="Visit billed by time, minutes support the level">v12</a><a class="chip" href="#case-v21" data-case="v21" title="Pink eye with drops on Medicaid, level supported">v21</a><a class="chip" href="#case-v27" data-case="v27" title="Very high blood pressure with medication change, level supported">v27</a><a class="chip off" href="#case-v28" data-case="v28" title="Dog bite to the hand billed one level low (answer key: To the clinician)">v28</a></div></div><div class="lane"><div class="lh"><b>Auto-fix</b><span class="n">5</span></div><div class="chips"><a class="chip" href="#case-v02" data-case="v02" title="Strep throat on Medicare, waived test billed without QW">v02</a><a class="chip" href="#case-v03" data-case="v03" title="Positive strep test coded as unspecified pharyngitis">v03</a><a class="chip" href="#case-v04" data-case="v04" title="Medicare strep visit with two claim fixes">v04</a><a class="chip" href="#case-v23" data-case="v23" title="COVID test on Medicare without QW">v23</a><a class="chip" href="#case-v25" data-case="v25" title="Positive flu A test coded as unidentified influenza">v25</a></div></div><div class="lane"><div class="lh"><b>To the clinician</b><span class="n">15</span></div><div class="chips"><a class="chip" href="#case-v05" data-case="v05" title="Viral cold billed one level high">v05</a><a class="chip" href="#case-v06" data-case="v06" title="Simple UTI with a prescription, billed one level high">v06</a><a class="chip off" href="#case-v08" data-case="v08" title="Asthma flare with oral steroid, level supported (answer key: Release)">v08</a><a class="chip" href="#case-v10" data-case="v10" title="Tension headache billed two levels high">v10</a><a class="chip" href="#case-v11" data-case="v11" title="Visit billed by time with too few minutes documented">v11</a><a class="chip" href="#case-v13" data-case="v13" title="Laceration repair with a visit charge that has no separate problem">v13</a><a class="chip off" href="#case-v14" data-case="v14" title="Laceration repair plus a separate sinus infection, modifier 25 present (answer key: Release)">v14</a><a class="chip off" href="#case-v15" data-case="v15" title="Separate problem documented, modifier 25 left off (answer key: Auto-fix)">v15</a><a class="chip" href="#case-v18" data-case="v18" title="Ankle x-ray billed without an ankle diagnosis">v18</a><a class="chip off" href="#case-v19" data-case="v19" title="New patient, right lower belly pain sent for CT, level supported (answer key: Release)">v19</a><a class="chip" href="#case-v20" data-case="v20" title="New patient, bug bite billed two levels high">v20</a><a class="chip" href="#case-v22" data-case="v22" title="Rash with a prescription cream billed one level low">v22</a><a class="chip off" href="#case-v24" data-case="v24" title="Flu with fever and antiviral on Medicare, level supported (answer key: Release)">v24</a><a class="chip" href="#case-v26" data-case="v26" title="Back strain with prescriptions billed one level high">v26</a><a class="chip off" href="#case-v30" data-case="v30" title="Minor bug bite, lowest level, supported (answer key: Release)">v30</a></div></div><div class="lane"><div class="lh"><b>Hold</b><span class="n">3</span></div><div class="chips"><a class="chip" href="#case-v16" data-case="v16" title="Note not signed">v16</a><a class="chip" href="#case-v17" data-case="v17" title="Note not signed and billed one level high">v17</a><a class="chip" href="#case-v29" data-case="v29" title="Note not signed, waived test also missing QW">v29</a></div></div></div><div class="lanes" data-view="claude"><div class="lane"><div class="lh"><b>Release</b><span class="n">10</span></div><div class="chips"><a class="chip" href="#case-v01" data-case="v01" title="Strep throat, positive rapid test, antibiotic">v01</a><a class="chip" href="#case-v08" data-case="v08" title="Asthma flare with oral steroid, level supported">v08</a><a class="chip" href="#case-v09" data-case="v09" title="Chest pain sent to the emergency department, high level supported">v09</a><a class="chip" href="#case-v12" data-case="v12" title="Visit billed by time, minutes support the level">v12</a><a class="chip" href="#case-v14" data-case="v14" title="Laceration repair plus a separate sinus infection, modifier 25 present">v14</a><a class="chip" href="#case-v19" data-case="v19" title="New patient, right lower belly pain sent for CT, level supported">v19</a><a class="chip" href="#case-v21" data-case="v21" title="Pink eye with drops on Medicaid, level supported">v21</a><a class="chip" href="#case-v24" data-case="v24" title="Flu with fever and antiviral on Medicare, level supported">v24</a><a class="chip" href="#case-v27" data-case="v27" title="Very high blood pressure with medication change, level supported">v27</a><a class="chip" href="#case-v30" data-case="v30" title="Minor bug bite, lowest level, supported">v30</a></div></div><div class="lane"><div class="lh"><b>Auto-fix</b><span class="n">6</span></div><div class="chips"><a class="chip" href="#case-v02" data-case="v02" title="Strep throat on Medicare, waived test billed without QW">v02</a><a class="chip" href="#case-v03" data-case="v03" title="Positive strep test coded as unspecified pharyngitis">v03</a><a class="chip" href="#case-v04" data-case="v04" title="Medicare strep visit with two claim fixes">v04</a><a class="chip" href="#case-v15" data-case="v15" title="Separate problem documented, modifier 25 left off">v15</a><a class="chip" href="#case-v23" data-case="v23" title="COVID test on Medicare without QW">v23</a><a class="chip" href="#case-v25" data-case="v25" title="Positive flu A test coded as unidentified influenza">v25</a></div></div><div class="lane"><div class="lh"><b>To the clinician</b><span class="n">11</span></div><div class="chips"><a class="chip" href="#case-v05" data-case="v05" title="Viral cold billed one level high">v05</a><a class="chip" href="#case-v06" data-case="v06" title="Simple UTI with a prescription, billed one level high">v06</a><a class="chip" href="#case-v07" data-case="v07" title="Pneumonia workup billed one level low">v07</a><a class="chip" href="#case-v10" data-case="v10" title="Tension headache billed two levels high">v10</a><a class="chip" href="#case-v11" data-case="v11" title="Visit billed by time with too few minutes documented">v11</a><a class="chip" href="#case-v13" data-case="v13" title="Laceration repair with a visit charge that has no separate problem">v13</a><a class="chip" href="#case-v18" data-case="v18" title="Ankle x-ray billed without an ankle diagnosis">v18</a><a class="chip" href="#case-v20" data-case="v20" title="New patient, bug bite billed two levels high">v20</a><a class="chip" href="#case-v22" data-case="v22" title="Rash with a prescription cream billed one level low">v22</a><a class="chip" href="#case-v26" data-case="v26" title="Back strain with prescriptions billed one level high">v26</a><a class="chip" href="#case-v28" data-case="v28" title="Dog bite to the hand billed one level low">v28</a></div></div><div class="lane"><div class="lh"><b>Hold</b><span class="n">3</span></div><div class="chips"><a class="chip" href="#case-v16" data-case="v16" title="Note not signed">v16</a><a class="chip" href="#case-v17" data-case="v17" title="Note not signed and billed one level high">v17</a><a class="chip" href="#case-v29" data-case="v29" title="Note not signed, waived test also missing QW">v29</a></div></div></div>
+  <p class="qnote">Dashed chips went somewhere other than the answer key says (run 1). Auto-fixes only add modifier QW or 25 or swap an
+  unspecified diagnosis for the one a positive test supports; a visit level is never changed without the clinician.</p>
+
+  <h2 id="pull">The pull</h2>
+  <p class="point">The visits arrive the way they would from the EHR: a FHIR R4 search per encounter, with OAuth client credentials and the
+  <span class="n">ah-practice</span> parameter athenahealth documents for its FHIR API, against a local stand-in that throttles and expires tokens.</p>
+  <div class="stats">
+    <div class="stat"><b>30</b><span>visits normalized from 188 FHIR resources</span></div>
+    <div class="stat"><b>183</b><span>search pages over 219 requests</span></div>
+    <div class="stat"><b>1</b><span>429 retried after Retry-After</span></div>
+    <div class="stat"><b>6</b><span>tokens fetched as each one expired</span></div>
+  </div>
+  <p class="note">The same client also ran against the public HAPI FHIR R4 test server on 2026-11-25: it loaded the 188 synthetic resources, pulled 30 visits back over 183 search pages and 213 requests, and every field matched the source (<a href="https://github.com/pg2342-hub/prebill-chart-check/actions/runs/45559158769">CI run</a>).</p>
+
+  <h2 id="detail">Every visit</h2>
+  <div class="seg" role="radiogroup" aria-label="Filter visits">
+    <button type="button" role="radio" aria-checked="true" data-t="all">All&nbsp; <span>30</span></button>
+    <button type="button" role="radio" aria-checked="false" data-t="routine">Routine&nbsp; <span>10</span></button><button type="button" role="radio" aria-checked="false" data-t="edge">Edge&nbsp; <span>10</span></button><button type="button" role="radio" aria-checked="false" data-t="risky">Risky&nbsp; <span>10</span></button>
+  </div>
+  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>Visit</th><th>Answer key</th><th>Claim-format</th><th>Structured</th><th>Claude</th></tr></thead><tbody>
+  <tr id="case-v01" data-tier="routine"><td class="n">v01</td>
+<td class="tx">Strep throat, positive rapid test, antibiotic<div class="ch">Commercial plan, established patient · billed 99213, 87880 · J02.0</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “streptococcal pharyngitis”</li><li><b>data</b> “rapid strep antigen ordered and reviewed, POSITIVE”</li><li><b>risk</b> “amoxicillin 500 mg twice daily x10 days”</li></ul><pre class="note">CC: sore throat x2 days.
+HPI: 24F with sore throat, painful swallowing, subjective fever. No cough. No sick contacts reported.
+Exam: T 100.9 F. Tonsillar exudate, tender anterior cervical nodes. Lungs clear.
+Tests: rapid strep antigen ordered and reviewed, POSITIVE.
+Assessment: streptococcal pharyngitis.
+Plan: amoxicillin 500 mg twice daily x10 days. Salt water gargles, return if unable to swallow fluids.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v02" data-tier="edge"><td class="n">v02</td>
+<td class="tx">Strep throat on Medicare, waived test billed without QW<div class="ch">Medicare, established patient · billed 99213, 87880 · J02.0</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “strep pharyngitis”</li><li><b>data</b> “rapid strep antigen ordered and reviewed, POSITIVE”</li><li><b>risk</b> “amoxicillin 500 mg BID x10 days”</li></ul><pre class="note">CC: sore throat.
+HPI: 67M with 3 days of sore throat and fever to 101 at home. No cough, no rash.
+Exam: T 100.4 F. Erythematous pharynx with exudate. Anterior cervical adenopathy.
+Tests: rapid strep antigen ordered and reviewed, POSITIVE.
+Assessment: strep pharyngitis.
+Plan: amoxicillin 500 mg BID x10 days. Fluids, acetaminophen as needed.</pre></details></td>
+<td>Auto-fix<div class="ch">QW missing on a waived test</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v03" data-tier="edge"><td class="n">v03</td>
+<td class="tx">Positive strep test coded as unspecified pharyngitis<div class="ch">Commercial plan, established patient · billed 99213, 87880 · J02.9</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “pharyngitis, strep positive”</li><li><b>data</b> “rapid strep ordered and reviewed, POSITIVE”</li><li><b>risk</b> “penicillin VK 500 mg BID x10 days”</li></ul><pre class="note">CC: sore throat and fever.
+HPI: 31M, 2 days of throat pain, fever, no cough.
+Exam: T 101.2 F, tonsillar swelling with exudate.
+Tests: rapid strep ordered and reviewed, POSITIVE.
+Assessment: pharyngitis, strep positive.
+Plan: penicillin VK 500 mg BID x10 days.</pre></details></td>
+<td>Auto-fix<div class="ch">diagnosis less specific than the result</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v04" data-tier="edge"><td class="n">v04</td>
+<td class="tx">Medicare strep visit with two claim fixes<div class="ch">Medicare, established patient · billed 99213, 87880 · J02.9</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “streptococcal pharyngitis”</li><li><b>data</b> “rapid strep ordered and reviewed, POSITIVE”</li><li><b>risk</b> “amoxicillin 500 mg BID x10 days”</li></ul><pre class="note">CC: throat pain.
+HPI: 71F with sore throat for 2 days, low appetite, no cough.
+Exam: T 100.6 F. Exudative tonsils, tender nodes.
+Tests: rapid strep ordered and reviewed, POSITIVE.
+Assessment: streptococcal pharyngitis.
+Plan: amoxicillin 500 mg BID x10 days, hydration.</pre></details></td>
+<td>Auto-fix<div class="ch">QW missing on a waived test, diagnosis less specific than the result</div></td><td class="v bad">Fail<div class="why">Auto-fix: QW missing on a waived test</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v05" data-tier="risky"><td class="n">v05</td>
+<td class="tx">Viral cold billed one level high<div class="ch">Commercial plan, established patient · billed 99214 · J06.9</div><details><summary>Claude: problems low, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “viral upper respiratory infection”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “over-the-counter guaifenesin and saline spray”</li></ul><pre class="note">CC: congestion and cough x4 days.
+HPI: 29F with runny nose, mild dry cough, no fever, no shortness of breath.
+Exam: afebrile, clear rhinorrhea, lungs clear, normal work of breathing.
+Assessment: viral upper respiratory infection.
+Plan: supportive care, over-the-counter guaifenesin and saline spray, return if fever or symptoms past 10 days.</pre></details></td>
+<td>To the clinician<div class="ch">visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v06" data-tier="risky"><td class="n">v06</td>
+<td class="tx">Simple UTI with a prescription, billed one level high<div class="ch">Commercial plan, established patient · billed 99214, 81002 · N39.0</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “uncomplicated urinary tract infection”</li><li><b>data</b> “urine dipstick ordered and reviewed”</li><li><b>risk</b> “nitrofurantoin 100 mg BID x5 days”</li></ul><pre class="note">CC: burning with urination.
+HPI: 35F, 2 days of dysuria and frequency. No fever, no flank pain, not pregnant.
+Exam: afebrile, no CVA tenderness, mild suprapubic tenderness.
+Tests: urine dipstick ordered and reviewed, positive leukocytes and nitrites.
+Assessment: uncomplicated urinary tract infection.
+Plan: nitrofurantoin 100 mg BID x5 days, fluids, return if fever or back pain.</pre></details></td>
+<td>To the clinician<div class="ch">visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v07" data-tier="edge"><td class="n">v07</td>
+<td class="tx">Pneumonia workup billed one level low<div class="ch">Commercial plan, established patient · billed 99213 · J18.9</div><details><summary>Claude: problems moderate, data moderate, risk moderate</summary><ul class="ev"><li><b>problems</b> “community-acquired pneumonia, acute illness with systemic symptoms”</li><li><b>data</b> “chest x-ray 2 views and CBC ordered; reviewed that visit&#x27;s discharge summary”</li><li><b>risk</b> “azithromycin 500 mg day 1 then 250 mg days 2-5”</li></ul><pre class="note">CC: cough, fever, chills.
+HPI: 52M with 5 days of productive cough, fever to 102.4, chills, body aches and fatigue. Seen at an outside
+emergency department 3 weeks ago for chest wall pain; I reviewed that visit&#x27;s discharge summary today.
+Exam: T 102.1 F, HR 104, SpO2 94% on room air. Crackles right lower lobe.
+Orders: chest x-ray 2 views and CBC ordered; results reviewed with the patient.
+Assessment: community-acquired pneumonia, acute illness with systemic symptoms.
+Plan: azithromycin 500 mg day 1 then 250 mg days 2-5. Strict return precautions for worsening breathing.</pre></details></td>
+<td>To the clinician<div class="ch">visit level below the note</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td></tr><tr id="case-v08" data-tier="routine"><td class="n">v08</td>
+<td class="tx">Asthma flare with oral steroid, level supported<div class="ch">Commercial plan, established patient · billed 99214 · J45.41</div><details><summary>Claude: problems moderate, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “moderate persistent asthma with acute exacerbation”</li><li><b>data</b> “SpO2 96%”</li><li><b>risk</b> “prednisone 40 mg daily x5 days”</li></ul><pre class="note">CC: wheezing.
+HPI: 41F with known moderate persistent asthma, 3 days of worsening wheeze and night cough after a cold,
+using albuterol every 3 hours.
+Exam: expiratory wheeze bilaterally, speaks full sentences, SpO2 96%.
+Assessment: moderate persistent asthma with acute exacerbation.
+Plan: prednisone 40 mg daily x5 days, albuterol refill, asthma action plan reviewed, follow up with PCP in 1 week.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level above the note</div></td><td class="v ok">Pass</td></tr><tr id="case-v09" data-tier="routine"><td class="n">v09</td>
+<td class="tx">Chest pain sent to the emergency department, high level supported<div class="ch">Medicare, established patient · billed 99215, 93000 · R07.9</div><details><summary>Claude: problems high, data minimal, risk high</summary><ul class="ev"><li><b>problems</b> “possible acute coronary syndrome, a threat to bodily function”</li><li><b>data</b> “ECG: performed in clinic, nonspecific ST changes”</li><li><b>risk</b> “transferred to the emergency department for admission evaluation”</li></ul><pre class="note">CC: chest pressure.
+HPI: 64M with 1 hour of substernal chest pressure radiating to the left arm with sweating. History of hypertension and smoking.
+Exam: diaphoretic, BP 168/96, HR 98.
+ECG: performed in clinic, nonspecific ST changes.
+Assessment: chest pain, possible acute coronary syndrome, a threat to bodily function.
+Plan: aspirin given, EMS called, transferred to the emergency department for admission evaluation.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v10" data-tier="risky"><td class="n">v10</td>
+<td class="tx">Tension headache billed two levels high<div class="ch">Commercial plan, established patient · billed 99215 · G44.209</div><details><summary>Claude: problems low, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “tension-type headache”</li><li><b>data</b> “normal neuro exam, mild trapezius tenderness”</li><li><b>risk</b> “ibuprofen over the counter, hydration, sleep”</li></ul><pre class="note">CC: headache.
+HPI: 38F with band-like headache since this morning after a long work week. No fever, no vision change,
+no weakness, no worst-headache-of-life features. Similar headaches in the past.
+Exam: normal neuro exam, mild trapezius tenderness.
+Assessment: tension-type headache.
+Plan: ibuprofen over the counter, hydration, sleep, return if new neurologic symptoms.</pre></details></td>
+<td>To the clinician<div class="ch">visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v11" data-tier="risky"><td class="n">v11</td>
+<td class="tx">Visit billed by time with too few minutes documented<div class="ch">Commercial plan, established patient · billed 99214 · M54.50</div><details><summary>Claude: problems low, data minimal, risk low, 22 min</summary><ul class="ev"><li><b>problems</b> “acute low back strain”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “over-the-counter naproxen”</li></ul><pre class="note">CC: low back pain.
+HPI: 46M with low back pain after lifting boxes yesterday, no leg weakness, no numbness, no bladder changes.
+Exam: paraspinal tenderness, negative straight leg raise, normal strength.
+Assessment: acute low back strain.
+Plan: heat, over-the-counter naproxen, activity as tolerated, home exercises given.
+Total time on the date of the encounter: 22 minutes.</pre></details></td>
+<td>To the clinician<div class="ch">too few minutes for a time-based level</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v12" data-tier="routine"><td class="n">v12</td>
+<td class="tx">Visit billed by time, minutes support the level<div class="ch">Commercial plan, established patient · billed 99214 · R42</div><details><summary>Claude: problems low, data minimal, risk moderate, 35 min</summary><ul class="ev"><li><b>problems</b> “dizziness, likely benign positional vertigo”</li><li><b>data</b> “positive Dix-Hallpike on the right, normal neuro exam”</li><li><b>risk</b> “meclizine 25 mg as needed”</li></ul><pre class="note">CC: dizziness.
+HPI: 58F with room-spinning dizziness when rolling over in bed for 2 days. No hearing loss, no weakness.
+Exam: positive Dix-Hallpike on the right, normal neuro exam.
+Assessment: dizziness, likely benign positional vertigo.
+Plan: canalith repositioning taught, meclizine 25 mg as needed, fall precautions, counseling on red flags.
+Total time on the date of the encounter: 35 minutes, including counseling and documentation.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v13" data-tier="risky"><td class="n">v13</td>
+<td class="tx">Laceration repair with a visit charge that has no separate problem<div class="ch">Commercial plan, new patient · billed 99203-25, 12002 · S61.411A</div><details><summary>Claude: problems low, data minimal, risk low, no separate problem</summary><ul class="ev"><li><b>problems</b> “laceration of the right hand”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “wound care, suture removal in 10-14 days”</li></ul><pre class="note">CC: cut hand.
+HPI: 27M cut his right palm on a kitchen knife 1 hour ago. Tetanus up to date. No numbness.
+Exam: 3.0 cm linear laceration of the right palm, no tendon exposure, full strength and sensation.
+Procedure: irrigated, lidocaine 1% local, simple repair with 5 sutures, 3.0 cm.
+Assessment: laceration of the right hand.
+Plan: wound care, suture removal in 10-14 days.</pre></details></td>
+<td>To the clinician<div class="ch">no separate problem for modifier 25</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v14" data-tier="routine"><td class="n">v14</td>
+<td class="tx">Laceration repair plus a separate sinus infection, modifier 25 present<div class="ch">Commercial plan, established patient · billed 99213-25, 12001 · S51.811A, J01.90</div><details><summary>Claude: problems low, data minimal, risk moderate, separate problem</summary><ul class="ev"><li><b>problems</b> “acute bacterial sinusitis”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “Amoxicillin-clavulanate 875 mg BID x7 days”</li></ul><pre class="note">CC: cut forearm; also sinus pain.
+HPI: 33F cut her left forearm on a shelf edge today. Separately, 12 days of facial pressure, purulent
+nasal discharge and worsening congestion after initial improvement.
+Exam: 2.0 cm superficial laceration left forearm. Maxillary sinus tenderness, purulent drainage.
+Procedure: simple repair of 2.0 cm laceration with 3 sutures.
+Assessment: 1) forearm laceration, repaired. 2) acute bacterial sinusitis.
+Plan: wound care, suture removal in 7-10 days. Amoxicillin-clavulanate 875 mg BID x7 days for sinusitis.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level below the note</div></td><td class="v ok">Pass</td></tr><tr id="case-v15" data-tier="edge"><td class="n">v15</td>
+<td class="tx">Separate problem documented, modifier 25 left off<div class="ch">Commercial plan, established patient · billed 99213, 12001 · S61.012A, H10.31</div><details><summary>Claude: problems low, data minimal, risk moderate, separate problem</summary><ul class="ev"><li><b>problems</b> “acute bacterial conjunctivitis, right eye”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “Polymyxin-trimethoprim drops 4 times daily x7 days”</li></ul><pre class="note">CC: cut thumb; also red eye.
+HPI: 44M cut his left thumb on sheet metal at home. Separately, right eye redness with crusting since yesterday.
+Exam: 1.5 cm superficial laceration left thumb. Right conjunctival injection with mucopurulent discharge, normal vision.
+Procedure: simple repair with 2 sutures.
+Assessment: 1) thumb laceration, repaired. 2) acute bacterial conjunctivitis, right eye.
+Plan: wound care, suture removal in 10 days. Polymyxin-trimethoprim drops 4 times daily x7 days.</pre></details></td>
+<td>Auto-fix<div class="ch">modifier 25 missing</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level below the note, modifier 25 missing</div></td><td class="v ok">Pass</td></tr><tr id="case-v16" data-tier="risky"><td class="n">v16</td>
+<td class="tx">Note not signed<div class="ch">Commercial plan, established patient · billed 99213 · H66.91 · <b>unsigned</b></div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “acute otitis media, left”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “amoxicillin 875 mg BID x10 days”</li></ul><pre class="note">CC: ear pain.
+HPI: 19F with left ear pain x2 days after a cold.
+Exam: bulging erythematous left tympanic membrane.
+Assessment: acute otitis media, left.
+Plan: amoxicillin 875 mg BID x10 days.</pre></details></td>
+<td>Hold<div class="ch">note not signed</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v17" data-tier="risky"><td class="n">v17</td>
+<td class="tx">Note not signed and billed one level high<div class="ch">Commercial plan, established patient · billed 99214 · J06.9 · <b>unsigned</b></div><details><summary>Claude: problems low, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “viral upper respiratory infection”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “over-the-counter lozenges and fluids”</li></ul><pre class="note">CC: sore throat and congestion.
+HPI: 50M with 3 days of scratchy throat and nasal congestion, no fever.
+Exam: mild pharyngeal erythema, no exudate, lungs clear.
+Assessment: viral upper respiratory infection.
+Plan: over-the-counter lozenges and fluids.</pre></details></td>
+<td>Hold<div class="ch">note not signed, visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v18" data-tier="edge"><td class="n">v18</td>
+<td class="tx">Ankle x-ray billed without an ankle diagnosis<div class="ch">Commercial plan, established patient · billed 99213, 73610 · J06.9</div><details><summary>Claude: problems low, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “1) right ankle sprain. 2) viral URI.”</li><li><b>data</b> “right ankle 3 views ordered and reviewed, no fracture”</li><li><b>risk</b> “ankle brace, RICE, ibuprofen over the counter”</li></ul><pre class="note">CC: twisted ankle; also a cold.
+HPI: 22M rolled his right ankle playing basketball today, can bear weight with pain. Also 3 days of runny nose.
+Exam: lateral right ankle swelling and tenderness over the ATFL, no bony tenderness at the malleolus tip.
+X-ray: right ankle 3 views ordered and reviewed, no fracture.
+Assessment: 1) right ankle sprain. 2) viral URI.
+Plan: ankle brace, RICE, ibuprofen over the counter, supportive care for URI.</pre></details></td>
+<td>To the clinician<div class="ch">procedure without a supporting diagnosis</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v19" data-tier="routine"><td class="n">v19</td>
+<td class="tx">New patient, right lower belly pain sent for CT, level supported<div class="ch">Commercial plan, new patient · billed 99204 · R10.31</div><details><summary>Claude: problems moderate, data moderate, risk high</summary><ul class="ev"><li><b>problems</b> “undiagnosed new problem with uncertain prognosis, appendicitis not excluded”</li><li><b>data</b> “reviewed her outside urgent care note; CBC and urinalysis ordered and reviewed”</li><li><b>risk</b> “sent to the emergency department for CT and surgical evaluation; decision made to escalate care”</li></ul><pre class="note">CC: abdominal pain.
+HPI: 26F with 12 hours of pain that started near the navel and moved to the right lower abdomen, nausea, no vomiting.
+I reviewed her outside urgent care note from last week, which documented a negative pregnancy test.
+Exam: T 99.9 F, RLQ tenderness with guarding, positive Rovsing sign.
+Orders: CBC and urinalysis ordered and reviewed, WBC 13.8.
+Assessment: right lower quadrant pain, undiagnosed new problem with uncertain prognosis, appendicitis not excluded.
+Plan: sent to the emergency department for CT and surgical evaluation; decision made to escalate care.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level below the note</div></td><td class="v bad">Fail<div class="why">Release: none</div></td></tr><tr id="case-v20" data-tier="risky"><td class="n">v20</td>
+<td class="tx">New patient, bug bite billed two levels high<div class="ch">Commercial plan, new patient · billed 99204 · W57.XXXA, S80.861A</div><details><summary>Claude: problems minimal, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “insect bite of the left lower leg, minor”</li><li><b>data</b> “No tests, external records, or independent historian documented”</li><li><b>risk</b> “over-the-counter hydrocortisone cream”</li></ul><pre class="note">CC: bug bite.
+HPI: 12M with an itchy bump on the left shin after camping. No fever, no spreading redness.
+Exam: 1 cm raised papule, no warmth, no drainage.
+Assessment: insect bite of the left lower leg, minor.
+Plan: over-the-counter hydrocortisone cream, cool compress, return if spreading redness.</pre></details></td>
+<td>To the clinician<div class="ch">visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v21" data-tier="routine"><td class="n">v21</td>
+<td class="tx">Pink eye with drops on Medicaid, level supported<div class="ch">Medicaid, established patient · billed 99213 · H10.32</div><details><summary>Claude: problems low, data low, risk moderate</summary><ul class="ev"><li><b>problems</b> “acute bacterial conjunctivitis, left eye”</li><li><b>data</b> “Mother provides the history.”</li><li><b>risk</b> “polymyxin-trimethoprim drops 4 times daily x7 days”</li></ul><pre class="note">CC: red eye.
+HPI: 8F with left eye redness and morning crusting x1 day. Mother provides the history.
+Exam: left conjunctival injection with mucopurulent discharge, normal acuity.
+Assessment: acute bacterial conjunctivitis, left eye.
+Plan: polymyxin-trimethoprim drops 4 times daily x7 days, school note given.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v22" data-tier="edge"><td class="n">v22</td>
+<td class="tx">Rash with a prescription cream billed one level low<div class="ch">Commercial plan, established patient · billed 99212 · L23.7</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “allergic contact dermatitis due to plants”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “triamcinolone 0.1% cream twice daily x14 days”</li></ul><pre class="note">CC: itchy rash.
+HPI: 36M with an itchy linear rash on both forearms 2 days after clearing brush.
+Exam: linear vesicular streaks on both forearms, no facial involvement, no signs of infection.
+Assessment: allergic contact dermatitis due to plants.
+Plan: triamcinolone 0.1% cream twice daily x14 days, oral antihistamine over the counter.</pre></details></td>
+<td>To the clinician<div class="ch">visit level below the note</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v23" data-tier="edge"><td class="n">v23</td>
+<td class="tx">COVID test on Medicare without QW<div class="ch">Medicare, established patient · billed 99213, 87811 · J06.9</div><details><summary>Claude: problems low, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “viral upper respiratory infection”</li><li><b>data</b> “COVID-19 antigen ordered and reviewed, negative”</li><li><b>risk</b> “over-the-counter dextromethorphan, fluids, rest”</li></ul><pre class="note">CC: cough and congestion.
+HPI: 69F with 2 days of cough, congestion and sore throat. No fever, no shortness of breath.
+Exam: afebrile, SpO2 97%, lungs clear.
+Tests: COVID-19 antigen ordered and reviewed, negative.
+Assessment: viral upper respiratory infection.
+Plan: over-the-counter dextromethorphan, fluids, rest, return if breathing worsens.</pre></details></td>
+<td>Auto-fix<div class="ch">QW missing on a waived test</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v24" data-tier="routine"><td class="n">v24</td>
+<td class="tx">Flu with fever and antiviral on Medicare, level supported<div class="ch">Medicare, established patient · billed 99214, 87804-QW, 87811-QW · J10.1</div><details><summary>Claude: problems moderate, data low, risk moderate</summary><ul class="ev"><li><b>problems</b> “influenza A, acute illness with systemic symptoms, higher risk due to age”</li><li><b>data</b> “influenza antigen and COVID-19 antigen ordered and reviewed”</li><li><b>risk</b> “oseltamivir 75 mg BID x5 days”</li></ul><pre class="note">CC: fever and body aches.
+HPI: 70M with sudden fever to 101.8, chills, myalgias, headache and dry cough since yesterday.
+Exam: T 101.6 F, HR 102, SpO2 95%, lungs clear.
+Tests: influenza antigen and COVID-19 antigen ordered and reviewed; influenza A POSITIVE, COVID negative.
+Assessment: influenza A, acute illness with systemic symptoms, higher risk due to age.
+Plan: oseltamivir 75 mg BID x5 days, fluids, return precautions for breathing difficulty.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level above the note</div></td><td class="v ok">Pass</td></tr><tr id="case-v25" data-tier="edge"><td class="n">v25</td>
+<td class="tx">Positive flu A test coded as unidentified influenza<div class="ch">Commercial plan, established patient · billed 99213, 87804 · J11.1</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “influenza A, mild”</li><li><b>data</b> “influenza antigen ordered and reviewed, influenza A POSITIVE”</li><li><b>risk</b> “oseltamivir 75 mg BID x5 days”</li></ul><pre class="note">CC: cough and congestion.
+HPI: 28F with 1 day of mild cough, congestion and scratchy throat. Afebrile at home. Roommate has the flu.
+Exam: afebrile, mild nasal congestion, lungs clear.
+Tests: influenza antigen ordered and reviewed, influenza A POSITIVE.
+Assessment: influenza A, mild.
+Plan: oseltamivir 75 mg BID x5 days given known exposure and onset within 48 hours, fluids.</pre></details></td>
+<td>Auto-fix<div class="ch">diagnosis less specific than the result</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v26" data-tier="risky"><td class="n">v26</td>
+<td class="tx">Back strain with prescriptions billed one level high<div class="ch">Commercial plan, established patient · billed 99214 · S39.012A</div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “strain of lower back muscles, acute, uncomplicated”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “cyclobenzaprine 10 mg at night x7 days”</li></ul><pre class="note">CC: back pain.
+HPI: 39M strained his lower back moving furniture yesterday. No radiation, no numbness, no bladder or bowel changes.
+Exam: lumbar paraspinal spasm and tenderness, negative straight leg raise, normal strength and reflexes.
+Assessment: strain of lower back muscles, acute, uncomplicated.
+Plan: cyclobenzaprine 10 mg at night x7 days, ibuprofen 800 mg TID with food x7 days, heat, gentle activity.</pre></details></td>
+<td>To the clinician<div class="ch">visit level above the note</div></td><td class="v bad crit">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v27" data-tier="routine"><td class="n">v27</td>
+<td class="tx">Very high blood pressure with medication change, level supported<div class="ch">Commercial plan, established patient · billed 99214 · I10, R51.9</div><details><summary>Claude: problems moderate, data low, risk moderate</summary><ul class="ev"><li><b>problems</b> “essential hypertension, poorly controlled (chronic illness with progression)”</li><li><b>data</b> “reviewed her PCP&#x27;s notes from her last two visits; basic metabolic panel ordered and reviewed”</li><li><b>risk</b> “add amlodipine 5 mg daily, continue lisinopril”</li></ul><pre class="note">CC: headache, high home blood pressure readings.
+HPI: 61F with known hypertension on lisinopril, home readings 170s-180s/100s this week, mild headache.
+No chest pain, no vision change, no weakness. I reviewed her PCP&#x27;s notes from her last two visits.
+Exam: BP 182/104 repeated 178/102, normal neuro exam, no edema.
+Orders: basic metabolic panel ordered and reviewed, creatinine at baseline.
+Assessment: essential hypertension, poorly controlled (chronic illness with progression); headache.
+Plan: add amlodipine 5 mg daily, continue lisinopril, recheck BP with PCP in 1 week, ED precautions.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v28" data-tier="edge"><td class="n">v28</td>
+<td class="tx">Dog bite to the hand billed one level low<div class="ch">Commercial plan, established patient · billed 99213 · S61.451A, W54.0XXA</div><details><summary>Claude: problems moderate, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “an acute complicated injury given infection risk and closeness to the extensor tendon”</li><li><b>data</b> “no tests ordered or reviewed”</li><li><b>risk</b> “amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis”</li></ul><pre class="note">CC: dog bite.
+HPI: 45F bitten on the back of the right hand by her neighbor&#x27;s dog 3 hours ago. Dog vaccinated.
+Exam: two puncture wounds over the 3rd metacarpal with surrounding swelling; tendon function intact,
+full range of motion, sensation intact. Wound left open given bite risk.
+Assessment: dog bite puncture wounds of the right hand, an acute complicated injury given infection risk
+and closeness to the extensor tendon.
+Plan: irrigation, amoxicillin-clavulanate 875 mg BID x5 days as prophylaxis, wound check in 48 hours.</pre></details></td>
+<td>To the clinician<div class="ch">visit level below the note</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v bad">Fail<div class="why">Release: none</div></td><td class="v ok">Pass</td></tr><tr id="case-v29" data-tier="risky"><td class="n">v29</td>
+<td class="tx">Note not signed, waived test also missing QW<div class="ch">Medicare, established patient · billed 99213, 87880 · J02.0 · <b>unsigned</b></div><details><summary>Claude: problems low, data minimal, risk moderate</summary><ul class="ev"><li><b>problems</b> “strep pharyngitis”</li><li><b>data</b> “rapid strep ordered and reviewed, POSITIVE”</li><li><b>risk</b> “amoxicillin 500 mg BID x10 days”</li></ul><pre class="note">CC: sore throat.
+HPI: 74M with 2 days of sore throat and fever.
+Exam: exudative pharyngitis, tender anterior nodes.
+Tests: rapid strep ordered and reviewed, POSITIVE.
+Assessment: strep pharyngitis.
+Plan: amoxicillin 500 mg BID x10 days.</pre></details></td>
+<td>Hold<div class="ch">note not signed, QW missing on a waived test</div></td><td class="v bad crit">Fail<div class="why">Auto-fix: QW missing on a waived test</div></td><td class="v ok">Pass</td><td class="v ok">Pass</td></tr><tr id="case-v30" data-tier="routine"><td class="n">v30</td>
+<td class="tx">Minor bug bite, lowest level, supported<div class="ch">Commercial plan, established patient · billed 99212 · W57.XXXA, S50.862A</div><details><summary>Claude: problems minimal, data minimal, risk low</summary><ul class="ev"><li><b>problems</b> “insect bite of the left forearm, minor”</li><li><b>data</b> “no tests or external records documented”</li><li><b>risk</b> “over-the-counter hydrocortisone cream and an oral antihistamine as needed”</li></ul><pre class="note">CC: bite on the arm.
+HPI: 30F with an itchy bump on the left forearm since yesterday. No fever, no spreading redness.
+Exam: small raised papule, no warmth or drainage.
+Assessment: insect bite of the left forearm, minor.
+Plan: over-the-counter hydrocortisone cream and an oral antihistamine as needed.</pre></details></td>
+<td>Release<div class="ch">none</div></td><td class="v ok">Pass</td><td class="v bad">Fail<div class="why">To the clinician: visit level below the note</div></td><td class="v ok">Pass</td></tr>
+  </tbody></table></div>
+</div>
+
+<aside class="side" aria-label="About this build">
+  <nav aria-label="On this page"><a href="#why">Why it matters</a><a href="#prompt">What the first run caught</a><a href="#queue">Where the visits went</a><a href="#pull">The pull</a><a href="#detail">Every visit</a></nav>
+  <div><h3>Data</h3><p>All 30 visits, notes, patients, clinics and claims are synthetic and hand-labeled. The coding rules are a small subset of public ones:
+  AMA 2021 E/M guidelines, the CMS CLIA-waived (QW) list, CMS global periods, and NCCI modifier 25 policy. The FHIR server is a local stand-in, not athenahealth's API.</p></div>
+  <div><h3>Model</h3><p>claude-opus-5-5 at low effort, structured JSON output. It never sees the billed level. 90 readings,
+  $0.79 in total, median 1.8 s each (the first prompt's 90 readings cost $0.76). Its MDM grades matched the hand labels on 88 of 90 readings.</p></div>
+  <div><h3>Run it yourself</h3><p>Python 3.10+. Re-grading the recorded readings needs no API key.</p><pre>pip install -r requirements.txt
+python scripts/pull.py
+cd evals && golive run golive.yml</pre></div>
+  <div><a class="pill" href="https://github.com/pg2342-hub/prebill-chart-check">Code on GitHub</a></div>
+</aside>
+</div>
+</main>
+<script>
+document.querySelectorAll('.seg').forEach(g=>{const bs=[...g.querySelectorAll('button')];bs.forEach(b=>b.addEventListener('click',()=>{
+ bs.forEach(x=>x.setAttribute('aria-checked',String(x===b)));
+ if(b.dataset.q){document.querySelectorAll('.lanes').forEach(l=>l.hidden=l.dataset.view!==b.dataset.q);}
+ if(b.dataset.t){const t=b.dataset.t;document.querySelectorAll('#cases tbody tr').forEach(r=>r.hidden=!(t==='all'||r.dataset.tier===t));}
+}))});
+document.querySelectorAll('.cell,.chip').forEach(c=>c.addEventListener('click',()=>{
+ document.querySelectorAll('#cases tbody tr').forEach(r=>r.hidden=false);
+ document.querySelectorAll('.seg button[data-t]').forEach(x=>x.setAttribute('aria-checked',String(x.dataset.t==='all')));
+ document.querySelectorAll('#cases tr.lit').forEach(r=>r.classList.remove('lit'));
+ const row=document.getElementById('case-'+c.dataset.case); row&&row.classList.add('lit');
+}));
+</script><!-- demo-chrome --><footer class="demo-foot"><span>A working build by <a href="https://pranavgudise.dev/">Pranav Gudise</a>. Synthetic or public data only.</span><a href="https://github.com/pg2342-hub/prebill-chart-check">github.com/pg2342-hub/prebill-chart-check</a></footer><!-- /demo-chrome -->
+</body></html>
