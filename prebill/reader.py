@@ -32,8 +32,8 @@ Problems addressed:
   1 undiagnosed new problem with uncertain prognosis; 1 acute illness with systemic symptoms; 1 acute complicated injury
 - high: 1+ chronic illness with severe exacerbation; 1 acute or chronic illness or injury that poses a threat to life or bodily function
 - Fever, body aches or fatigue in a minor illness that is treated to relieve symptoms do not make it an acute illness with
-  systemic symptoms; grade that as acute uncomplicated (low). "Systemic symptoms" means a general illness affecting more than one
-  body system with real risk of morbidity.
+  systemic symptoms; grade that as acute uncomplicated (low). An acute illness with systemic symptoms has a high risk of morbidity
+  without treatment; its systemic symptoms may be single system (for example pyelonephritis).
 
 Data reviewed and analyzed (each unique test ordered or result reviewed counts once; ordering a test includes reviewing its result):
 - minimal: none, or 1 element

@@ -185,6 +185,8 @@ pre.note{white-space:pre-wrap;font-size:12px;max-width:44em;background:var(--pap
 table.t{min-width:640px}
 .lanes[hidden]{display:none}
 .seg button span{margin-left:6px}
+.scrollhint{display:none}
+@media (max-width:760px){.scrollhint{display:block}}
 @media (max-width:1000px){.lanes,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.strip{grid-template-columns:repeat(15,minmax(0,1fr))}}"""))
 
@@ -238,8 +240,9 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
     <button type="button" role="radio" aria-checked="true" data-q="claude">Claude <span>{wrong['claude']} off</span></button>
   </div>
   {queue_panels}
-  <p class="qnote">Dashed chips went somewhere other than the answer key says (run 1). Auto-fixes only add modifier QW or 25 or swap an
-  unspecified diagnosis for the one a positive test supports; a visit level is never changed without the clinician.</p>
+  <p class="qnote">Dashed chips went somewhere other than the answer key says (run 1). In this build, auto-fixes add modifier QW or 25 or swap an
+  unspecified diagnosis for the one a positive test supports, and a visit level is never changed without the clinician. In the pilot
+  plan, adding modifier 25 stays with the clinician until it clears the shadow bar.</p>
 
   <h2 id="pull">The pull</h2>
   <p class="point">The visits arrive the way they would from the EHR: a FHIR R4 search per encounter, with OAuth client credentials and the
@@ -257,6 +260,7 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
     <button type="button" role="radio" aria-checked="true" data-t="all">All&nbsp; <span>30</span></button>
     {''.join(f'<button type="button" role="radio" aria-checked="false" data-t="{g}">{GROUPS[g]}&nbsp; <span>{counts[g]}</span></button>' for g in GROUPS)}
   </div>
+  <p class="qnote scrollhint">Scroll the table sideways to see every column.</p>
   <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>Visit</th><th>Answer key</th><th>Claim-format</th><th>Structured</th><th>Claude</th></tr></thead><tbody>
   {''.join(trs)}
   </tbody></table></div>
