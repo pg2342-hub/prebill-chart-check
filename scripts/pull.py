@@ -39,6 +39,7 @@ else:
                         client_secret=mock_server.CLIENT_SECRET, practice=mock_server.PRACTICE)
     target = "local athenaOne-style mock"
 visits = client.pull_visits()
+Path(a.out).parent.mkdir(parents=True, exist_ok=True)
 Path(a.out).write_text(json.dumps({"source": target, "stats": client.stats, "seconds": round(time.time() - t0, 2),
                                    "visits": visits}, indent=1))
 print(f"pulled {len(visits)} visits from {target}: {client.stats}")
