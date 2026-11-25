@@ -31,7 +31,18 @@ Three setups run through the same cases and rules:
 | Structured-only rules | Nothing: the MDM elements are estimated from orders, results, prescriptions and diagnosis codes |
 | Claude reader | Claude reads the note (recorded replies in `recordings/`, re-graded in CI without an API call) |
 
-Results are on the demo page and in each CI run's `reports` artifact.
+Results on the 30 visits (Claude Opus 5.5 at low effort, 3 runs each):
+
+| Setup | Passed (every run) | Critical failures | Gate |
+|---|---|---|---|
+| Claim-format checks | 14 of 30 | 10 | NO-GO |
+| Structured-only rules | 22 of 30 | 0 | NO-GO |
+| Claude reader, first prompt | 25 of 30 (runs: 26, 25, 25) | 0 | NO-GO |
+| Claude reader, second prompt | 29 of 30 (runs: 30, 29, 29) | 0 | GO |
+
+The first prompt's misses were all one call: on five strep throat visits with a fever, Claude graded the problem as an acute illness with systemic symptoms, which would have sent correctly billed 99213s to the clinician as under-coded. The AMA E/M guidelines say fever or body aches in a minor illness treated for symptoms point to an acute uncomplicated illness, so that one sentence went into the prompt (`prebill/reader.py`) and nothing else changed. The first prompt's readings are kept in `recordings/claude_reads_v1.json` and CI re-grades both. The remaining miss (v19, right lower belly pain sent for a CT) is a judgment call between "undiagnosed new problem" and "threat to bodily function". The prompt change was found on these same 30 visits, so the honest next step is fresh visits it has not seen.
+
+Results are also on the demo page and in each CI run's `reports` artifact.
 
 ## Run it
 

@@ -1,0 +1,9 @@
+{
+ "source": "https://hapi.fhir.org/baseR4",
+ "ci_run": "https://github.com/pg2342-hub/prebill-chart-check/actions/runs/45559158769",
+ "date": "2026-11-25",
+ "resources_loaded": 188,
+ "visits_pulled": 30,
+ "field_mismatches": 0,
+ "stats": {"requests": 213, "retries_429": 0, "token_fetches": 0, "pages": 183}
+}

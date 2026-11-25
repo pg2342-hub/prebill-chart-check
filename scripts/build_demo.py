@@ -16,7 +16,7 @@ STARTER = Path(sys.argv[1]) if len(sys.argv) > 1 else ROOT / "scripts/starter.ht
 VISITS = yaml.safe_load((ROOT / "data/visits.yml").read_text())["visits"]
 PULL = json.loads((ROOT / "data/pulled_visits.json").read_text())
 BUNDLE = json.loads((ROOT / "data/fhir_bundle.json").read_text())
-HAPI = ROOT / "reports/hapi_pull.json"
+HAPI = ROOT / "data/hapi_check.json"  # result of the public-fhir-server CI job (see ci_run)
 REC = json.loads((ROOT / "recordings/claude_reads.json").read_text())
 
 SETUPS = [
@@ -150,9 +150,10 @@ types = Counter(e["resource"]["resourceType"] for e in BUNDLE["entry"])
 hapi_line = ""
 if HAPI.exists():
     h = json.loads(HAPI.read_text())
-    hapi_line = (f'<p class="note">The same client also ran against the public HAPI FHIR R4 test server: it loaded the '
-                 f'synthetic bundle, pulled {len(h["visits"])} visits back over {h["stats"]["pages"]} search pages and '
-                 f'{h["stats"]["requests"]} requests, and every field matched the source.</p>')
+    assert h["field_mismatches"] == 0
+    hapi_line = (f'<p class="note">The same client also ran against the public HAPI FHIR R4 test server on {h["date"]}: it loaded the '
+                 f'{h["resources_loaded"]} synthetic resources, pulled {h["visits_pulled"]} visits back over {h["stats"]["pages"]} search pages and '
+                 f'{h["stats"]["requests"]} requests, and every field matched the source (<a href="{h["ci_run"]}">CI run</a>).</p>')
 
 html = STARTER.read_text()
 head, body = html.split("<main>", 1)
@@ -181,7 +182,9 @@ details summary{cursor:pointer;font-size:13px;color:var(--ink-2);margin-top:6px}
 .ev{margin:6px 0;padding-left:18px;font-size:13px;color:var(--ink-2)}
 pre.note{white-space:pre-wrap;font-size:12px;max-width:44em;background:var(--paper);border:1px solid var(--rule-soft);border-radius:10px;padding:10px;margin:6px 0 0}
 .scroll{overflow-x:auto}
-table.t{min-width:860px}
+table.t{min-width:640px}
+.lanes[hidden]{display:none}
+.seg button span{margin-left:6px}
 @media (max-width:1000px){.lanes,.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.strip{grid-template-columns:repeat(15,minmax(0,1fr))}}"""))
 
@@ -221,8 +224,11 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
   Every miss was the same call: on {len(v1_fail_ids)} strep throat visits with a fever, Claude graded the problem as an acute illness
   with systemic symptoms, which would have sent a correctly billed 99213 to the clinician as under-coded. The AMA guidelines say fever
   or body aches in a minor illness treated for symptoms do not count as systemic. That one sentence went into the prompt, nothing
-  else changed, and the second prompt passed {'/'.join(map(str, v2_runs))} with {v2_crit} critical errors. In a live pilot this is what
-  shadow mode is for: the coder's rejections show which call is off before anything auto-fixes.</p>
+  else changed, and the second prompt passed {'/'.join(map(str, v2_runs))} with {v2_crit} critical errors. The remaining miss is a
+  close call: on a right lower belly pain sent for a CT, Claude twice read possible appendicitis as a threat to bodily function, where
+  the answer key says an undiagnosed problem with uncertain prognosis. Because the fix was found on these same 30 visits, the next
+  step would be fresh visits it has not seen. In a live pilot this is what shadow mode is for: the coders' rejections show which call
+  is off before anything auto-fixes.</p>
 
   <h2 id="queue">Where the visits went</h2>
   <div class="seg" role="radiogroup" aria-label="Whose routing to show">
@@ -261,7 +267,7 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
   <div><h3>Data</h3><p>All 30 visits, notes, patients, clinics and claims are synthetic and hand-labeled. The coding rules are a small subset of public ones:
   AMA 2021 E/M guidelines, the CMS CLIA-waived (QW) list, CMS global periods, and NCCI modifier 25 policy. The FHIR server is a local stand-in, not athenahealth's API.</p></div>
   <div><h3>Model</h3><p>{', '.join(models)} at low effort, structured JSON output. It never sees the billed level. {len(recs)} readings,
-  ${cost:.2f} in total, median {p50:.1f} s each. Its MDM grades matched the hand labels on {level_agree} of {len(VISITS) * claude_runs} readings.</p></div>
+  ${cost:.2f} in total, median {p50:.1f} s each (the first prompt's {len(REC_V1)} readings cost ${sum(r["cost_usd"] for r in REC_V1.values()):.2f}). Its MDM grades matched the hand labels on {level_agree} of {len(VISITS) * claude_runs} readings.</p></div>
   <div><h3>Run it yourself</h3><p>Python 3.10+. Re-grading the recorded readings needs no API key.</p><pre>pip install -r requirements.txt
 python scripts/pull.py
 cd evals && golive run golive.yml</pre></div>
