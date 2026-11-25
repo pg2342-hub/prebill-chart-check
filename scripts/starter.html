@@ -1,0 +1,149 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BUILD NAME</title>
+<meta name="description" content="ONE SENTENCE WITH THE RESULT AND ITS KEY NUMBER.">
+<!-- Run scripts/demo_chrome.py on this file after writing it: it adds the shared kit stylesheet, the header and the footer. -->
+<style>
+/* Shared demo layout, copied from the approved pilots. Keep it; add page-specific rules below it. */
+
+.head{padding:8px 0 0}
+.head h1{margin:40px 0 14px}
+.head .lead{max-width:38em}
+/* verdict: the same 25 cases under the same gate, one square per case */
+.verdict{margin:36px 0 0;border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.vhead{display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:8px 24px;padding:18px 24px;border-bottom:1px solid var(--rule)}
+.vhead h2{all:unset;font:400 22px/1.2 var(--serif)}
+.vhead p{margin:0;color:var(--ink-2);font-size:15px}
+.vhead p b{color:var(--ink)}
+.vrow,.arow{display:grid;grid-template-columns:minmax(0,15em) minmax(0,1fr) 7.5em 5.5em;align-items:center;gap:20px;padding:22px 24px}
+.vrow+.vrow{border-top:1px solid var(--rule-soft)}
+.vwho b,.awho b{display:block;font:400 20px/1.2 var(--serif)}
+.vwho span,.awho span{display:block;color:var(--ink-2);font-size:14px;line-height:1.4;margin-top:4px}
+.strip{display:grid;grid-template-columns:repeat(25,minmax(0,1fr));gap:4px}
+.cell{display:block;aspect-ratio:1;border-radius:4px;border:1.5px solid transparent;transition:transform .2s var(--ease),box-shadow .2s}
+.cell.pass{background:var(--green)}
+.cell.fail{background:var(--paper);border-color:var(--ink)}
+.cell.crit{background:var(--ink)}
+.cell:hover,.cell:focus-visible,.cell.lit{transform:translateY(-3px);box-shadow:0 6px 12px -6px rgb(27 26 23/.5)}
+.vscore b{font:400 44px/1 var(--serif)}
+.vscore span{display:block;color:var(--ink-2);font-size:13px;line-height:1.35;margin-top:4px}
+.gate{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:32px;padding:0 14px;border-radius:999px;font:500 13px/1 var(--mono);letter-spacing:.06em}
+.gate.go{background:var(--green-wash);color:var(--green)}
+.gate.nogo{background:var(--ink);color:var(--paper)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 20px;padding:14px 24px;border-top:1px solid var(--rule);color:var(--ink-2);font-size:13px}
+.legend span{display:inline-flex;align-items:center;gap:8px}
+.legend i{width:12px;height:12px;border-radius:3px;border:1.5px solid transparent}
+.legend .pass{background:var(--green)}.legend .fail{border-color:var(--ink)}.legend .crit{background:var(--ink)}
+/* page body: content and a side column */
+.layout{display:grid;grid-template-columns:minmax(0,1fr) 270px;gap:56px;align-items:start;margin-top:8px}
+.side{position:sticky;top:24px;margin-top:64px;display:grid;gap:22px;font-size:14px;color:var(--ink-2)}
+.side h3{margin:0 0 6px;font:500 13px/1.3 var(--sans);color:var(--ink)}
+.side p{margin:0}
+.side nav a{display:block;padding:5px 0;color:var(--ink-2);text-decoration:none;border-bottom:1px solid var(--rule-soft)}
+.side nav a:hover{color:var(--ink)}
+.side pre{font-size:12px;margin:6px 0 0}
+.point{font-size:17px;max-width:40em;margin:0}
+.point b{font-weight:500}
+.seg{display:flex;width:fit-content;max-width:100%;flex-wrap:wrap;gap:2px;padding:3px;border:1px solid var(--rule);border-radius:999px;margin:0 0 16px;background:#fbfaf6}
+.seg button{min-height:34px;padding:0 14px;border:0;border-radius:999px;background:transparent;color:var(--ink-2);font:500 14px/1 var(--sans);cursor:pointer}
+.seg button span{font-weight:400;opacity:.8}
+.seg button[aria-checked=true]{background:var(--ink);color:var(--paper)}
+.n{font-family:var(--mono);font-size:13px}
+.tag{font:400 12px/1 var(--mono);border:1px solid var(--rule);border-radius:999px;padding:4px 8px;white-space:nowrap}
+.tx{max-width:340px}.ch{font-size:13px;color:var(--ink-2);margin-top:4px}
+.v{white-space:nowrap;font-weight:500}
+.v.ok{color:var(--green)}
+.v.bad{white-space:normal;color:var(--ink)}
+.v.bad.crit::before{content:"";display:inline-block;width:8px;height:8px;border-radius:2px;background:var(--ink);margin-right:6px;vertical-align:1px}
+.why{font-weight:400;font-size:13px;color:var(--ink-2);margin-top:4px;max-width:240px}
+#cases tr.lit td{background:var(--green-wash)}
+#cases tr{scroll-margin-top:24px}
+.abl{border:1px solid var(--rule);border-radius:16px;background:#fbfaf6;overflow:hidden}
+.arow{grid-template-columns:minmax(0,13em) minmax(0,1fr) 6.5em}
+.arow+.arow{border-top:1px solid var(--rule-soft)}
+.ascore{font:400 15px/1 var(--sans);color:var(--ink-2)}
+.ascore b{font:400 30px/1 var(--serif);color:var(--ink)}
+.ascore span{display:block;font-size:13px;margin-top:4px}
+.note{color:var(--ink-2);font-size:15px;max-width:44em;margin-top:14px}
+.rule{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.rule div{border:1px solid var(--rule);border-radius:16px;padding:20px 22px;background:#fbfaf6}
+.rule div:last-child{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.rule h3{margin:0 0 6px;font:400 22px/1.2 var(--serif)}
+.rule p{margin:0 0 10px;font-size:15px;opacity:.85}
+.rule ul{margin:0;font-size:15px}
+.rule div:last-child li::marker{color:rgb(244 242 236/.6)}
+.sev{font:500 12px/1 var(--mono);padding:4px 8px;border-radius:999px;border:1px solid var(--rule)}
+.sev-critical{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.sev-low{color:var(--ink-2)}
+@media (max-width:1000px){
+ .layout{grid-template-columns:minmax(0,1fr);gap:0}
+ .side{position:static;margin-top:48px;order:2}
+ .vrow{grid-template-columns:minmax(0,1fr) auto;gap:14px 16px}
+ .vrow .strip{grid-column:1/-1;grid-row:2}
+ .vscore{grid-row:3}.vrow .gate{grid-row:3}
+ .arow{grid-template-columns:minmax(0,1fr) auto;gap:12px 16px}
+ .arow .strip{grid-column:1/-1;grid-row:2}
+ .ascore{grid-column:2;grid-row:1}
+ .rule{grid-template-columns:1fr}
+}
+@media (max-width:640px){.vrow,.arow{padding:18px}.vhead{padding:16px 18px}.strip{gap:3px}.tx{max-width:none}}
+@media (prefers-reduced-motion:reduce){.cell{transition:none}}
+
+/* ---- page-specific rules go here ---- */
+</style></head><body><main>
+
+<div class="head">
+<h1>BUILD NAME</h1>
+<p class="lead">One or two sentences: what this build does and for whom. No result here; the result goes in the card below.</p>
+</div>
+
+<!-- RESULT FIRST. Eval/gate: one .vrow per agent or setup, each with a .strip of case squares, a .vscore and a .gate badge.
+     Reconciliation: tie status plus the one-line answer. Report: state switch (.seg) plus a summary bar and a board.
+     Tool: the tool itself, with an example already loaded. -->
+<section class="verdict" aria-labelledby="verdict-h">
+  <div class="vhead"><h2 id="verdict-h">Same N cases, same gate</h2><p>Gate: <b>THE RULE</b></p></div>
+  <div class="vrow">
+    <div class="vwho"><b>Setup A</b><span>What it is, in one line</span></div>
+    <div class="strip" role="group" aria-label="Setup A: every case">
+      <a class="cell pass" href="#case-1" data-case="1" aria-label="Setup A case 1 passed"></a>
+      <a class="cell fail" href="#case-2" data-case="2" aria-label="Setup A case 2 failed"></a>
+      <a class="cell crit" href="#case-3" data-case="3" aria-label="Setup A case 3 failed with a critical error"></a>
+    </div>
+    <div class="vscore"><b>1</b><span>of 3 passed<br>1 critical</span></div>
+    <span class="gate nogo">NO-GO</span>
+  </div>
+  <div class="legend"><span><i class="pass"></i>Passed</span><span><i class="fail"></i>Failed</span><span><i class="crit"></i>Critical error</span><span>Each square is one case. Select one to read it.</span></div>
+</section>
+
+<div class="layout">
+<div class="content">
+  <h2 id="why">Why it matters</h2>
+  <p class="point">The point of the build, in two or three sentences.</p>
+
+  <h2 id="detail">Every case</h2>
+  <div class="seg" role="radiogroup" aria-label="Filter"><button type="button" role="radio" aria-checked="true" data-t="all">All&nbsp; <span>N</span></button></div>
+  <div class="scroll"><table class="t" id="cases"><thead><tr><th>#</th><th>Input</th><th>Expected</th><th>Result</th></tr></thead><tbody>
+    <tr id="case-1"><td class="n">1</td><td class="tx">...</td><td>...</td><td class="v ok">Pass</td></tr>
+  </tbody></table></div>
+
+  <!-- ONE signature visual for this page: an inline SVG chart drawn to scale, labels inside bounds, tabular numerals. -->
+</div>
+
+<aside class="side" aria-label="About this build">
+  <nav aria-label="On this page"><a href="#why">Why it matters</a><a href="#detail">Every case</a></nav>
+  <div><h3>Data</h3><p>All data is synthetic (or: name the public source). Say what is invented.</p></div>
+  <div><h3>Run it yourself</h3><p>Python 3.x, standard library only.</p><pre>python3 run.py</pre></div>
+  <div><a class="pill" href="https://github.com/pg2342-hub/REPO">Code on GitHub</a></div>
+</aside>
+</div>
+</main>
+<script>
+const seg=[...document.querySelectorAll('.seg button')];
+seg.forEach(b=>b.addEventListener('click',()=>{
+ seg.forEach(x=>x.setAttribute('aria-checked',String(x===b)));
+ const t=b.dataset.t;document.querySelectorAll('#cases tbody tr').forEach(r=>r.hidden=!(t==='all'||r.dataset.tier===t));
+}));
+document.querySelectorAll('.cell').forEach(c=>c.addEventListener('click',()=>{
+ document.querySelectorAll('#cases tr.lit').forEach(r=>r.classList.remove('lit'));
+ const row=document.getElementById('case-'+c.dataset.case); row&&row.classList.add('lit');
+}));
+</script></body></html>

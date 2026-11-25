@@ -28,7 +28,7 @@ jobs:
       - name: FHIR bundle is up to date with data/visits.yml
         run: python scripts/make_bundle.py && git diff --exit-code data/fhir_bundle.json
       - name: Pull the visits over FHIR from the local athenaOne-style mock
-        run: python scripts/pull.py && git diff --exit-code data/pulled_visits.json -I '"seconds"'
+        run: python scripts/pull.py && git diff --exit-code -I '"seconds"' -- data/pulled_visits.json
       - name: Gate sanity (answer key must GO, claim-format checks and structured-only rules must be blocked)
         run: |
           cd evals
