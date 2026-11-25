@@ -43,7 +43,9 @@ jobs:
         if: steps.rec.outputs.has == 'yes'
         run: cd evals && golive run golive.yml --runs 3 --out ../reports/claude
       - name: Re-grade the first prompt's recorded readings (no API call)
-        run: cd evals && golive run golive.yml --agent agents:claude_v1_recorded --runs 3 --out ../reports/claude_v1
+        run: |
+          cd evals && golive run golive.yml --agent agents:claude_v1_recorded --runs 3 --out ../reports/claude_v1 || true
+          python -c "import json,sys; d=json.load(open('../reports/claude_v1/results.json'))['decision']; print('claude_v1', d); sys.exit(d != 'no-go')"
       - uses: actions/upload-artifact@v4
         if: always()
         with: {name: reports, path: reports/}

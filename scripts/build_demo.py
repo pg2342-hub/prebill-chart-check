@@ -36,6 +36,8 @@ FINDING_TEXT = {
 }
 
 res = {k: json.loads((ROOT / f"reports/{k}/results.json").read_text()) for k, _, _ in SETUPS}
+V1 = json.loads((ROOT / "reports/claude_v1/results.json").read_text())
+REC_V1 = json.loads((ROOT / "recordings/claude_reads_v1.json").read_text())
 by_case = {k: {c["id"]: c for c in r["cases"]} for k, r in res.items()}
 crit_checks = {"unsigned_held", "overbilling_stopped"}
 
@@ -184,6 +186,13 @@ table.t{min-width:860px}
 @media (max-width:640px){.strip{grid-template-columns:repeat(15,minmax(0,1fr))}}"""))
 
 c_pass = sum(case_state("claude", v["id"]) == "pass" for v in VISITS)
+v1_cases = {c["id"]: c for c in V1["cases"]}
+v1_pass = sum(all(r["passed"] for r in v1_cases[v["id"]]["runs"]) for v in VISITS)
+v1_crit = sum(r["critical"] for r in V1["summary"]["by_run"])
+v1_fail_ids = [v["id"] for v in VISITS if not all(r["passed"] for r in v1_cases[v["id"]]["runs"])]
+v1_runs = [r["passed"] for r in V1["summary"]["by_run"]]
+v2_runs = [r["passed"] for r in res["claude"]["summary"]["by_run"]]
+v2_crit = sum(r["critical"] for r in res["claude"]["summary"]["by_run"])
 s_pass = sum(case_state("structured", v["id"]) == "pass" for v in VISITS)
 k_pass = sum(case_state("scrubber", v["id"]) == "pass" for v in VISITS)
 body = f"""<main>
@@ -206,6 +215,14 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
   sent every overbilled and unsigned visit out the door ({k_pass} of 30 matched). Rules that guess the visit level from orders and
   prescriptions avoided those critical misses but raised false alarms ({s_pass} of 30). With Claude reading the note and the same
   fixed rules deciding, {c_pass} of 30 visits matched the answer key on all {claude_runs} runs.</p>
+
+  <h2 id="prompt">What the first run caught</h2>
+  <p class="point">The first prompt passed {'/'.join(map(str, v1_runs))} of 30 on its three runs, with {v1_crit} critical errors, so it did not clear the gate.
+  Every miss was the same call: on {len(v1_fail_ids)} strep throat visits with a fever, Claude graded the problem as an acute illness
+  with systemic symptoms, which would have sent a correctly billed 99213 to the clinician as under-coded. The AMA guidelines say fever
+  or body aches in a minor illness treated for symptoms do not count as systemic. That one sentence went into the prompt, nothing
+  else changed, and the second prompt passed {'/'.join(map(str, v2_runs))} with {v2_crit} critical errors. In a live pilot this is what
+  shadow mode is for: the coder's rejections show which call is off before anything auto-fixes.</p>
 
   <h2 id="queue">Where the visits went</h2>
   <div class="seg" role="radiogroup" aria-label="Whose routing to show">
@@ -240,7 +257,7 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
 </div>
 
 <aside class="side" aria-label="About this build">
-  <nav aria-label="On this page"><a href="#why">Why it matters</a><a href="#queue">Where the visits went</a><a href="#pull">The pull</a><a href="#detail">Every visit</a></nav>
+  <nav aria-label="On this page"><a href="#why">Why it matters</a><a href="#prompt">What the first run caught</a><a href="#queue">Where the visits went</a><a href="#pull">The pull</a><a href="#detail">Every visit</a></nav>
   <div><h3>Data</h3><p>All 30 visits, notes, patients, clinics and claims are synthetic and hand-labeled. The coding rules are a small subset of public ones:
   AMA 2021 E/M guidelines, the CMS CLIA-waived (QW) list, CMS global periods, and NCCI modifier 25 policy. The FHIR server is a local stand-in, not athenahealth's API.</p></div>
   <div><h3>Model</h3><p>{', '.join(models)} at low effort, structured JSON output. It never sees the billed level. {len(recs)} readings,
