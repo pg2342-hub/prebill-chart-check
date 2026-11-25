@@ -225,7 +225,7 @@ the claim goes out. Each visit is released, auto-fixed, sent to the clinician, o
   <p class="point">The first prompt passed {'/'.join(map(str, v1_runs))} of 30 on its three runs, with {v1_crit} critical errors, so it did not clear the gate.
   Every miss was the same call: on {len(v1_fail_ids)} strep throat visits with a fever, Claude graded the problem as an acute illness
   with systemic symptoms, which would have sent a correctly billed 99213 to the clinician as under-coded. The AMA guidelines say fever
-  or body aches in a minor illness treated for symptoms do not count as systemic. That one sentence went into the prompt, nothing
+  or body aches in a minor illness treated for symptoms do not count as systemic. That rule went into the prompt, nothing
   else changed, and the second prompt passed {'/'.join(map(str, v2_runs))} with {v2_crit} critical errors. The remaining miss is a
   close call: on a right lower belly pain sent for a CT, Claude twice read possible appendicitis as a threat to bodily function, where
   the answer key says an undiagnosed problem with uncertain prognosis. Because the fix was found on these same 30 visits, the next
